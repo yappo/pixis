@@ -4,8 +4,6 @@ package Pixis::Plugin::Conference;
 use Moose;
 use MooseX::AttributeHelpers;
 use DateTime;
-use Pixis::API::ConferenceSession;
-use Pixis::API::ConferenceTrack;
 
 with 'Pixis::Plugin';
 
@@ -65,10 +63,11 @@ sub register {
     };
     $c->add_translation( $path );
 
-    Pixis::Registry->set(api => 'ConferenceTrack',
-        Pixis::API::ConferenceTrack->new());
-    Pixis::Registry->set(api => 'ConferenceSession',
-        Pixis::API::ConferenceSession->new());
+    foreach my $name qw(Conference ConferenceTrack ConferenceSession) {
+        my $class = "Pixis::API::$name";
+        Class::MOP::load_class($class);
+        Pixis::Registry->set(api => $name, $class->new());
+    }
 }
 
 1;
