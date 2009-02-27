@@ -162,14 +162,14 @@ sub add_navigation {
 }
 
 sub add_translation {
-    my ($self, $path) = @_;
+    my ($self, @paths) = @_;
 
     # we're using gettext by default, just look for a localize by that
     # type in the localizer
     my $localize = $self->model('Data::Localize');
     my ($localizer) = $localize->find_localizers(isa => 'Data::Localize::Gettext');
 
-    $localizer->path_add( $path );
+    $localizer->path_add( $_ ) for @paths;
 }
 
 sub add_formfu_path {
