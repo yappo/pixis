@@ -110,7 +110,7 @@ sub register {
     my $c = $registry->get(pixis => 'web');
     $c->add_tt_include_path($self->include_path);
     $c->add_formfu_path($self->formfu_path);
-    $c->add_translation($self->translation_path);
+    $c->add_translation_path($self->translation_path);
     $c->add_navigation($self->navigation) if $self->has_navigation;
     $registry->set(api => (split(/::/, blessed($_)))[-1], $_)
         for $self->extra_api;

@@ -161,7 +161,7 @@ sub add_navigation {
     push @$navigation, $_ for @_;
 }
 
-sub add_translation {
+sub add_translation_path {
     my ($self, @paths) = @_;
 
     # we're using gettext by default, just look for a localize by that
