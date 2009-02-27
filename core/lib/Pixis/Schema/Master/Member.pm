@@ -59,6 +59,24 @@ __PACKAGE__->add_columns(
         is_nullable => 1,
         size => 256
     },
+    country => {
+        data_type => "TEXT",
+    },
+    state   => {
+        data_type => "TEXT",
+    },
+    postal_code => { # won't bind to japanese addresses, for now
+        data_type => "TEXT",
+    },
+    address1 => { # when requiring addresses, this is required
+        data_type => "TEXT"
+    },
+    address2 => { # your town, whatever
+        data_type => "TEXT",
+    },
+    address3 => { # building name, room number, etc.
+        data_type => "TEXT"
+    },
     modified_on => {
         data_type => "TIMESTAMP",
         is_nullable => 0,
@@ -88,5 +106,4 @@ sub sqlt_deploy_hook {
     $c->fields([ 'email(255)' ]);
 }
 
-1;
 1;
