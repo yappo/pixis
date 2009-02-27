@@ -1,0 +1,46 @@
+---
+model_config:
+    resultset: ConferenceSession
+javascript: |-
+    $(function() { 
+        $("#start_on_date_picker").datepicker();
+    });
+
+elements:
+    - type: Text
+      label_loc: Title
+      name: title
+      id: session_title
+      default: タイトル未定
+      attrs:
+          onfocus: this.timer = setInterval( function() { $("#timeslot").text($("#session_title").attr('value')) }, 1000)
+          onblur: clearInterval(this.timer)
+      constraints:
+        - Required
+      filters:
+        - HTMLScrubber
+    - type: Text
+      label_loc: Start on
+      name: start_on
+      id: session_start_on
+      attrs:
+        readonly: readonly
+      inflator:
+        - type: DateTime
+          parser:
+            strptime: '%Y/%m/%d %H:%M'
+    - type: Text
+      label_loc: Duration
+      name: duration
+      id: session_duration
+      attrs:
+        readonly: readonly
+    - type: Textarea
+      label_loc: Description
+      name: description
+      id: session_description
+      filters:
+        - HTMLScrubber
+    - type: Submit
+      name: submit
+      

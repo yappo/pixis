@@ -1,0 +1,65 @@
+---
+action: 
+method: POST
+auto_fieldset: 1
+indicator: submit
+model_config:
+    resultset: Conference
+javascript: |-
+    $(function() { 
+        $("#start_on_picker").datepicker();
+    });
+    $(function() { 
+        $("#end_on_picker").datepicker();
+    });
+
+elements:
+    - type: Text
+      name: id
+      label_loc: Conference ID (Will be used in URL)
+      constraints:
+        - type: Length
+          max: 32
+        - type: Regex
+          regex: '^[a-zA-Z0-9._-]+$'
+    - type: Text
+      name: title
+      label_loc: Conference Title
+      constraints:
+        - Required
+      filters:
+        - HTMLEscape
+    - type: Textarea
+      rows: 5
+      cols: 40
+      name: description
+      label_loc: Conference Description
+      constraints:
+        - Required
+      filters:
+        - HTMLEscape
+    - type: Hidden
+      name: category1
+      value: '0002'
+    - type: Text
+      name: start_on
+      id: start_on_picker
+      label_loc: 開催日
+      inflators:
+          - type: DateTime
+            parser:
+                strptime: '%m/%d/%Y'
+    - type: Text
+      name: end_on
+      id: end_on_picker
+      label_loc: 終了日
+      filters:
+        - type: CopyValue
+          field: start_on
+      inflators:
+          - type: DateTime
+            parser:
+                strptime: '%m/%d/%Y'
+    - type: Submit
+      name: submit
+      value_loc: Create

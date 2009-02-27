@@ -1,0 +1,6 @@
+[% WRAPPER wrapper.tt %]
+
+[% PROCESS conference/track_timeline.tt %]
+<a href="[% c.uri_for( '/conference', conference.id, 'track', track.id, 'session', 'add' ) %]">[% loc("Add session") %]</a>
+
+[% END # WRAPPER %]

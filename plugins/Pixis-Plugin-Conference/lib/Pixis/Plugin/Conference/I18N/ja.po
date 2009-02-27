@@ -1,0 +1,25 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8    \n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Conference"
+msgstr "カンファレンス"
+
+msgid "Organize a conference"
+msgstr "カンファレンスを開催する"
+
+msgid "Conference ID (Will be used in URL)"
+msgstr "カンファレンスID (URLに使用されます）"
+
+msgid "Conference Title"
+msgstr "カンファレンス名"
+
+msgid "Conference Description"
+msgstr "カンファレンス詳細"

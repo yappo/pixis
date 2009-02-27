@@ -1,0 +1,16 @@
+[% WRAPPER wrapper.tt %]
+
+
+<ul>
+    <li><a href="/conference/create">[% loc('Organize a conference') %]</a></li>
+</ul>
+
+<h2>これから開催されるカンファレンス</h2>
+<ul>
+[% FOREACH conference IN conferences %]
+    <li><a href="[% c.uri_for("/conference", conference.id) %]">[% conference.title | html %]</a></li>
+[% END %]
+</ul>
+    
+
+[% END # WRAPPER %]

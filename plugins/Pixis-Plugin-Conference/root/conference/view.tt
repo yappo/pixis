@@ -1,0 +1,18 @@
+[% WRAPPER wrapper.tt %]
+
+<h2>[% conference.title %]</h2>
+
+<ul id="menu">
+    <li><a href="[% c.uri_for( conference.id, 'edit') %]">[% loc("Edit") %]</a></li>
+</ul>
+
+<div id="description">[% conference.description %]</div>
+
+<div>
+    <h3>Tracks</h3>
+    <div><a href="[% c.uri_for( "/conference", conference.id, "track", "add" ) %]">[% loc("Add track") %]</a></div>
+    [% FOREACH track IN tracks %]
+        <a href="[% c.uri_for('/conference', conference.id, 'track', track.id) %]">[% track.title %]</a>
+    [% END %]
+</div>
+[% END # WRAPPER %]
