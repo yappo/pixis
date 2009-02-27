@@ -19,4 +19,35 @@ use base qw(Catalyst::Controller::HTML::FormFu);
 #   4B - verify payment by hand (how unfortunate).
 #        We need an admin view for this
 
+sub index :Index :Args(0) {}
+
+sub basic :Local :Args(0) :FormConfig {
+    my ($self, $c) = @_;
+
+    my $form = $c->stash->{form};
+
+    my $user = $c->registry(api => 'Member')->find($c->user->id);
+    $form->model->default_values( $user );
+    if ($form->submitted_and_valid) {
+        my $hash = Digest::SHA1->new()->add(time(), {}, $$, rand())->hexdigest();
+        my $params = $form->params;
+        $c->session->{jpa_signup}->{$hash} = $params;
+        $c->res->redirect($c->uri_for('confirm', $hash));
+    }
+}
+
+sub confirm_basic :Local :Args(1) {
+    my ($self, $c, $session) = @_;
+
+    $c->stash->{subsession} = $session;
+    $c->stash->{confirm} = $c->session->{jpa_signup}->{$session};
+}
+
+sub commit_basic :Local :Args(1) {
+
+}
+
+sub payment :Local :Args(0) {
+}
+
 1;

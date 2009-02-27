@@ -1,0 +1,18 @@
+[% WRAPPER wrapper.tt %]
+
+<h2>[% loc("Singup for Japan Perl Association") %]</h2>
+
+[% # ここはローカライズするにしても後だな %]
+
+<p> Japan Perl Associationでは随時会員を募集しています。</p>
+
+<ul>
+    <li> ここに書かなくちゃいけないこと </li>
+    <li> このフォームは個人用です </li>
+    <li> 法人の方はこちらのPDFをダウンロードし、書面にてお申し込みください。 </li>
+    <li> 個人の方は、Paypalを利用することにより、500円の割引を受けることができる（予定) </li>
+</ul>
+
+<p><a href="/jpa/signup/basic">登録はこちらから</a></p>
+
+[% END # WRAPPER %]

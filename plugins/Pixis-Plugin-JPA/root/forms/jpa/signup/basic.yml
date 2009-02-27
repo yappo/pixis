@@ -1,0 +1,38 @@
+---
+auto_fieldset: 1
+
+elements:
+    - type: Text
+      name: lastname
+      label_loc: Last Name
+      constraints:
+        - Required
+    - type: Text
+      name: firstname
+      label_loc: First Name
+      constraints:
+        - Required
+    - type: Text # Oh I wish
+      name: state
+      label_loc: State
+      constraints:
+        - Required
+    - type: Text
+      name: postal_code
+      label_loc: Postal Code
+      constraints:
+        - Required
+    - type: Text
+      name: address1
+      label_loc: Address1
+      constraints:
+        - Required
+    - type: Text
+      name: address2
+      label_loc: Address2
+    - type: Text 
+      name: address3
+      label_loc: Address3
+    - type: Submit
+      name: submit
+      value_loc: Submit

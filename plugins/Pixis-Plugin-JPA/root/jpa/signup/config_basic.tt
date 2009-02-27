@@ -1,0 +1,31 @@
+[% WRAPPER wrapper.tt %]
+
+<div>
+    <div style="float: left">[% loc("Last Name") %]</div>
+    <div style="float: right">[% confirm.lastname %]</div>
+</div>
+<div>
+    <div style="float: left">[% loc("First Name") %]</div>
+    <div style="float: right">[% confirm.firstname %]</div>
+</div>
+<div>
+    <div style="float: left">[% loc("State") %]</div>
+    <div style="float: right">[% confirm.state %]</div>
+</div>
+<div>
+    <div style="float: left">[% loc("Address1") %]</div>
+    <div style="float: right">[% confirm.address1 %]</div>
+</div>
+<div>
+    <div style="float: left">[% loc("Address2") %]</div>
+    <div style="float: right">[% confirm.address2 %]</div>
+</div>
+<div>
+    <div style="float: left">[% loc("Address3") %]</div>
+    <div style="float: right">[% confirm.address3 %]</div>
+</div>
+
+
+<a href="[% c.uri_for("done", subsession) %]">上記で登録する</a>
+
+[% END # WRAPPER%]
