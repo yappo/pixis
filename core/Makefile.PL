@@ -44,3 +44,33 @@ catalyst;
 install_script glob('script/*.pl');
 auto_install;
 WriteAll;
+
+print <<EOM;
+
+To setup your database:
+
+    # Just the core
+    ./script/pixis_setupdb.pl \
+        --dsn="dbi:mysql:dbname=pixis" \
+        --user="...." \
+        --password="..."
+
+    # to include plugins
+    ./script/pixis_cmd.pl ./script/pixis_setupdb.pl \
+        --dsn="dbi:mysql:dbname=pixis" \
+        --user="...." \
+        --password="..."
+
+Add --drop, if you want to drop the old schema
+
+    ./script/pixis_setupdb.pl ... --drop
+
+To start your dev server
+
+    # Just the core
+    ./script/pixis_web_server.pl
+
+    # to include plugins
+    ./script/pixis_cmd.pl ./script/pixis_web_server.pl
+
+EOM
