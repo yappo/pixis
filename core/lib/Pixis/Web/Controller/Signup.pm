@@ -1,4 +1,3 @@
-# $Id: /mirror/pixis/Pixis-Core/trunk/lib/Pixis/Web/Controller/Signup.pm 99505 2009-02-03T03:28:19.287739Z daisuke  $
 
 package Pixis::Web::Controller::Signup;
 use strict;

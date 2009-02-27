@@ -50,7 +50,9 @@ sub unfollow :Chained('load_member') :Args(0) {
     $c->registry(api => 'Relationship')->unfollow($c->user, $c->stash->{member});
 }
 
-sub setting :Local :Args(0) :FormConfig {
+sub settings :Local :Args(0) {}
+
+sub settings_basic :Path('settings/basic') :Args(0) :FormConfig {
     my ($self, $c) = @_;
 
     my $form = $c->stash->{form};
