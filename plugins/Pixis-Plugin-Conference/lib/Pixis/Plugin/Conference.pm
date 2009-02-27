@@ -7,67 +7,23 @@ use DateTime;
 
 with 'Pixis::Plugin';
 
+has '+navigation' => (
+   default => sub {
+       { 
+           text => "Conference",
+           url => "/conference"
+       }
+    }
+);
 
-has 'include_path' => (
-    metaclass => 'Collection::List',
-    is => 'rw', 
-    isa => 'ArrayRef',
+has '+extra_api' => (
     default => sub {
-        my $class = __PACKAGE__;
-        $class =~ s{::}{/}g;
-        $class =~ s/$/\.pm/;
-        my $path  = Path::Class::File->new($INC{$class});
-        [ $path->parent->parent->parent->parent->subdir('root')->absolute ];
-    },
-    auto_deref => 1,
-    provides => {
-        count => 'include_path_count'
+        [ qw(Conference ConferenceTrack ConferenceSession) ]
     }
 );
 
 __PACKAGE__->meta->make_immutable;
 
 no Moose;
-
-sub BUILDARGS {
-    my $class = shift;
-    my $args  = @_ > 1 ? { @_ } : $_[0];
-
-    if ($args->{include_path} && ref $args->{include_path} ne 'ARRAY') {
-        $args->{include_path} = [ $args->{include_path} ];
-    }
-    return $args;
-}
-
-sub register {
-    my $self = shift;
-
-    my $c = Pixis::Registry->get(pixis => 'web');
-    $c->add_tt_include_path($self->include_path);
-    $c->add_formfu_path(map { Path::Class::Dir->new($_, 'forms') } $self->include_path);
-
-    $c->add_navigation(
-        { 
-            text => "Conference",
-            url => "/conference"
-        }
-    );
-
-    my $path = do {
-        my $class = __PACKAGE__;
-        $class =~ s{::}{/}g;
-        my $file = "$class.pm";
-        my $path = $INC{ $file };
-        $path =~ s{\.pm$}{/I18N/*.po};
-        $path;
-    };
-    $c->add_translation( $path );
-
-    foreach my $name qw(Conference ConferenceTrack ConferenceSession) {
-        my $class = "Pixis::API::$name";
-        Class::MOP::load_class($class);
-        Pixis::Registry->set(api => $name, $class->new());
-    }
-}
 
 1;
