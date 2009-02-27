@@ -61,21 +61,27 @@ __PACKAGE__->add_columns(
     },
     country => {
         data_type => "TEXT",
+        is_nullable => 1,
     },
     state   => {
         data_type => "TEXT",
+        is_nullable => 1,
     },
     postal_code => { # won't bind to japanese addresses, for now
         data_type => "TEXT",
+        is_nullable => 1,
     },
     address1 => { # when requiring addresses, this is required
-        data_type => "TEXT"
+        data_type => "TEXT",
+        is_nullable => 1,
     },
     address2 => { # your town, whatever
         data_type => "TEXT",
+        is_nullable => 1,
     },
     address3 => { # building name, room number, etc.
-        data_type => "TEXT"
+        data_type => "TEXT",
+        is_nullable => 1,
     },
     modified_on => {
         data_type => "TIMESTAMP",
