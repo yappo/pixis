@@ -1,0 +1,20 @@
+---
+auto_fieldset: 1
+method: POST
+indicator: submit
+
+elements:
+    - type: Text
+      name: email
+      label_loc: Email
+      constraints:
+        - Required
+    - type: Password
+      name: password
+      label_loc: Password
+      constraints:
+        - Required
+    - type: Submit
+      value_loc: Submit
+      name: submit
+

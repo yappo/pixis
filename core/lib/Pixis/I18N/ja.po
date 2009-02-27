@@ -1,0 +1,68 @@
+
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8    \n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Pixis - a Perl-Based Social Networking Systems Platform"
+msgstr "Pixis - Perlで書かれたSNSプラットフォーム"
+
+msgid "Home"
+msgstr "ホーム"
+
+msgid "Member Home" 
+msgstr "ホーム"
+
+msgid "Member Settings"
+msgstr "設定"
+
+msgid "Welcome x"
+msgstr "ようこそ %1さん"
+
+# root/signup/start.tt
+msgid "Email"
+msgstr "メールアドレス"
+
+msgid "Password"
+msgstr "パスワード"
+
+msgid "Password (re-type)"
+msgstr "パスワード（確認用）"
+
+msgid "Nick Name"
+msgstr "ニックネーム"
+
+msgid "First Name"
+msgstr "名"
+
+msgid "Last Name"
+msgstr "姓"
+
+msgid "Submit"
+msgstr "送信"
+
+# root/auth/login.tt
+msgid "No Account? Sign up now!"
+msgstr "新規登録はこちら"
+
+msgid "Create"
+msgstr "作成"
+
+msgid "Edit"
+msgstr "編集"
+
+msgid "Login Now!"
+msgstr "ログイン"
+
+msgid "Login"
+msgstr "ログイン"
+
+msgid "Logout"
+msgstr "ログアウト"

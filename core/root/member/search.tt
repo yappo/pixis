@@ -1,0 +1,12 @@
+[% WRAPPER wrapper.tt %]
+[% form %]
+
+[% IF (members) %]
+<div>[% loc("Found [_1] hits", members.size) %]</div>
+[% FOREACH m IN members %]
+<div>
+    <div><a href="[% c.uri_for(m.id) %]">[% m.nickname %]</a></div>
+</div>
+[% END %]
+[% END # if members %]
+[% END # wrapper %]

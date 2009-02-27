@@ -1,0 +1,8 @@
+[%-
+
+MACRO loc(text, args) BLOCK;
+    c.localize(text, args);
+END;
+
+ -%]
+[%- SET lang = c.session.lang || 'ja' -%]

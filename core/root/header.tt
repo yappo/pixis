@@ -1,0 +1,3 @@
+<!-- START header -->
+[% PROCESS navigation.tt %]
+<!-- END header -->

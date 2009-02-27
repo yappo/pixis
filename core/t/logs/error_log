@@ -1,0 +1,75 @@
+[Wed Feb 04 14:45:57 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:45:57 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:45:57 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:45:59 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4517)
+[Wed Feb 04 14:45:59 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:46:09 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:46:09 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:46:09 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:46:11 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4605)
+[Wed Feb 04 14:46:11 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:46:20 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:46:20 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:46:20 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:46:21 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4629)
+[Wed Feb 04 14:46:21 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:46:47 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:46:47 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:46:47 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:46:49 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4672)
+[Wed Feb 04 14:46:49 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:47:05 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:47:05 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:47:05 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:47:08 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4696)
+[Wed Feb 04 14:47:08 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:51:44 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:51:44 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:51:44 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:51:47 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4742)
+[Wed Feb 04 14:51:47 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:54:15 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:54:15 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:54:15 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:54:17 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4765)
+[Wed Feb 04 14:54:17 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:55:12 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:55:12 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:55:12 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:55:14 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4805)
+[Wed Feb 04 14:55:14 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:57:03 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:57:03 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:57:03 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:57:04 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4825)
+[Wed Feb 04 14:57:04 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:57:25 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:57:25 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:57:25 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:57:26 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4849)
+[Wed Feb 04 14:57:26 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:59:07 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:59:07 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:59:07 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:59:09 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4882)
+[Wed Feb 04 14:59:09 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 14:59:20 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 14:59:20 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 14:59:20 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 14:59:21 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4905)
+[Wed Feb 04 14:59:21 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 15:00:43 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 15:00:43 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 15:00:43 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 15:00:45 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4931)
+[Wed Feb 04 15:00:45 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 15:01:11 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 15:01:11 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 15:01:11 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 15:01:13 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4955)
+[Wed Feb 04 15:01:13 2009] [notice] caught SIGTERM, shutting down
+[Wed Feb 04 15:01:49 2009] [notice] Apache/2.2.6 (Unix) mod_perl/2.0.3 Perl/v5.8.8 configured -- resuming normal operations
+[Wed Feb 04 15:01:49 2009] [info] Server built: Nov 29 2007 18:03:41
+[Wed Feb 04 15:01:49 2009] [debug] prefork.c(991): AcceptMutex: flock (default: flock)
+[Wed Feb 04 15:01:50 2009] [info] removed PID file /Users/daisuke/svk/pixis/Pixis-Core/trunk/t/logs/httpd.pid (pid=4979)
+[Wed Feb 04 15:01:50 2009] [notice] caught SIGTERM, shutting down

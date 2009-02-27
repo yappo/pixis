@@ -1,0 +1,5 @@
+[% WRAPPER wrapper.tt %]
+[% form %]
+
+<a href="[% c.uri_for('/signup') %]">[% loc("No Account? Sign up now!") %]</a>
+[% END # WRAPPER %]

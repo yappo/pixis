@@ -1,0 +1,17 @@
+---
+auto_fieldset: 1
+method: POST
+
+elements:
+    - type: Text
+      name: openid_identifier
+      constraints:
+        - Required
+        - type: Regex
+          common:
+            - URI
+            - HTTP
+            - { '-scheme': 'https?' }
+    - type: Submit
+      name: submit
+      value_loc: Submit

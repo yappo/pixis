@@ -1,0 +1,13 @@
+---
+auto_fieldset: 1
+indicator: submit
+elements:
+    - type: Text
+      name: nickname
+      label_loc: Nickname
+    - type: Text
+      name: email
+      label_loc: Email
+    - type: Submit
+      name: submit
+      value_loc: Submit

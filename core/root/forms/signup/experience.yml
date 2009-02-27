@@ -1,0 +1,18 @@
+---
+auto_fieldset: 1
+method: POST
+indicator: submit
+
+elements:
+    - type: Text
+      name: coderepos_id
+      label_loc: CodeRepos ID (If Available)
+    - type: Text
+      name: cpan_id
+      label_loc: CPAN ID (If Available)
+    - type: Text
+      name: github_id
+      label_loc: Github ID (If Available)
+    - type: Submit
+      name: submit
+      value: submit

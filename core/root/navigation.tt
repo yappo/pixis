@@ -1,0 +1,11 @@
+[% SET navlist = c.navigation %]
+<ul>
+[% FOREACH nav IN navlist %]
+<li><a href="[% nav.url %]">[% loc(nav.text || 'Link') %]</a></li>
+[% END %]
+[% IF c.user_exists %]
+<li><a href="/auth/logout">[% loc("Logout") %]</a></li>
+[% ELSE %]
+<li><a href="/auth/login">[% loc("Login") %]</a></li>
+[% END %]
+</ul>
