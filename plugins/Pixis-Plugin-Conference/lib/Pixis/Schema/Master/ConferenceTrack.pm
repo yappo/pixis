@@ -3,7 +3,7 @@
 package Pixis::Schema::Master::ConferenceTrack;
 use strict;
 use warnings;
-use base qw(DBIx::Class);
+use base qw(Pixis::Schema::Base::MySQL);
 
 __PACKAGE__->load_components("PK::Auto", "InflateColumn::DateTime", "UTF8Columns", "Core");
 __PACKAGE__->table("pixis_conference_track");
