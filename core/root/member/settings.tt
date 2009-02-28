@@ -1,0 +1,5 @@
+[% WRAPPER wrapper.tt %]
+
+<div><a href="/member/settings/basic">[% loc("Basic Settings") %]</a></li>
+
+[% END %]
