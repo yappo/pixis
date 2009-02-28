@@ -9,7 +9,7 @@
     <div style="float: right">[% confirm.firstname %]</div>
 </div>
 <div>
-    <div style="float: left">[% loc("State") %]</div>
+    <div style="float: left">[% loc("State / Prefecture") %]</div>
     <div style="float: right">[% confirm.state %]</div>
 </div>
 <div>
