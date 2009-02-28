@@ -44,8 +44,8 @@ sub populate_initial_data {
     $schema->populate( 
         JPAMembership => [
             [ qw(name price created_on) ],
-            [ qw(JPA個人一般会員 5000), $now ],
-            [ qw(JPA個人学生会員 0), $now ],
+            [ qw(JPA一般会員 5000), $now ],
+            [ qw(JPA学生会員 0), $now ],
         ]
     );
 }

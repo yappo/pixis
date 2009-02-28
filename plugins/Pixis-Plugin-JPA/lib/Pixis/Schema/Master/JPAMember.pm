@@ -53,6 +53,15 @@ __PACKAGE__->add_columns(
         data_type => "TEXT",
         is_nullable => 1,
     },
+    membership_type => {
+        data_type => "VARCHAR",
+        is_nullable => 1,
+        size => 255
+    },
+    membership_expires_on => {
+        data_type => "DATETIME",
+        is_nullable => 1,
+    },
     modified_on => {
         data_type => "TIMESTAMP",
         is_nullable => 0,
