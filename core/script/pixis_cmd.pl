@@ -4,7 +4,7 @@ use Path::Class::File;
 
 my @libs;
 
-# XXX This is a HACK!
+# XXX This script is a HACK! - beware!
 my $BASEDIR;
 {
     my $file = Path::Class::File->new(__FILE__)->absolute;
@@ -29,6 +29,12 @@ while (glob("$BASEDIR/plugins/Pixis-Plugin-*/lib")) {
 
 
 $ENV{PERL5LIB} = join(':', @libs, $ENV{PERL5LIB}) ;
+# if this command was _server.pl, then include the plugin directories
+# in the restart directory list
+if ($ARGV[0] =~ /_server.pl$/) {
+    push @ARGV, map { "--restartdirectory=$_" } @libs;
+}
+
 
 exec(@ARGV);
 
