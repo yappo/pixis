@@ -1,0 +1,19 @@
+[% WRAPPER wrapper.tt %]
+
+<p>この時点で</p>
+<ul>
+    <li>仮登録終了（個人情報等、すでに持っているべき）</li>
+    <li>仮の支払いデータもすでに作成</li>
+</ul>
+
+[% # XXX - There are membership types that doesn't require a fee. Need to handle it %]
+
+<h2>支払い</h2>
+
+<ul>
+    <li><a href="[% c.uri_for('/jpa', 'payment', 'paypal') %]">Paypalでのお支払い</a></li>
+    <li><a href="[% c.uri_for('/jpa', 'payment', 'bank') %]">銀行振り込みでのお支払い</a></li>
+</li>
+</ul>
+
+[% END # WRAPPER %]
