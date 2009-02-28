@@ -3,7 +3,7 @@
 package Pixis::Schema::Master::MemberAuth;
 use strict;
 use warnings;
-use base 'DBIx::Class';
+use base 'Pixis::Schema::Base::MySQL';
 use DateTime;
 use Digest::SHA1 qw(sha1_hex);
 
@@ -55,6 +55,7 @@ sub sqlt_deploy_hook {
 
     my ($c) = grep { $_->name eq 'unique_auth_per_user' } $sqlt_table->get_constraints();
     $c->fields([ 'email(255)', 'auth_type(8)' ]);
+    $self->next::method($sqlt_table);
 }
 
 sub populate_initial_data {

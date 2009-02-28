@@ -3,10 +3,9 @@
 package Pixis::Schema::Master::MemberRelationship;
 use strict;
 use warnings;
-use base 'DBIx::Class';
+use base qw(Pixis::Schema::Base::MySQL);
 
-
-__PACKAGE__->load_components("PK::Auto", "Core");
+__PACKAGE__->load_components("PK::Auto", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("pixis_member_relationship");
 __PACKAGE__->add_columns(
     "id" => {

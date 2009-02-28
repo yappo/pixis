@@ -3,7 +3,7 @@
 package Pixis::Schema::Master::Member;
 use strict;
 use warnings;
-use base 'DBIx::Class';
+use base qw(Pixis::Schema::Base::MySQL);
 use DateTime;
 
 __PACKAGE__->load_components("PK::Auto", "VirtualColumns", "InflateColumn::DateTime", "Core");
@@ -110,6 +110,7 @@ sub sqlt_deploy_hook {
 
     my ($c) = grep { $_->name eq 'unique_email' } $sqlt_table->get_constraints();
     $c->fields([ 'email(255)' ]);
+    $self->next::method($sqlt_table);
 }
 
 sub populate_initial_data {
