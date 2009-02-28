@@ -42,19 +42,17 @@ sub run {
         add_drop_table => $self->drop
     });
 
-    # I want to refacto this stuff...
-    $schema->populate(
-        Member => [
-            [ qw(email nickname firstname lastname roles created_on) ],
-            [ qw(me@mydomain admin Admin Admin), join('|', qw(admin)), DateTime->now ],
-        ],
-    );
-    $schema->populate(
-        MemberAuth => [
-            [ qw(email auth_type auth_data created_on) ],
-            [ qw(me@mydomain password), sha1_hex('admin'), DateTime->now ],
-        ],
-    );
+    foreach my $source ($schema->sources) {
+        my $class = $schema->class($source);
+        if (my $code = $class->can('populate_initial_data')) {
+            eval {
+                $code->($class, $schema);
+            };
+            if ($@) {
+                print STDERR "Failed to load data for $source\n   $@\n";
+            }
+        }
+    }
 }
 
 1;

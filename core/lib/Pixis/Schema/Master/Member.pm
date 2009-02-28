@@ -4,7 +4,7 @@ package Pixis::Schema::Master::Member;
 use strict;
 use warnings;
 use base 'DBIx::Class';
-
+use DateTime;
 
 __PACKAGE__->load_components("PK::Auto", "VirtualColumns", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("pixis_member");
@@ -110,6 +110,16 @@ sub sqlt_deploy_hook {
 
     my ($c) = grep { $_->name eq 'unique_email' } $sqlt_table->get_constraints();
     $c->fields([ 'email(255)' ]);
+}
+
+sub populate_initial_data {
+    my ($self, $schema) = @_;
+    $schema->populate(
+        Member => [
+            [ qw(email nickname firstname lastname roles created_on) ],
+            [ qw(me@mydomain admin Admin Admin), join('|', qw(admin)), DateTime->now ],
+        ],
+    );
 }
 
 1;

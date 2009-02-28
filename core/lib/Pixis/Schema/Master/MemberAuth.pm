@@ -4,6 +4,8 @@ package Pixis::Schema::Master::MemberAuth;
 use strict;
 use warnings;
 use base 'DBIx::Class';
+use DateTime;
+use Digest::SHA1 qw(sha1_hex);
 
 __PACKAGE__->load_components("PK::Auto", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("pixis_member_auth");
@@ -53,6 +55,16 @@ sub sqlt_deploy_hook {
 
     my ($c) = grep { $_->name eq 'unique_auth_per_user' } $sqlt_table->get_constraints();
     $c->fields([ 'email(255)', 'auth_type(8)' ]);
+}
+
+sub populate_initial_data {
+    my ($self, $schema) = @_;
+    $schema->populate(
+        MemberAuth => [
+            [ qw(email auth_type auth_data created_on) ],
+            [ qw(me@mydomain password), sha1_hex('admin'), DateTime->now ],
+        ],
+    );
 }
 
 1;
