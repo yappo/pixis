@@ -20,6 +20,12 @@ elements:
       label_loc: First Name
       constraints:
         - Required
+    - type: Text
+      name: email
+      label_loc: Email
+      constraints:
+        - Required
+        - Email
     - type: Select # this option should be refactored or something
       name: state
       label_loc: State / Prefecture

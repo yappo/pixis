@@ -24,6 +24,8 @@ sub index :Index :Args(0) {}
 sub basic :Local :Args(0) :FormConfig {
     my ($self, $c) = @_;
 
+    $c->forward('/auth/assert_logged_in') or return;
+
     my $form = $c->stash->{form};
 
     my $user = $c->registry(api => 'Member')->find($c->user->id);
@@ -31,23 +33,41 @@ sub basic :Local :Args(0) :FormConfig {
     if ($form->submitted_and_valid) {
         my $hash = Digest::SHA1->new()->add(time(), {}, $$, rand())->hexdigest();
         my $params = $form->params;
+        # remove extraneous stuff
+        delete $params->{submit};
+
         $c->session->{jpa_signup}->{$hash} = $params;
-        $c->res->redirect($c->uri_for('confirm', $hash));
+        $c->res->redirect($c->uri_for('confirm_basic', $hash));
     }
 }
 
 sub confirm_basic :Local :Args(1) {
     my ($self, $c, $session) = @_;
 
+    $c->forward('/auth/assert_logged_in') or return;
+    if( !($c->stash->{confirm} = $c->session->{jpa_signup}->{$session})) {
+        $c->res->redirect($c->uri_for('/jpa', 'signup'));
+        return;
+    }
     $c->stash->{subsession} = $session;
-    $c->stash->{confirm} = $c->session->{jpa_signup}->{$session};
 }
 
 sub commit_basic :Local :Args(1) {
+    my ($self, $c, $session) = @_;
+    $c->forward('/auth/assert_logged_in') or return;
 
+    my $params;
+    if( !($params = $c->session->{jpa_signup}->{$session})) {
+        $c->res->redirect($c->uri_for('/jpa', 'signup'));
+        return;
+    }
+    # commit this basic information.
+    $c->registry(api => 'JPAMember')->create($params);
 }
 
 sub payment :Local :Args(0) {
+    my ($self, $c) = @_;
+    $c->forward('/auth/assert_logged_in') or return;
 }
 
 1;

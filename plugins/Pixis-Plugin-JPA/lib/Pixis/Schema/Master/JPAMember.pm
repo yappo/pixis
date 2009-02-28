@@ -14,6 +14,11 @@ __PACKAGE__->add_columns(
         is_nullable => 0,
         size => 32,
     },
+    membership => {
+        data_type => "VARCHAR",
+        is_nullable => 0,
+        size => 32,
+    },
     email => {
         data_type => "VARCHAR",
         is_nullable => 0,

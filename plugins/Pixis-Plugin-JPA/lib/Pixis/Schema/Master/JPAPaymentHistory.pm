@@ -13,7 +13,7 @@ __PACKAGE__->add_columns(
         is_nullable => 0,
         size => 32,
     },
-    user_id => {
+    member_id => {
         data_type => "VARCHAR",
         is_nullable => 0,
         size => 255,
@@ -28,14 +28,14 @@ __PACKAGE__->add_columns(
         is_nullable => 0,
         size => 8
     },
-    payment_method => {
+    payment_method => { # TBD(null), Paypal, Bank Transfer
         data_type => "VARCHAR",
-        is_nullable => 0,
+        is_nullable => 1,
         size => 256
     },
     payment_received_on => {
         data_type => "DATETIME",
-        is_nullable => 0,
+        is_nullable => 1,
     },
     modified_on => {
         data_type => "TIMESTAMP",

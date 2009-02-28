@@ -1,31 +1,25 @@
 [% WRAPPER wrapper.tt %]
 
-<div>
-    <div style="float: left">[% loc("Last Name") %]</div>
-    <div style="float: right">[% confirm.lastname %]</div>
+[% SET fields = [
+    { field => "lastname", label => "Last Name" },
+    { field => "firstname", label => "First Name" },
+    { field => "email", label => "Email" }
+    { field => "state", label => "State / Prefecture" },
+    { field => "postal_code", label => "Postal Code" },
+    { field => "address1", label => "Address1" },
+    { field => "address2", label => "Address2" },
+    { field => "address3", label => "Address3" },
+] %]
+[% FOREACH field IN fields %]
+<div style="width: 400px; clear: both">
+    <div style="float: left">[% loc(field.label) %]</div>
+    <div style="float: right">[% confirm.item(field.field) %]</div>
 </div>
-<div>
-    <div style="float: left">[% loc("First Name") %]</div>
-    <div style="float: right">[% confirm.firstname %]</div>
-</div>
-<div>
-    <div style="float: left">[% loc("State / Prefecture") %]</div>
-    <div style="float: right">[% confirm.state %]</div>
-</div>
-<div>
-    <div style="float: left">[% loc("Address1") %]</div>
-    <div style="float: right">[% confirm.address1 %]</div>
-</div>
-<div>
-    <div style="float: left">[% loc("Address2") %]</div>
-    <div style="float: right">[% confirm.address2 %]</div>
-</div>
-<div>
-    <div style="float: left">[% loc("Address3") %]</div>
-    <div style="float: right">[% confirm.address3 %]</div>
-</div>
+[% END %]
 
-
-<a href="[% c.uri_for("done", subsession) %]">上記で登録する</a>
+<br />
+<div>
+<a href="[% c.uri_for("commit_basic", subsession) %]">上記で登録する</a>
+</div>
 
 [% END # WRAPPER%]
