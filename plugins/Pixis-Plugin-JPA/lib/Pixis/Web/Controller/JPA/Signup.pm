@@ -31,7 +31,7 @@ sub basic :Local :Args(0) :FormConfig {
     my $user = $c->registry(api => 'Member')->find($c->user->id);
     $form->model->default_values( $user );
     if ($form->submitted_and_valid) {
-        my $hash = Digest::SHA1->new()->add(time(), {}, $$, rand())->hexdigest();
+        my $hash = $c->generate_session_id;
         my $params = $form->params;
         # remove extraneous stuff
         delete $params->{submit};

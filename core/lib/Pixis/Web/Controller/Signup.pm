@@ -3,7 +3,6 @@ package Pixis::Web::Controller::Signup;
 use strict;
 use warnings;
 use parent qw(Catalyst::Controller::HTML::FormFu);
-use Digest::SHA1;
 
 # Ask things like name, and email address
 sub start :Index :Path :Args(0) :FormConfig {
@@ -11,7 +10,7 @@ sub start :Index :Path :Args(0) :FormConfig {
 
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
-        my $hash = Digest::SHA1->new()->add(time(), {}, $$, rand())->hexdigest() ;
+        my $hash = $c->generate_session_id;
         my $params = $form->params;
         delete $params->{password_check}; # no need to include it here
         $c->session->{ signup }->{ $hash } = $params;
