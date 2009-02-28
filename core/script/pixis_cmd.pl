@@ -32,7 +32,7 @@ $ENV{PERL5LIB} = join(':', @libs, $ENV{PERL5LIB}) ;
 # if this command was _server.pl, then include the plugin directories
 # in the restart directory list
 if ($ARGV[0] =~ /_server.pl$/) {
-    push @ARGV, map { "--restartdirectory=$_" } @libs;
+    push @ARGV, map { s/\blib$//; "--restartdirectory=$_" } @libs;
 }
 
 
