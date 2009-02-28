@@ -36,7 +36,18 @@ no Moose;
 
 sub run {
     my $self = shift;
-    my $schema = Pixis::Schema::Master->connection($self->dsn, $self->username, $self->password, { RaiseError => 1, AutoCommit => 1 });
+    my $options = { RaiseError => 1, AutoCommit => 1 };
+    if ($self->dsn =~ /^dbi:mysql:/i) {
+        $options->{on_connect_do} = [
+            'SET sql_mode = "STRICT_TRANS_TABLES"'
+        ];
+    }
+    my $schema = Pixis::Schema::Master->connection(
+        $self->dsn,
+        $self->username,
+        $self->password,
+        $options,
+    );
     $schema->deploy({
         quote_field_names => 0,
         add_drop_table => $self->drop
