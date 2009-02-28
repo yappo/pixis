@@ -1,0 +1,7 @@
+[% WRAPPER wrapper.tt %]
+
+<ul>
+    <li><a href="[% c.uri_for('/jpa/signup') %]">新規会員登録</a></li>
+</ul>
+
+[% END # WRAPPER %]
