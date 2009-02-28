@@ -45,6 +45,21 @@ msgstr "名"
 msgid "Last Name"
 msgstr "姓"
 
+msgid "State / Prefecture"
+msgstr "都道府県"
+
+msgid "Postal Code"
+msgstr "郵便番号"
+
+msgid "Address1"
+msgstr "住所1"
+
+msgid "Address2"
+msgstr "住所2"
+
+msgid "Address3"
+msgstr "住所3"
+
 msgid "Submit"
 msgstr "送信"
 
