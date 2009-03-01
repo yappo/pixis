@@ -62,6 +62,7 @@ sub commit_basic :Local :Args(1) {
         return;
     }
     # commit this basic information.
+    $params->{member_id} = $c->user->id;
     $c->registry(api => 'JPAMember')->create($params);
 }
 
