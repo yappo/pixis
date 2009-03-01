@@ -56,6 +56,25 @@ sub load_multi {
     return wantarray ? @ret : \@ret;
 }
 
+sub search {
+    my ($self, $where, $attrs) = @_;
+
+    $attrs ||= {};
+    my $schema = Pixis::Registry->get('schema' => 'master');
+
+    my $rs = $schema->resultset($self->resultset_moniker);
+
+    my @pk = $rs->result_source->primary_columns;
+    if (@pk != 1) {
+        confess "vanilla API::search only supports tables with exactly 1 primary key (" . $self->resultset_moniker . " contains @pk)";
+    }
+
+    my ($pk) = @pk;
+    $attrs->{select} ||= \@pk;
+    my @keys = map { $_->$pk } $rs->search($where, $attrs);
+    return $self->load_multi(@keys);
+}
+
 sub create_from_form {
     my ($self, $form) = @_;
 
