@@ -3,7 +3,7 @@
 package Pixis::Schema::Master::JPAMembership;
 use strict;
 use warnings;
-use base qw(DBIx::Class);
+use base qw(Pixis::Schema::Base::MySQL);
 use DateTime;
 
 __PACKAGE__->load_components("PK::Auto", "InflateColumn::DateTime", "Core");

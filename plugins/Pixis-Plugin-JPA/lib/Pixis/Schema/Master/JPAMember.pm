@@ -2,8 +2,7 @@
 package Pixis::Schema::Master::JPAMember;
 use strict;
 use warnings;
-use base 'DBIx::Class';
-
+use base qw(Pixis::Schema::Base::MySQL);
 
 __PACKAGE__->load_components("PK::Auto", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("pixis_jpa_member");
@@ -11,6 +10,11 @@ __PACKAGE__->add_columns(
     "id" => {
         data_type => "INTEGER",
         is_auto_increment => 1,
+        is_nullable => 0,
+        size => 32,
+    },
+    member_id  => {
+        data_type => "INTEGER",
         is_nullable => 0,
         size => 32,
     },

@@ -2,7 +2,7 @@
 package Pixis::Schema::Master::JPAPaymentHistory;
 use strict;
 use warnings;
-use base 'DBIx::Class';
+use base qw(Pixis::Schema::Base::MySQL);
 
 __PACKAGE__->load_components("PK::Auto", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("pixis_jpa_payment_history");
