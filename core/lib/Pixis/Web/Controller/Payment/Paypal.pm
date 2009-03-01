@@ -15,6 +15,7 @@ sub purchase :Private {
         });
     };
     if ($@) {
+        $c->log->debug("Communication Paypal failed: $@") if $c->log->is_debug;
         $c->forward('/error', "Communication with PayPal failed");
         return;
     }
@@ -34,6 +35,7 @@ sub complete :Private {
         });
     };
     if ($@) {
+        $c->log->debug("Communication Paypal failed: $@") if $c->log->is_debug;
         $c->forward('/error', "Communication with PayPal failed");
         return;
     }
