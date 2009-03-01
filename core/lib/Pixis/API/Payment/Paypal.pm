@@ -119,6 +119,10 @@ sub initiate_purchase {
     my $uri = URI->new($self->api_url);
     $uri->query_form(@auth_parameters, @query);
     my $response = $self->user_agent->request(HTTP::Request->new(GET => $uri));
+    if (! $response->is_success) {
+        confess "HTTP Request failed: " . $response->code . ", " . $response->message;
+    }
+
     my $result = do {
         my $uri = URI->new();
         $uri->query($response->content);
@@ -140,14 +144,60 @@ sub initiate_purchase {
     }
 
     my $token = $result->{TOKEN};
-    my $uri = URI->new($self->web_url);
-    $uri->path("/cgi-bin/webscr");
-    $uri->query_form(cmd => '_express-checkout', token => $token);
+    my $next_uri = URI->new($self->web_url);
+    $next_uri->path("/cgi-bin/webscr");
+    $next_uri->query_form(cmd => '_express-checkout', token => $token);
 
     if (DEBUG()) {
-        print STDERR "Returning url $uri\n";
+        print STDERR "Returning url $next_uri\n";
     }
-    return $uri;
+    return $next_uri;
+}
+
+sub complete_purchase {
+    my ($self, $args) = @_;
+
+    my $cancel_url      = $args->{cancel_url};
+    my $return_url      = $args->{return_url};
+    my $price           = $args->{price};
+    my $payer_id        = $args->{payer_id};
+    my $token           = $args->{token};
+    my @auth_parameters = $self->auth_parameters;
+    my @query = (
+        method => 'DoExpressCheckoutPayment',
+        useraction => 'commit',
+        amt => $price,
+        currencycode => 'JPY',
+        paymentaction => 'sale',
+        payerid => $payer_id,
+        token => $token
+    );
+
+    my $uri = URI->new($self->api_url);
+    $uri->query_form(@auth_parameters, @query);
+    my $response = $self->user_agent->request(HTTP::Request->new(GET => $uri));
+    if (! $response->is_success) {
+        confess "HTTP Request failed: " . $response->code . ", " . $response->message;
+    }
+    my $result = do {
+        my $uri = URI->new();
+        $uri->query($response->content);
+        +{ $uri->query_form }
+    };
+
+    if (DEBUG()) {
+        require Data::Dumper;
+        print STDERR 
+            "Set request $uri\n",
+            "   -> got response:\n",
+            ( map { "      $_\n" } split(/\n/, $response->as_string) ), "\n",
+            "   -> decompose to ", Data::Dumper::Dumper($result), "\n",
+        ;
+    }
+
+    if ( $result->{ACK} ne 'Success') {
+        confess "Request to paypal failed " . $response->as_string;
+    }
 }
 
 sub encrypt_and_sign {
