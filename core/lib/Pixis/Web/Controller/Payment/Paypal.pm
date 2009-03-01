@@ -8,7 +8,7 @@ sub purchase :Private {
     my ($self, $c, $args) = @_;
 
     my $url = eval {
-        $c->registry(api => 'Payment::Paypal')->initiate_purchase({
+        $c->registry(api => 'payment' => 'paypal')->initiate_purchase({
             return_url => $args->{return_url},
             cancel_url => $args->{cancel_url},
             price      => $args->{price},
@@ -27,7 +27,7 @@ sub complete :Private {
     my ($self, $c, $args) = @_;
 
     my $url = eval {
-        $c->registry(api => 'Payment::Paypal')->complete_purchase({
+        $c->registry(api => 'payment' => 'paypal')->complete_purchase({
             return_url => $args->{return_url},
             cancel_url => $args->{cancel_url},
             price      => $args->{price},
