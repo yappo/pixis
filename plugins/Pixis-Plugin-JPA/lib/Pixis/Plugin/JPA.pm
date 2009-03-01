@@ -15,7 +15,7 @@ has '+navigation' => (
 );
 
 has '+extra_api' => (
-    default => sub { +[ qw(JPAMember) ] }
+    default => sub { +[ qw(JPAMember JPAPaymentHistory) ] }
 );
 
 no Moose;
