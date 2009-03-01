@@ -21,7 +21,7 @@ sub default :Path {
     $c->response->status(404);
 }
 
-sub error {
+sub error :Private {
     my ($self, $c, $comment) = @_;
     $c->response->body($comment);
     $c->response->status(500);
