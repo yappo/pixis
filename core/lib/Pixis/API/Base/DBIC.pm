@@ -1,8 +1,8 @@
-# $Id: /mirror/pixis/Pixis-Core/trunk/lib/Pixis/API/Base/DBIC.pm 101219 2009-02-25T02:24:11.216454Z daisuke  $
 
 package Pixis::API::Base::DBIC;
 use Moose::Role;
 use MooseX::WithCache;
+use namespace::clean -except => qw(meta);
 
 has 'resultset_moniker' => (
     is => 'rw',
@@ -10,9 +10,7 @@ has 'resultset_moniker' => (
     lazy_build => 1,
 );
 
-with_cache(backend => 'Cache::Memcached');
-
-no Moose::Role;
+with_cache 'cache' => (backend => 'Cache::Memcached');
 
 sub _build_resultset_moniker {
     my $self = shift;
