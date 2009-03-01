@@ -63,7 +63,7 @@ sub populate_initial_data {
     $schema->populate(
         MemberAuth => [
             [ qw(email auth_type auth_data created_on) ],
-            [ qw(me@mydomain password), sha1_hex('admin'), DateTime->now ],
+            [ qw(me@example.jp password), sha1_hex('admin'), DateTime->now ],
         ],
     );
 }
