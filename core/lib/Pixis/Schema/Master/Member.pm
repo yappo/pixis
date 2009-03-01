@@ -118,7 +118,7 @@ sub populate_initial_data {
     $schema->populate(
         Member => [
             [ qw(email nickname firstname lastname roles created_on) ],
-            [ qw(me@mydomain admin Admin Admin), join('|', qw(admin)), DateTime->now ],
+            [ qw(me@example.jp admin Admin Admin), join('|', qw(admin)), DateTime->now ],
         ],
     );
 }
