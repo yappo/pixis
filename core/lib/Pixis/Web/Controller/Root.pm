@@ -19,7 +19,12 @@ sub default :Path {
     my ( $self, $c ) = @_;
     $c->response->body( 'Page not found' );
     $c->response->status(404);
-    
+}
+
+sub error {
+    my ($self, $c, $comment) = @_;
+    $c->response->body($comment);
+    $c->response->status(500);
 }
 
 sub end : ActionClass('RenderView') {}
