@@ -1,10 +1,11 @@
 package Pixis::API::MemberAuth;
 use Moose;
 use Pixis::Registry;
+use namespace::clean -except => qw(meta);
 
 with 'Pixis::API::Base::DBIC';
 
-no Moose;
+__PACKAGE__->meta->make_immutable;
 
 sub load_auth {
     my ($self, $args) = @_;

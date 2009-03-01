@@ -1,15 +1,13 @@
-# $Id: /mirror/pixis/Pixis-Core/trunk/lib/Pixis/API/Member.pm 101264 2009-02-27T05:10:06.352581Z daisuke  $
 
 package Pixis::API::Member;
 use Moose;
 use Pixis::Registry;
 use Digest::SHA1();
+use namespace::clean -except => qw(meta);
 
 with 'Pixis::API::Base::DBIC';
 
 __PACKAGE__->meta->make_immutable;
-
-no Moose;
 
 sub load_from_email {
     my ($self, $email) = @_;

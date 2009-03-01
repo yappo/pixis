@@ -3,6 +3,7 @@
 package Pixis::Registry;
 use MooseX::Singleton;
 use MooseX::AttributeHelpers;
+use namespace::clean -except => qw(meta);
 
 use constant DEBUG => $ENV{PIXIS_DEBUG};
 

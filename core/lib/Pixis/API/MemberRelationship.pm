@@ -2,10 +2,9 @@
 
 package Pixis::API::MemberRelationship;
 use Moose;
+use namespace::clean -except => qw(meta);
 
 __PACKAGE__->meta->make_immutable;
-
-no Moose;
 
 sub follow {
     my ($self, $from, $to) = @_;

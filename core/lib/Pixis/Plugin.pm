@@ -1,10 +1,7 @@
-# $Id: /mirror/pixis/Pixis-Core/trunk/lib/Pixis/Plugin.pm 99505 2009-02-03T03:28:19.287739Z daisuke  $
-
 package Pixis::Plugin;
-use namespace::clean -except => [ qw(meta) ];
 use Moose::Role;
 use Moose::Util::TypeConstraints;
-use MooseX::AttributeHelpers;
+use namespace::clean -except => [ qw(meta) ];
 
 has 'registered' => (
     is => 'rw',
@@ -76,8 +73,6 @@ has 'extra_api' => (
     auto_deref => 1,
     coerce => 1,
 );
-
-no namespace::clean;
 
 sub _build_include_path {
     my $self = shift;
