@@ -26,7 +26,7 @@ sub complete :Private {
         $c->registry(api => 'payment' => 'paypal')->complete_purchase({
             return_url => $args->{return_url},
             cancel_url => $args->{cancel_url},
-            price      => $args->{price},
+            amount     => $args->{price},
             payer_id   => $args->{payer_id},
         });
     };

@@ -96,7 +96,7 @@ sub initiate_purchase {
 
     my $cancel_url      = $args->{cancel_url} or confess "no cancel_url";
     my $return_url      = $args->{return_url} or confess "no return_url";
-    my $price           = $args->{price} or confess "no price";
+    my $amount          = $args->{amount} or confess "no amount";
     my $member_id       = $args->{member_id} or confess "no member_id";
     my $description     = $args->{description} or confess "no description";
     my @auth_parameters = $self->auth_parameters;
@@ -105,7 +105,7 @@ sub initiate_purchase {
         useraction   => 'commit',
         cancelurl    => $cancel_url,
         returnurl    => $return_url,
-        amt          => $price,
+        amt          => $amount,
         currencycode => 'JPY',
         noshipping   => 1,
         solutiontype => 'SOLE'
@@ -161,7 +161,7 @@ sub initiate_purchase {
         {
             txn_id      => $token,
             txn_type    => 'paypal',
-            amount      => $price,
+            amount      => $amount,
             member_id   => $member_id,
             description => $description,
             created_on  => DateTime->now,
@@ -186,14 +186,14 @@ sub complete_purchase {
 
     my $cancel_url      = $args->{cancel_url};
     my $return_url      = $args->{return_url};
-    my $price           = $args->{price};
+    my $amount          = $args->{amount};
     my $payer_id        = $args->{payer_id};
     my $token           = $args->{token};
     my @auth_parameters = $self->auth_parameters;
     my @query = (
         method => 'DoExpressCheckoutPayment',
         useraction => 'commit',
-        amt => $price,
+        amt => $amount,
         currencycode => 'JPY',
         paymentaction => 'sale',
         payerid => $payer_id,
@@ -247,7 +247,8 @@ sub complete_purchase {
     $txn_api->change_status( {
         txn_id => $txn->id,
         status => 'COMPLETED',
-    } );
+        message => join(', ', map { "$_ => $result->{$_}" } qw(CORRELATION_ID TXN_ID) ),
+     } );
 }
 
 1;
