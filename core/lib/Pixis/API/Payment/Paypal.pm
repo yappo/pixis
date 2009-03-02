@@ -320,6 +320,7 @@ sub complete_purchase {
             message => join(', ', map { "$_ => $result->{$_}" } qw(CORRELATION_ID TXN_ID) ),
             txn      => {
                 id => $txn->id,
+                txn_type => 'paypal',
                 status => 'PAYPAL_DONE',
             }
         }
