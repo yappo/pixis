@@ -102,10 +102,10 @@ sub change_txn_status {
 sub __match_txn {
     my ($self, $schema, $args) = @_;
 
-    my $txn = $schema->resultset('PaymentTransaction')->search(
-        {
+    my $txn = $schema->resultset('PaymentTransaction')->search({
             order_id => $args->{order_id},
-            id => $args->{txn_id},
+            id => $args->{txn}->{id},
+            ext_id => $args->{txn}->{ext_id},
         }
     )->single;
 

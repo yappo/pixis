@@ -23,13 +23,7 @@ sub complete :Private {
     my ($self, $c, $args) = @_;
 
     eval {
-        $c->registry(api => 'payment' => 'paypal')->complete_purchase({
-            token      => $args->{token},
-            return_url => $args->{return_url},
-            cancel_url => $args->{cancel_url},
-            amount     => $args->{price},
-            payer_id   => $args->{payer_id},
-        });
+        $c->registry(api => 'payment' => 'paypal')->complete_purchase($args);
     };
     if ($@) {
         $c->log->debug("Communication Paypal failed: $@") if $c->log->is_debug;

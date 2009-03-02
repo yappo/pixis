@@ -101,6 +101,18 @@ sub initiate_purchase {
     my $member_id       = $args->{member_id} or confess "no member_id";
     my $description     = $args->{description} or confess "no description";
     my @auth_parameters = $self->auth_parameters;
+
+    # Before sending stuff to Paypal, create a transaction record
+    my $order_api = Pixis::Registry->get(api => 'order');
+
+    my $txn = $order_api->create_txn( {
+        order_id => $order_id,
+        txn => {
+            txn_type => 'paypal',
+            amount   => $amount,
+        }
+    });
+    $return_url->query_form($return_url->query_form, txn => $txn->id);
     my @query = (
         method       => 'SetExpressCheckout',
         useraction   => 'commit',
@@ -114,18 +126,6 @@ sub initiate_purchase {
 
     my $uri = URI->new($self->api_url);
     $uri->query_form(@auth_parameters, @query);
-
-    # Before sending stuff to Paypal, create a transaction record
-    my $order_api = Pixis::Registry->get(api => 'order');
-
-    my $txn = $order_api->create_txn( {
-        order_id => $order_id,
-        txn => {
-            txn_type => 'paypal',
-            amount   => $amount,
-        }
-    });
-
 
     my $response = $self->user_agent->request(HTTP::Request->new(GET => $uri));
     if (! $response->is_success) {
@@ -210,13 +210,13 @@ sub complete_purchase {
             order_id => $order_id,
             txn => {
                 id => $args->{txn_id},
-                ext_id => $args->{token}
+                ext_id => $args->{ext_id}
             }
         }
     );
 
     if (! $order) {
-        confess "Could not load order id + txn id: $order_id, $args->{txn_id}, $args->{token}";
+        confess "Could not load order id + txn id: $order_id, $args->{txn_id}, $args->{ext_id}";
     }
 
     # Update the previous transation, so we can log that the user successfully
@@ -239,15 +239,16 @@ sub complete_purchase {
             order_id => $order_id,
             txn => {
                 txn_type => "paypal",
+                amount   => $order->amount,
             }
         }
     );
 
     my $cancel_url      = $args->{cancel_url};
     my $return_url      = $args->{return_url};
-    my $amount          = $args->{amount};
+    my $amount          = $order->amount,
     my $payer_id        = $args->{payer_id};
-    my $token           = $args->{token};
+    my $token           = $args->{ext_id};
     my @auth_parameters = $self->auth_parameters;
     my @query = (
         method => 'DoExpressCheckoutPayment',
@@ -315,7 +316,7 @@ sub complete_purchase {
     $order_api->change_status(
         {
             order_id => $order_id,
-            status   => &Pixis::Schema::Master::ST_DONE,
+            status   => &Pixis::Schema::Master::Order::ST_DONE,
             message => join(', ', map { "$_ => $result->{$_}" } qw(CORRELATION_ID TXN_ID) ),
             txn      => {
                 id => $txn->id,
