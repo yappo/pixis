@@ -14,12 +14,6 @@ has 'user_agent' => (
     lazy_build => 1,
 );
 
-has 'openssl_cmd' => (
-    is => 'rw',
-    isa => 'Path::Class::File',
-#    required => 1
-);
-
 has 'mode' => (
     is => 'rw',
     isa => enum([ qw(producation development) ]),
@@ -41,25 +35,24 @@ has 'api_url' => (
 
 has 'username' => (
     is => 'rw',
-    isa => 'Str',
     required => 1,
+    default => 'daisuk_1235727902_biz_api1.perlassociation.org',
 );
 
 has 'password' => (
     is => 'rw',
-    isa => 'Str',
     required => 1,
+    default => '1235727980',
 );
 
 has 'signature' => (
     is => 'rw',
-    isa => 'Str',
     required => 1,
+    default => 'An5ns1Kso7MWUdW4ErQKJJJ4qi4-AYLktabNtq8Xnd6.Sd.qcwF99IHm',
 );
 
 has 'version' => (
     is => 'rw',
-    isa => 'Str',
     required => 1,
     default => '56.0'
 );
@@ -101,9 +94,11 @@ sub auth_parameters {
 sub initiate_purchase {
     my ($self, $args) = @_;
 
-    my $cancel_url      = $args->{cancel_url};
-    my $return_url      = $args->{return_url};
-    my $price           = $args->{price};
+    my $cancel_url      = $args->{cancel_url} or confess "no cancel_url";
+    my $return_url      = $args->{return_url} or confess "no return_url";
+    my $price           = $args->{price} or confess "no price";
+    my $member_id       = $args->{member_id} or confess "no member_id";
+    my $description     = $args->{description} or confess "no description";
     my @auth_parameters = $self->auth_parameters;
     my @query = (
         method       => 'SetExpressCheckout',
@@ -118,9 +113,18 @@ sub initiate_purchase {
 
     my $uri = URI->new($self->api_url);
     $uri->query_form(@auth_parameters, @query);
+
+    # Before sending stuff to Paypal, create a transaction record
+    my $txn_api = Pixis::Registry->get(api => payment => 'transaction');
+
     my $response = $self->user_agent->request(HTTP::Request->new(GET => $uri));
     if (! $response->is_success) {
-        confess "HTTP Request failed: " . $response->code . ", " . $response->message;
+        my $message = $response->code . ", " . $response->message;
+        $txn_api->change_status( {
+            status => 'INVALID',
+            message => "HTTP Request failed : $message"
+        } );
+        confess "HTTP Request failed: $message";
     }
 
     my $result = do {
@@ -140,13 +144,29 @@ sub initiate_purchase {
     }
 
     if ( $result->{ACK} ne 'Success') {
-        confess "Request to paypal failed " . $response->as_string;
+        my $message = "Request to paypal failed: " . $response->as_string;
+        $txn_api->change_status( {
+            status => 'INVALID',
+            message => $message
+        } );
+        confess $message;
     }
 
     my $token = $result->{TOKEN};
     my $next_uri = URI->new($self->web_url);
     $next_uri->path("/cgi-bin/webscr");
     $next_uri->query_form(cmd => '_express-checkout', token => $token);
+
+    my $txn = $txn_api->create(
+        {
+            txn_id      => $token,
+            txn_type    => 'paypal',
+            amount      => $price,
+            member_id   => $member_id,
+            description => $description,
+            created_on  => DateTime->now,
+        }
+    );
 
     if (DEBUG()) {
         print STDERR "Returning url $next_uri\n";
@@ -156,6 +176,13 @@ sub initiate_purchase {
 
 sub complete_purchase {
     my ($self, $args) = @_;
+
+    my $txn_api = Pixis::Registry->get(api => payment => 'transaction');
+    my $txn     = $txn_api->load_from_token($args->{token});
+
+    if (! $txn) {
+        confess "Could not load transaction by token: $args->{token}";
+    }
 
     my $cancel_url      = $args->{cancel_url};
     my $return_url      = $args->{return_url};
@@ -175,9 +202,21 @@ sub complete_purchase {
 
     my $uri = URI->new($self->api_url);
     $uri->query_form(@auth_parameters, @query);
+
+    $txn_api->change_status( {
+        txn_id  => $txn->id,
+        status  => 'PAYPAL_ACK',
+    });
+    
     my $response = $self->user_agent->request(HTTP::Request->new(GET => $uri));
     if (! $response->is_success) {
-        confess "HTTP Request failed: " . $response->code . ", " . $response->message;
+        my $message = "HTTP Request failed: " . $response->code . ", " . $response->message;
+        $txn_api->change_status( {
+            txn_id => $txn->id,
+            status => 'INVALID',
+            message => $message,
+        } );
+        confess $message;
     }
     my $result = do {
         my $uri = URI->new();
@@ -196,20 +235,19 @@ sub complete_purchase {
     }
 
     if ( $result->{ACK} ne 'Success') {
-        confess "Request to paypal failed " . $response->as_string;
+        my $message = "Request to paypal failed " . $response->as_string;
+        $txn_api->change_status( {
+            txn_id => $txn->id,
+            status => 'INVALID',
+            message => $message,
+        } );
+        confess $message;
     }
+
+    $txn_api->change_status( {
+        txn_id => $txn->id,
+        status => 'COMPLETED',
+    } );
 }
-
-sub encrypt_and_sign {
-    my ($self, $form) = @_;
-
-    my $openssl = $self->openssl_cmd;
-    my $pp_cert = $self->pp_cert;
-
-    my $my_cert = $self->my_cert;
-    my $my_key  = $self->my_key;
-    my $mey_cert_id = $self->my_cert_id;
-}
-
 
 1;

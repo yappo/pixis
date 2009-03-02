@@ -18,7 +18,7 @@ sub COMPONENT {
     my $config = $c->config->{'Model::API'};
 
     my $apis = $config->{apis} || [];
-    unshift @$apis, map { +{ class => $_ } } qw(Member MemberAuth MemberRelationship Payment::Paypal);
+    unshift @$apis, map { +{ class => $_ } } qw(Member MemberAuth MemberRelationship Payment::Paypal Payment::Transaction Order);
     foreach my $config (@$apis) {
         $config = { %$config };
         my $class = delete $config->{class} || die "'class' is required";

@@ -8,15 +8,11 @@ sub purchase :Private {
     my ($self, $c, $args) = @_;
 
     my $url = eval {
-        $c->registry(api => 'payment' => 'paypal')->initiate_purchase({
-            return_url => $args->{return_url},
-            cancel_url => $args->{cancel_url},
-            price      => $args->{price},
-        });
+        $c->registry(api => 'payment' => 'paypal')->initiate_purchase($args);
     };
     if ($@) {
         $c->log->debug("Communication Paypal failed: $@") if $c->log->is_debug;
-        $c->forward('/error', "Communication with PayPal failed");
+        $c->detach('/error', "Communication with PayPal failed");
         return;
     }
 
