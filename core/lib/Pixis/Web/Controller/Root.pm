@@ -5,9 +5,23 @@ use warnings;
 use parent 'Catalyst::Controller';
 
 __PACKAGE__->config->{namespace} = '';
+__PACKAGE__->mk_accessors($_) for qw(site_index);
+
+sub COMPONENT {
+    my ($self, $c, $config) = @_;
+
+    $self = $self->NEXT::COMPONENT($c, $config);
+    $self->site_index($config->{site_index}) if $config->{site_index};
+    return $self;
+}
 
 sub index :Path :Args(0) {
     my ($self, $c) = @_;
+
+    if (my $index = $self->site_index()) {
+        # user has define some sort of custom index
+        $c->res->redirect($c->uri_for($index));
+    }
 
     if ($c->user_exists) {
         $c->res->redirect($c->uri_for('/member/home'));
