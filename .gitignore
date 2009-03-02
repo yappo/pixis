@@ -1,0 +1,8 @@
+*.bak
+*~
+\.*\.sw*
+Makefile
+blib
+pm_to_blib
+Build
+_build
