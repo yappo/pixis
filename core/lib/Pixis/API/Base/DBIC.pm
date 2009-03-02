@@ -83,4 +83,11 @@ sub create_from_form {
     return $form->model->create();
 }
 
+sub create {
+    my ($self, $args) = @_;
+    my $schema = Pixis::Registry->get('schema' => 'master');
+    my $rs = $schema->resultset($self->resultset_moniker);
+    $rs->create($args);
+}
+
 1;
