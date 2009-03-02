@@ -3,6 +3,7 @@ package Pixis::Schema::Master::JPAMember;
 use strict;
 use warnings;
 use base qw(Pixis::Schema::Base::MySQL);
+use utf8;
 
 __PACKAGE__->load_components("PK::Auto", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("pixis_jpa_member");
@@ -83,5 +84,18 @@ __PACKAGE__->add_columns(
 );
 
 __PACKAGE__->set_primary_key("id");
+
+sub populate_initial_data {
+    my ($class, $schema) = @_;
+
+    my $now = DateTime->now;
+    () = $schema->populate( 
+        PurchaseItem => [
+            [ qw(id store_name name price description created_on) ],
+            [ 'JPA-0001', 'JPA', 'JPA一般会員年会費', '5000', 'JPA 年会費', $now ],
+            [ 'JPA-0002', 'JPA', 'JPA学生会員年会費', '0', 'JPA 年会費', $now ],
+        ]
+    );
+}
 
 1;

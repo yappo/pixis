@@ -11,34 +11,39 @@ sub auto :Private {
 sub paypal :Local :Args(0) :FormConfig{
     my ($self, $c) = @_;
 
-    my $payment;
+    my $order;
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
-        ($payment) = $c->registry(api => 'JPAPaymentHistory')->search(
+        ($order) = $c->registry(api => 'Order')->search(
             {
-                id => $form->param('payment'),
+                id        => $form->param('order'),
                 member_id => $c->user->id,
-                payment_received_on => undef
+                status    => &Pixis::Schema::Master::Order::ST_UNPAID,
             }
         );
     }
 
-    if (! $payment) {
+    if (! $order) {
         # XXX - huh?
-        $c->log->debug("Payment not found :(") if $c->log->is_debug;
+        $c->log->debug("Order not found :(") if $c->log->is_debug;
         $c->forward('/default');
         return;
     }
 
     $c->controller('Payment::Paypal')->purchase($c, {
-        return_url => $c->uri_for('/jpa/payment/paypal/complete'),
-        cancel_url => $c->uri_for('/jpa/payment/paypal/cancel', { payment => $form->param('payment') }),
-        price      => $payment->amount,
+        return_url  => $c->uri_for('/jpa/payment/paypal/complete'),
+        cancel_url  => $c->uri_for('/jpa/payment/paypal/cancel', { payment => $form->param('order') }),
+        price       => $order->amount,
+        member_id   => $c->user->id,
+        description => $order->description,
     });
 }
 
 sub paypal_cancel :Path('paypal/cancel') {
     my ($self, $c) = @_;
+
+    $c->controler('Payment::Paypal')->cancel($c, {
+    } );
 }
 
 sub paypal_complete :Path('paypa/complete') :FormConfig{

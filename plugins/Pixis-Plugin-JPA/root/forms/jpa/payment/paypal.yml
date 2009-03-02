@@ -1,6 +1,6 @@
 ---
 elements:
     - type: Text
-      name: payment
+      name: order
       constraints:
         - Required

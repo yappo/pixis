@@ -63,7 +63,8 @@ sub commit_basic :Local :Args(1) {
     }
     # commit this basic information.
     $params->{member_id} = $c->user->id;
-    $c->registry(api => 'JPAMember')->create($params);
+    my $order = $c->registry(api => 'JPAMember')->create($params);
+    $c->stash->{order} = $order;
 }
 
 sub payment :Local :Args(0) {

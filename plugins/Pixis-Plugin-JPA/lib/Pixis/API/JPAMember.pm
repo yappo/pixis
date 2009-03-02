@@ -2,43 +2,48 @@
 
 package Pixis::API::JPAMember;
 use Moose;
-use utf8;
+use namespace::clean -except => qw(meta);
 
 with 'Pixis::API::Base::DBIC';
 
 __PACKAGE__->meta->make_immutable;
 
-no Moose;
-
 sub create {
     my ($self, $args) = @_;
 
     my $schema = Pixis::Registry->get(schema => 'Master');
-    my ($membership) = $schema->resultset('JPAMembership')->search({ 
-        name => $args->{membership}
+    my ($item) = $schema->resultset('PurchaseItem')->search({
+        id => $args->{membership}
     })->single;
-    if (! $membership) {
+    if (! $item) {
         confess "no such membership type: $args->{membership}";
     }
-    $args->{created_on} = DateTime->now;
+    return $schema->txn_do(sub {
+        my ($schema, $args, $item) = @_;
 
-    $schema->txn_do(sub {
-        my ($schema, $args, $membership) = @_;
-
-        # JPA Member info
+        my $now = DateTime->now;
+        # JPA Member info (don't confuse it with pixis member!)
         my $member = $schema->resultset('JPAMember')->create({
             %$args,
-            membership => $membership->name
+            created_on => $now,
+            membership => $item->name
         });
 
-        # Also create a payment lot
-        $schema->resultset('JPAPaymentHistory')->create({
-            member_id  => $member->id,
-            item_id    => $membership->id,
-            amount     => $membership->price,
-            created_on => $args->{created_on},
-        });
-    }, $schema, $args, $membership);
+        # Also create an order for this signup
+        if ($item->price <= 0) {
+#            if (DEBUG) {
+                print STDERR "new member does not require a fee\n";
+#            }
+        } else {
+            my $order_api = Pixis::Registry->get(api => 'Order');
+            return $order_api->create( {
+                member_id   => $args->{member_id}, # pixis member ID
+                amount      => $item->price,
+                description => $item->description,
+                created_on  => $now,
+            });
+        }
+    }, $schema, $args, $item);
 }
 
 1;

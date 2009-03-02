@@ -1,5 +1,7 @@
 [% WRAPPER wrapper.tt %]
 
+<h1>Japan Perl Association</h1>
+
 <ul>
     <li><a href="[% c.uri_for('/jpa/signup') %]">新規会員登録</a></li>
 </ul>

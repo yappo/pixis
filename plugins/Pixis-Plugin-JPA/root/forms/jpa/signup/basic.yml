@@ -6,8 +6,8 @@ elements:
       label_loc: Membership Type
       name: membership
       options:
-        - [ 'JPA一般会員', 'JPA一般会員' ]
-        - [ 'JPA学生会員', 'JPA学生会員' ]
+        - [ 'JPA-0001', 'JPA一般会員' ]
+        - [ 'JPA-0002', 'JPA学生会員' ]
       constraints:
         - Required
     - type: Text
