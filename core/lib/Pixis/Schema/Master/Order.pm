@@ -4,9 +4,12 @@ use strict;
 use warnings;
 use base qw(Pixis::Schema::Base::MySQL);
 
-use constant ST_UNPAID      => 0;
-use constant ST_TXN_PENDING => 1;
-use constant ST_PAID        => 2;
+use constant ST_DONE           => 0;
+use constant ST_INIT           => 1;
+use constant ST_CREDIT_CHECK   => 2;
+use constant ST_CREDIT_ACCEPT  => 3;
+use constant ST_CHECK_REQUIRED => 4;
+use constant ST_SYSTEM_ERROR   => 99;
 
 __PACKAGE__->load_components("PK::Auto", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("pixis_order");
@@ -27,10 +30,17 @@ __PACKAGE__->add_columns(
         is_nullable => 0,
         size => 8
     },
-    status => { # 0 -> new (unpaid), 1 - some sort of transaction pending, 2 - paid
+    status => {
+        # 0 -> DONE
+        # 1 -> new
+        # 2 -> credit check required (if applicable)
+        # 3 -> credit ok, pending accept (if applicable)
+        # 4 -> requires some sort of manual check,
+        #      for example, for students
+        # 99 -> system error
         data_type => "SMALLINT",
         is_nullable => 0,
-        default_value => ST_UNPAID,
+        default_value => ST_INIT,
     },
     description => {
         data_type => "TEXT",
@@ -47,7 +57,6 @@ __PACKAGE__->add_columns(
     },
 );
 __PACKAGE__->set_primary_key("id");
-__PACKAGE__->has_many('logs' => 'Pixis::Schema::Master::PaymentTransactionLog' => 'txn_id');
 
 sub sqlt_deploy_hook {
     my ($self, $sqlt_table) = @_;

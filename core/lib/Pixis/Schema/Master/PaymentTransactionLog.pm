@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base qw(Pixis::Schema::Base::MySQL);
 
-__PACKAGE__->load_components("PK::Auto", "VirtualColumns", "InflateColumn::DateTime", "Core");
+__PACKAGE__->load_components("PK::Auto", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("pixis_payment_transaction_log");
 __PACKAGE__->add_columns(
     "id" => {

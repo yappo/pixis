@@ -22,8 +22,9 @@ sub purchase :Private {
 sub complete :Private {
     my ($self, $c, $args) = @_;
 
-    my $url = eval {
+    eval {
         $c->registry(api => 'payment' => 'paypal')->complete_purchase({
+            token      => $args->{token},
             return_url => $args->{return_url},
             cancel_url => $args->{cancel_url},
             amount     => $args->{price},
@@ -36,7 +37,7 @@ sub complete :Private {
         return;
     }
 
-    $c->res->redirect($url);
+    $c->res->redirect($args->{return_url});
 }
 
 1;

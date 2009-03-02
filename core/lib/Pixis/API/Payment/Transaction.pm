@@ -23,7 +23,7 @@ sub change_status {
         my $new = $args->{status};
         $txn->status( $new );
 
-        $txn->create_related( 'PaymentTransactionLog', {
+        $txn->create_related( 'logs', {
             message    => "change status from $old to $new" .
                 ($args->{message} ? ": $args->{message}" : ''),
             created_on => \'NOW()'

@@ -94,6 +94,7 @@ sub auth_parameters {
 sub initiate_purchase {
     my ($self, $args) = @_;
 
+    my $order_id        = $args->{order_id} or confess "no order_id";
     my $cancel_url      = $args->{cancel_url} or confess "no cancel_url";
     my $return_url      = $args->{return_url} or confess "no return_url";
     my $amount          = $args->{amount} or confess "no amount";
@@ -115,16 +116,30 @@ sub initiate_purchase {
     $uri->query_form(@auth_parameters, @query);
 
     # Before sending stuff to Paypal, create a transaction record
-    my $txn_api = Pixis::Registry->get(api => payment => 'transaction');
+    my $order_api = Pixis::Registry->get(api => 'order');
+
+    my $txn = $order_api->create_txn( {
+        order_id => $order_id,
+        txn => {
+            txn_type => 'paypal',
+            amount   => $amount,
+        }
+    });
+
 
     my $response = $self->user_agent->request(HTTP::Request->new(GET => $uri));
     if (! $response->is_success) {
-        my $message = $response->code . ", " . $response->message;
-        $txn_api->change_status( {
-            status => 'INVALID',
-            message => "HTTP Request failed : $message"
+        my $message = "HTTP request to paypal failed: " .  $response->code . ", " . $response->message;
+        $order_api->change_status( {
+            order_id  => $order_id,
+            status    => &Pixis::Schema::Master::Order::ST_ERROR,
+            message   => $message,
+            txn => {
+                id => $txn->id,
+                txn_type => 'paypal',
+            }
         } );
-        confess "HTTP Request failed: $message";
+        confess $message;
     }
 
     my $result = do {
@@ -145,10 +160,18 @@ sub initiate_purchase {
 
     if ( $result->{ACK} ne 'Success') {
         my $message = "Request to paypal failed: " . $response->as_string;
-        $txn_api->change_status( {
-            status => 'INVALID',
-            message => $message
-        } );
+        $order_api->change_status(
+            {
+                order_id => $order_id,
+                status => &Pixis::Schema::Master::Order::ST_SYSTEM_ERROR,
+                message => $message,
+                txn => {
+                    id       => $txn->id,
+                    txn_type => 'paypal',
+                    status   => 'PAYPAL_ERROR',
+                }
+            }
+        );
         confess $message;
     }
 
@@ -157,14 +180,16 @@ sub initiate_purchase {
     $next_uri->path("/cgi-bin/webscr");
     $next_uri->query_form(cmd => '_express-checkout', token => $token);
 
-    my $txn = $txn_api->create(
+    $order_api->change_status(
         {
-            txn_id      => $token,
-            txn_type    => 'paypal',
-            amount      => $amount,
-            member_id   => $member_id,
-            description => $description,
-            created_on  => DateTime->now,
+            order_id => $order_id,
+            status => &Pixis::Schema::Master::Order::ST_CREDIT_CHECK,
+            txn => {
+                id       => $txn->id,
+                txn_type => 'paypal',
+                ext_id   => $token,
+                status   => 'PAYPAL_PROCESSING',
+            },
         }
     );
 
@@ -177,12 +202,46 @@ sub initiate_purchase {
 sub complete_purchase {
     my ($self, $args) = @_;
 
-    my $txn_api = Pixis::Registry->get(api => payment => 'transaction');
-    my $txn     = $txn_api->load_from_token($args->{token});
+    my $order_id  = $args->{order_id};
 
-    if (! $txn) {
-        confess "Could not load transaction by token: $args->{token}";
+    my $order_api = Pixis::Registry->get(api => 'order');
+    my $order   = $order_api->match_txn(
+        {
+            order_id => $order_id,
+            txn => {
+                id => $args->{txn_id},
+                ext_id => $args->{token}
+            }
+        }
+    );
+
+    if (! $order) {
+        confess "Could not load order id + txn id: $order_id, $args->{txn_id}, $args->{token}";
     }
+
+    # Update the previous transation, so we can log that the user successfully
+    # came back
+    $order_api->change_status(
+        {
+            order_id => $order_id,
+            status   => &Pixis::Schema::Master::Order::ST_CREDIT_ACCEPT,
+            txn      => {
+                id => $args->{txn_id},
+                txn_type => 'paypal',
+                status => 'PAYPAL_CHECK_CREDIT_DONE',
+            }
+        }
+    );
+
+    # And create a new one, this one for the final charge
+    my $txn = $order_api->create_txn(
+        {
+            order_id => $order_id,
+            txn => {
+                txn_type => "paypal",
+            }
+        }
+    );
 
     my $cancel_url      = $args->{cancel_url};
     my $return_url      = $args->{return_url};
@@ -203,19 +262,21 @@ sub complete_purchase {
     my $uri = URI->new($self->api_url);
     $uri->query_form(@auth_parameters, @query);
 
-    $txn_api->change_status( {
-        txn_id  => $txn->id,
-        status  => 'PAYPAL_ACK',
-    });
-    
     my $response = $self->user_agent->request(HTTP::Request->new(GET => $uri));
     if (! $response->is_success) {
         my $message = "HTTP Request failed: " . $response->code . ", " . $response->message;
-        $txn_api->change_status( {
-            txn_id => $txn->id,
-            status => 'INVALID',
-            message => $message,
-        } );
+        $order_api->change_status(
+            {
+                order_id => $order_id,
+                message  => $message,
+                status   => &Pixis::Schema::Master::Order::ST_SYSTEM_ERROR,
+                txn      => {
+                    id => $txn->id,
+                    txn_type => 'paypal',
+                    status   => 'PAYPAL_ERROR',
+                }
+            }
+        );
         confess $message;
     }
     my $result = do {
@@ -236,19 +297,32 @@ sub complete_purchase {
 
     if ( $result->{ACK} ne 'Success') {
         my $message = "Request to paypal failed " . $response->as_string;
-        $txn_api->change_status( {
-            txn_id => $txn->id,
-            status => 'INVALID',
-            message => $message,
-        } );
+        $order_api->change_status(
+            {
+                order_id => $order_id,
+                message  => $message,
+                status   => &Pixis::Schema::Master::Order::ST_SYSTEM_ERROR,
+                txn      => {
+                    id => $txn->id,
+                    txn_type => 'paypal',
+                    status   => 'PAYPAL_ERROR',
+                }
+            }
+        );
         confess $message;
     }
 
-    $txn_api->change_status( {
-        txn_id => $txn->id,
-        status => 'COMPLETED',
-        message => join(', ', map { "$_ => $result->{$_}" } qw(CORRELATION_ID TXN_ID) ),
-     } );
+    $order_api->change_status(
+        {
+            order_id => $order_id,
+            status   => &Pixis::Schema::Master::ST_DONE,
+            message => join(', ', map { "$_ => $result->{$_}" } qw(CORRELATION_ID TXN_ID) ),
+            txn      => {
+                id => $txn->id,
+                status => 'PAYPAL_DONE',
+            }
+        }
+    );
 }
 
 1;

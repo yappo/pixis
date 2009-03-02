@@ -14,7 +14,7 @@ __PACKAGE__->add_columns(
         is_nullable => 0,
         size => 8,
     },
-    member_id => {
+    order_id => {
         data_type => "INTEGER",
         is_nullabe => 0,
         size => 8,
@@ -24,9 +24,9 @@ __PACKAGE__->add_columns(
         size      => 32,
         is_nullable => 0
     },
-    txn_id => { # 
+    ext_id => { # 
         data_type => "TEXT",
-        is_nullable => 0,
+        is_nullable => 1,
     },
     amount => {
         data_type => "INTEGER",
@@ -38,10 +38,6 @@ __PACKAGE__->add_columns(
         is_nullable => 0,
         size => 32,
         default_value => "CREATED"
-    },
-    description => {
-        data_type => "TEXT",
-        is_nullable => 0
     },
     modified_on => {
         data_type => "TIMESTAMP",
@@ -64,12 +60,12 @@ sub sqlt_deploy_hook {
         fields => [ 'txn_type(32)' ],
     );
     $sqlt_table->add_index(
-        name => 'txn_id_idx',
-        fields => [ 'txn_id(255)' ],
+        name => 'ext_id_idx',
+        fields => [ 'ext_id(255)' ],
     );
     $sqlt_table->add_index(
-        name => 'member_id_idx',
-        fields => [ 'member_id' ],
+        name => 'order_id_idx',
+        fields => [ 'order_id' ],
     );
     $self->next::method($sqlt_table);
 }
