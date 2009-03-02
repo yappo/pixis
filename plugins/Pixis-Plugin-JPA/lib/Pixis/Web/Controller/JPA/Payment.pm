@@ -18,7 +18,7 @@ sub paypal :Local :Args(0) :FormConfig{
             {
                 id        => $form->param('order'),
                 member_id => $c->user->id,
-                status    => &Pixis::Schema::Master::Order::ST_UNPAID,
+                status    => &Pixis::Schema::Master::Order::ST_INIT,
             }
         );
     }
@@ -31,6 +31,7 @@ sub paypal :Local :Args(0) :FormConfig{
     }
 
     $c->controller('Payment::Paypal')->purchase($c, {
+        order_id    => $order->id,
         return_url  => $c->uri_for('/jpa/payment/paypal/accept', { order => $form->param('order') } ),
         cancel_url  => $c->uri_for('/jpa/payment/paypal/cancel', { order => $form->param('order') }),
         amount      => $order->amount,
@@ -52,8 +53,8 @@ sub paypal_accept :Path('paypal/accept') :FormConfig{
     my $order;
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
+        $c->log->debug("Loading order for paypa_accet: " . $form->param('order')) if $c->log->is_debug;
         $order = $c->registry(api => 'Order')->find($form->param('order'));
-$c->log->debug("form is valid, got $order");
     }
 
     if (! $order) {
@@ -70,9 +71,23 @@ $c->log->debug("form is valid, got $order");
         price       => $order->amount,
         member_id   => $c->user->id,
         description => $order->description,
-        token       => $form->param('token'),
-        player_id   => $form->param('PlayerID'),
+        ext_id      => $form->param('token'),
+        txn_id      => $form->param('txn'),
+        order_id    => $form->param('order'),
+        payer_id    => $form->param('PayerID'),
+        
     } );
+}
+
+sub paypal_complete :Path('paypal/complete') {
+    my ($self, $c) = @_;
+
+    my $order;
+    my $form = $c->stash->{form};
+    if ($form->submitted_and_valid) {
+        $c->log->debug("Loading order for paypa_accet: " . $form->param('order')) if $c->log->is_debug;
+        $order = $c->registry(api => 'Order')->find($form->param('order'));
+    }
 }
 
 1;

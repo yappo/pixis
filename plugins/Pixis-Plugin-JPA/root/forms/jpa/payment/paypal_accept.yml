@@ -1,0 +1,18 @@
+---
+elements:
+    - type: Text
+      name: order
+      constraints:
+        - Required
+    - type: Text
+      name: txn
+      constraints:
+        - Required
+    - type: Text
+      name: token
+      constraints:
+        - Required
+    - type: Text
+      name: PayerID
+      constraints:
+        - Required
