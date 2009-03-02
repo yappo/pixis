@@ -1,0 +1,3 @@
+[% WRAPPER wrapper.tt %]
+<div>Paypalによる支払いを完了しました</div>
+[% END # WRAPPER %]

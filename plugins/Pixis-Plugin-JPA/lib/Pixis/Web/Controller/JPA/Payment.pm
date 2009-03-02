@@ -53,7 +53,7 @@ sub paypal_accept :Path('paypal/accept') :FormConfig{
     my $order;
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
-        $c->log->debug("Loading order for paypa_accet: " . $form->param('order')) if $c->log->is_debug;
+        $c->log->debug("Loading order for paypal_accept: " . $form->param('order')) if $c->log->is_debug;
         $order = $c->registry(api => 'Order')->find($form->param('order'));
     }
 
@@ -79,15 +79,22 @@ sub paypal_accept :Path('paypal/accept') :FormConfig{
     } );
 }
 
-sub paypal_complete :Path('paypal/complete') {
+sub paypal_complete :Path('paypal/complete') :FormConfig{
     my ($self, $c) = @_;
 
-    my $order;
     my $form = $c->stash->{form};
-    if ($form->submitted_and_valid) {
-        $c->log->debug("Loading order for paypa_accet: " . $form->param('order')) if $c->log->is_debug;
-        $order = $c->registry(api => 'Order')->find($form->param('order'));
+    if (! $form->submitted_and_valid) {
+        $c->forward('/error', 'unknown order');
     }
+
+    $c->log->debug("Loading order for paypal_complete: " . $form->param('order')) if $c->log->is_debug;
+    $c->stash->{order} = $c->registry(api => 'Order')->find($form->param('order'));
+    $c->registry(api => 'order')->change_status(
+        {
+            order_id => $form->param('order'),
+            status   => &Pixis::Schema::Master::Order::ST_DONE,
+        }
+    );
 }
 
 1;
