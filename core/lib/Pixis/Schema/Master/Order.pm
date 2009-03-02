@@ -65,6 +65,11 @@ sub sqlt_deploy_hook {
         name => 'member_id_idx',
         fields => [ 'member_id' ],
     );
+    $sqlt_table->add_index(
+        name => 'status_idx',
+        fields => [ 'status' ],
+    );
+    
     $self->next::method($sqlt_table);
 }
 
