@@ -31,9 +31,9 @@ sub paypal :Local :Args(0) :FormConfig{
     }
 
     $c->controller('Payment::Paypal')->purchase($c, {
-        return_url  => $c->uri_for('/jpa/payment/paypal/complete'),
-        cancel_url  => $c->uri_for('/jpa/payment/paypal/cancel', { payment => $form->param('order') }),
-        price       => $order->amount,
+        return_url  => $c->uri_for('/jpa/payment/paypal/accept', { order => $form->param('order') } ),
+        cancel_url  => $c->uri_for('/jpa/payment/paypal/cancel', { order => $form->param('order') }),
+        amount      => $order->amount,
         member_id   => $c->user->id,
         description => $order->description,
     });
@@ -46,28 +46,32 @@ sub paypal_cancel :Path('paypal/cancel') {
     } );
 }
 
-sub paypal_complete :Path('paypa/complete') :FormConfig{
+sub paypal_accept :Path('paypal/accept') :FormConfig{
     my ($self, $c) = @_;
 
-    my $txn;
+    my $order;
     my $form = $c->stash->{form};
-    # Ah, bummer, I haven't thought this out yet.
     if ($form->submitted_and_valid) {
-        # find the transaction
-        # $txn = $c->registry(api => payment => 'paypal')->load_txn( {
-        #   token => $form->param('token'),
-        #   payer_id => $form->param('PayerID'),
-        # } );
+        $order = $c->registry(api => 'Order')->find($form->param('order'));
+$c->log->debug("form is valid, got $order");
     }
 
-    if (! $txn) {
-        $c->log->debug("Couldn't find transaction " . $form->param('token')) if $c->log->is_debug;
-        $c->forward('/error', "Couldn't find paypal transaction " . $form->param('token'));
+    if (! $order) {
+        # XXX - huh?
+        $c->log->debug("Order not found :(") if $c->log->is_debug;
+        $c->forward('/default');
         return;
     }
 
+    # let the payment gateway do its thing. if it's okay, we shall proceed
     $c->controller('Payment::Paypal')->complete($c, {
-        
+        return_url => $c->uri_for('/jpa/payment/paypal/complete', { order => $form->param('order') }) ,
+        cancel_url  => $c->uri_for('/jpa/payment/paypal/cancel', { order => $c->req->param('order') }),
+        price       => $order->amount,
+        member_id   => $c->user->id,
+        description => $order->description,
+        token       => $form->param('token'),
+        player_id   => $form->param('PlayerID'),
     } );
 }
 
