@@ -10,6 +10,12 @@ has 'resultset_moniker' => (
     lazy_build => 1,
 );
 
+has 'primary_key' => (
+    is => 'rw',
+    required => 1,
+    lazy_build => 1
+);
+
 with_cache 'cache' => (backend => 'Cache::Memcached');
 
 sub _build_resultset_moniker {
@@ -56,21 +62,30 @@ sub load_multi {
     return wantarray ? @ret : \@ret;
 }
 
-sub search {
-    my ($self, $where, $attrs) = @_;
+sub _build_primary_key {
+    my $self = shift;
 
-    $attrs ||= {};
     my $schema = Pixis::Registry->get('schema' => 'master');
-
     my $rs = $schema->resultset($self->resultset_moniker);
 
     my @pk = $rs->result_source->primary_columns;
     if (@pk != 1) {
-        confess "vanilla API::search only supports tables with exactly 1 primary key (" . $self->resultset_moniker . " contains @pk)";
+        confess "vanilla Pixis::API::Base::DBIC only supports tables with exactly 1 primary key (" . $self->resultset_moniker . " contains @pk)";
     }
 
-    my ($pk) = @pk;
-    $attrs->{select} ||= \@pk;
+    return $pk[0];
+}
+
+sub search {
+    my ($self, $where, $attrs) = @_;
+
+    $attrs ||= {};
+
+    my $schema = Pixis::Registry->get('schema' => 'master');
+    my $rs = $schema->resultset($self->resultset_moniker);
+    my $pk = $self->primary_key();
+
+    $attrs->{select} ||= [ $pk ];
     my @keys = map { $_->$pk } $rs->search($where, $attrs);
     return $self->load_multi(@keys);
 }
@@ -88,6 +103,24 @@ sub create {
     my $schema = Pixis::Registry->get('schema' => 'master');
     my $rs = $schema->resultset($self->resultset_moniker);
     $rs->create($args);
+}
+
+sub update {
+    my ($self, $args) = @_;
+
+    my $schema = Pixis::Registry->get('schema' => 'master');
+    my $rs = $schema->resultset($self->resultset_moniker);
+    my $pk = $self->primary_key();
+
+    my $key = delete $args->{$pk};
+    my $row = $self->find($key);
+    if ($row) {
+        while (my ($field, $value) = each %$args) {
+            $row->$field( $value );
+        }
+    }
+    $row->update;
+    return $row;
 }
 
 1;
