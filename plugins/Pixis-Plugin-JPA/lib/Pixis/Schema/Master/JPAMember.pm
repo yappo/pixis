@@ -72,6 +72,10 @@ __PACKAGE__->add_columns(
         data_type => "DATETIME",
         is_nullable => 1,
     },
+    is_active => {
+        data_type   => "TINYINT",
+        is_nullable => 0,
+    },
     modified_on => {
         data_type => "TIMESTAMP",
         is_nullable => 0,
@@ -85,10 +89,27 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("id");
 
+sub sqlt_deploy_hook {
+    my ($self, $table) = @_;
+
+    $table->add_index(
+        name => "member_id_idx",
+        fields => [ qw(member_id) ]
+    );
+    $table->add_index(
+        name => "is_active_idx",
+        fields => [ qw(is_active) ]
+    );
+    $self->next::method($table);
+}
+
 sub populate_initial_data {
     my ($class, $schema) = @_;
 
     my $now = DateTime->now;
+    # XXX - ooh, what's this, you ask? This is a work around for 
+    # DBIC 0.08012's broken insert_bulk(). By introducing a () in front,
+    # we force list context, and therefore insert_bulk is not used.
     () = $schema->populate( 
         PurchaseItem => [
             [ qw(id store_name name price description created_on) ],
