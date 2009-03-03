@@ -1,4 +1,4 @@
-[% WRAPPER wrapper.tt %]
+[% WRAPPER jpa/wrapper.tt %]
 
 <h1>Japan Perl Association</h1>
 
@@ -6,5 +6,26 @@
 <ul>
     <li><a href="[% c.uri_for('/jpa/signup') %]">新規会員登録</a></li>
 </ul>
+
+<h3> Japan Perl Associationについて </h3>
+<p> 一般社団法人Japan Perl Association (JPA) は Perl技術及び文化の啓蒙・促進のた
+めの組織です。Perl技術を利用するプロジェクト、コミュニティ、ビジネスのサポートに
+取り組む事を目的とします。</p>
+
+<h3>Perlについて</h3>
+
+<p> Perlは1987年に初めて発表され、以来20年以上の長きに渡って進化し続けている言語
+です。インターネットの創世記にはCGIスクリプトを作成するのに多用されさらに有名に>なりました。しかしPerl自体はCGIのための言語ではありません：世界中の開発者達が自>作のライブラリを登録するCPANという巨大なライブラリネットワークを持ち、豊富なテス
+ト・自動化ツールを駆使して堅牢なシステム開発を可能にする、「難しい事を可能に、簡
+単な事をさらに簡単に」してくれる最高のツールと言えるでしょう。</p>
+
+<p> PerlはWeb、バイオインフォマティクス、システム管理ツールやテストフレームワー>クなど、すでに様々な分野で幅広く使用されており、今後も活躍が期待されています。</p>
+
+<p> JPAは モダンかつ実践的なPerlの使用方法やノウハウ
+を研修やセミナーなどで提供することにより、企業の皆様が安心してPerlを使用していただけるよう全力でサポートいたします。</p>
+
+<h3>本サイトについて</h3>
+
+<p>本サイトは<a href="http://catalyst.perl.org">Catalyst MVCフレームワーク</a>、<a href="http://www.perlfoundation.org/perl5/index.cgi?dbix_class">DBIx::Class オブジェクトマッパー</a>、<a href="http://code.google.com/p/html-formfu/">HTML::FormFu フォーム作成・バリデーションツール</a>、<a href="http://search.cpan.org/dist/Data-Localize">Data::Localize 国際化用ツール</a>等を用いて、プラッガブルなWebアプリケーションシステムを可能にする<a href="http://github.com/lestrrat/pixis/tree/master">Pixis エンジン</a>上で動作しています。</p>
 
 [% END # WRAPPER %]
