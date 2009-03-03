@@ -25,7 +25,7 @@ sub assert_roles : Private{
 
     $self->assert_logged_in($c) or return ();
     if (! $c->check_user_roles(@args)) {
-        $c->forward('/auth/fail');
+        $c->detach('/auth/fail');
         return ();
     }
     return 1;
