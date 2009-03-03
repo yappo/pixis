@@ -41,7 +41,7 @@ has 'formfu_path' => (
 
 has 'navigation' => (
     is => 'rw',
-    isa => 'HashRef',
+    isa => 'ArrayRef[HashRef]',
     predicate => 'has_navigation',
 );
 
@@ -106,7 +106,9 @@ sub register {
     $c->add_tt_include_path($self->include_path);
     $c->add_formfu_path($self->formfu_path);
     $c->add_translation_path($self->translation_path);
-    $c->add_navigation($self->navigation) if $self->has_navigation;
+    if ($self->has_navigation) {
+        $c->add_navigation($_) for @{$self->navigation};
+    }
     $registry->set(api => (split(/::/, blessed($_)))[-1], $_)
         for $self->extra_api;
 }
