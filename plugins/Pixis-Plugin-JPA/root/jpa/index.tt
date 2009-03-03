@@ -1,4 +1,4 @@
-[% WRAPPER wrapper.tt %]
+[% WRAPPER jpa/wrapper.tt %]
 
 <h1>Japan Perl Association</h1>
 
