@@ -1,7 +1,7 @@
-# $Id$
 
 package Pixis::Plugin::JPA;
 use Moose;
+use namespace::clean -except => qw(meta);
 
 with 'Pixis::Plugin';
 
@@ -13,8 +13,12 @@ has '+navigation' => (
                 url  => "/jpa"
             },
             {
-                text => "Wiki",
+                text => "JPA Wiki",
                 url  => "http://wiki.perlassociation.org"
+            },
+            {
+                text => "JPA Services",
+                url => "/jpa/service"
             }
         ]
     }
@@ -24,6 +28,6 @@ has '+extra_api' => (
     default => sub { +[ qw(JPAMember) ] }
 );
 
-no Moose;
+__PACKAGE__->meta->make_immutable;
 
 1;
