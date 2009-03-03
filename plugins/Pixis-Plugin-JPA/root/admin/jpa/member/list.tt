@@ -1,0 +1,6 @@
+[% WRAPPER wrapper.tt %]
+[% USE dumper %]
+[% FOREACH member IN list %]
+[% dumper.dump_html(member) %]
+[% END %]
+[% END %]
