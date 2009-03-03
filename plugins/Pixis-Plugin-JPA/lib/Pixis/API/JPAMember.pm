@@ -25,6 +25,7 @@ sub create {
         # JPA Member info (don't confuse it with pixis member!)
         my $member = $schema->resultset('JPAMember')->create({
             %$args,
+            is_active  => 0, # must be
             created_on => $now,
             membership => $item->name
         });
@@ -34,6 +35,9 @@ sub create {
 #            if (DEBUG) {
                 print STDERR "new member does not require a fee\n";
 #            }
+
+            # Students need not pay, but they need to give us a 
+            # proof (a copy of their school ID)
         } else {
             my $order_api = Pixis::Registry->get(api => 'Order');
             return $order_api->create( {

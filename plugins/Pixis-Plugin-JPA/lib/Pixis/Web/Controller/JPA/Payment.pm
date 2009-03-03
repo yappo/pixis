@@ -88,13 +88,26 @@ sub paypal_complete :Path('paypal/complete') :FormConfig{
     }
 
     $c->log->debug("Loading order for paypal_complete: " . $form->param('order')) if $c->log->is_debug;
-    $c->stash->{order} = $c->registry(api => 'Order')->find($form->param('order'));
+    my $order = $c->registry(api => 'Order')->find($form->param('order'));
     $c->registry(api => 'order')->change_status(
         {
             order_id => $form->param('order'),
             status   => &Pixis::Schema::Master::Order::ST_DONE,
         }
     );
+    my $jpa_member_api = $c->registry(api => 'jpamember');
+    my ($jpa_member) = $jpa_member_api->search(
+        {
+            member_id => $order->member_id
+        }
+    );
+    $jpa_member_api->update(
+        {
+            id => $jpa_member->id,
+            is_active => 1
+        }
+    );
+    $c->stash->{order} = $order;
 }
 
 1;
