@@ -1,0 +1,8 @@
+[% WRAPPER jpa/wrapper.tt %]
+
+<h1>JPA サービス内容</h1>
+<ul>
+    <li><a href="[% c.uri_for("training") %]">研修・トレーニング</a></li>
+</ul>
+
+[% END %]
