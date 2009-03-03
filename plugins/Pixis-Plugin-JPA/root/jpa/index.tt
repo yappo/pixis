@@ -24,4 +24,8 @@
 <p> JPAは モダンかつ実践的なPerlの使用方法やノウハウ
 を研修やセミナーなどで提供することにより、企業の皆様が安心してPerlを使用していただけるよう全力でサポートいたします。</p>
 
+<h3>本サイトについて</h3>
+
+<p>本サイトは<a href="http://catalyst.perl.org">Catalyst MVCフレームワーク</a>、<a href="http://www.perlfoundation.org/perl5/index.cgi?dbix_class">DBIx::Class オブジェクトマッパー</a>、<a href="http://code.google.com/p/html-formfu/">HTML::FormFu フォーム作成・バリデーションツール</a>、<a href="http://search.cpan.org/dist/Data-Localize">Data::Localize 国際化用ツール</a>等を用いて、プラッガブルなWebアプリケーションシステムを可能にする<a href="http://github.com/lestrrat/pixis/tree/master">Pixis エンジン</a>上で動作しています。</p>
+
 [% END # WRAPPER %]
