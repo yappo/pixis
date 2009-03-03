@@ -18,7 +18,7 @@
     <li><a href="/member/home">[% loc("Member Home") %]</a></li>
     <li><a href="/member/setting">[% loc("Member Settings") %]</a></li>
 [% END %]
-    <li><a href="/member/search">[% loc("Search") %]</a></li>
+    <li><a href="/member/search">[% loc("Member Search") %]</a></li>
 </ul>
 
 <img src="[% member.gravatar_url %]" />

@@ -4,7 +4,7 @@
 <li><a href="[% nav.url %]">[% loc(nav.text || 'Link') %]</a></li>
 [% END %]
 [% IF c.user_exists %]
-<li><a href="/member/settings">[% loc("Settings") %]</a></li>
+<li><a href="/member/settings">[% loc("Member Settings") %]</a></li>
 <li><a href="/auth/logout">[% loc("Logout") %]</a></li>
 [% ELSE %]
 <li><a href="/auth/login">[% loc("Login") %]</a></li>

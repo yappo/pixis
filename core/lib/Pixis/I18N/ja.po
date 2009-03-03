@@ -81,3 +81,12 @@ msgstr "ログイン"
 
 msgid "Logout"
 msgstr "ログアウト"
+
+msgid "Search"
+msgstr "検索"
+
+msgid "Member Search"
+msgstr "メンバー検索"
+
+msgid "Basic Settings"
+msgstr "基本設定"

@@ -25,7 +25,7 @@ elements:
         - Required
     - type: Text # Oh I wish
       name: state
-      label_loc: State
+      label_loc: State / Prefecture
     - type: Text
       name: postal_code
       label_loc: Postal Code
