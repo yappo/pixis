@@ -34,6 +34,9 @@ our $VERSION = '0.01';
 __PACKAGE__->config(
     name => 'Pixis::Web',
     default_view => 'TT',
+    static => {
+        dirs => [ 'static' ]
+    },
     'Controller::HTML::FormFu' => {
         language_from_context  => 1,
         localize_from_context  => 1,
@@ -131,6 +134,18 @@ sub setup_pixis_plugins {
             $plugin->registered(1);
         }
     }
+}
+
+# Note: This exists *solely* for the benefit of pixis_web_server.pl
+# In your real app (fastcgi deployment suggested), you need to do something
+# like:
+#   Alias /static/<plugin>  /path/to/plugin/root/static/<plugin>
+sub add_static_include_path {
+    my ($self, @paths) = @_;
+
+    my $config = $self->config->{static};
+    $config->{include_path} ||= [];
+    push @{$config->{include_path}}, @paths;
 }
 
 sub add_tt_include_path {
