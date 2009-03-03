@@ -2,6 +2,7 @@
 
 <h1>Japan Perl Association</h1>
 
+<img src="[% c.uri_for('/static/jpa/img/jpa_logo_large.jpg') %]" width="150">
 <ul>
     <li><a href="[% c.uri_for('/jpa/signup') %]">新規会員登録</a></li>
 </ul>
