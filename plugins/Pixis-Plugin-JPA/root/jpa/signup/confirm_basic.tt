@@ -10,15 +10,38 @@
     { field => "address2", label => "Address2" },
     { field => "address3", label => "Address3" },
 ] %]
+
+[% # 後で直す %]
+[% IF (confirm.membership == 'JPA-0002') %]
+<div style="width: 400px; clear: both">
+    <div style="float: left">JPA会員種別</div>
+    <div style="float: right">JPA学生会員</div>
+</div>
+<div style="width: 400px; clear: both">
+    <div style="float: left">年会費</div>
+    <div style="float: right">無料（学生証の提示が必要）</div>
+</div>
+[% ELSE %]
+<div style="width: 400px; clear: both">
+    <div style="float: left">JPA会員種別</div>
+    <div style="float: right">JPA一般会員</div>
+</div>
+<div style="width: 400px; clear: both">
+    <div style="float: left">年会費</div>
+    <div style="float: right">5000円</div>
+</div>
+[% END # IF %]
+
 [% FOREACH field IN fields %]
 <div style="width: 400px; clear: both">
     <div style="float: left">[% loc(field.label) %]</div>
     <div style="float: right">[% confirm.item(field.field) %]</div>
 </div>
-[% END %]
+[% END # FOREACH %]
 
 <br />
 <div>
+
 <a href="[% c.uri_for("commit_basic", subsession) %]">上記で登録する</a>
 </div>
 

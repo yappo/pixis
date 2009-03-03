@@ -57,14 +57,15 @@ sub commit_basic :Local :Args(1) {
     $c->forward('/auth/assert_logged_in') or return;
 
     my $params;
-    if( !($params = $c->session->{jpa_signup}->{$session})) {
+    if( !($params = delete $c->session->{jpa_signup}->{$session})) {
         $c->res->redirect($c->uri_for('/jpa', 'signup'));
         return;
     }
     # commit this basic information.
     $params->{member_id} = $c->user->id;
-    my $order = $c->registry(api => 'JPAMember')->create($params);
+    my ($jpa_member, $order) = $c->registry(api => 'JPAMember')->create($params);
     $c->stash->{order} = $order;
+    $c->stash->{jpa_member} = $jpa_member;
 }
 
 sub payment :Local :Args(0) {

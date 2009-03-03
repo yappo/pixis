@@ -18,6 +18,7 @@ sub create {
     if (! $item) {
         confess "no such membership type: $args->{membership}";
     }
+
     return $schema->txn_do(sub {
         my ($schema, $args, $item) = @_;
 
@@ -27,10 +28,11 @@ sub create {
             %$args,
             is_active  => 0, # must be
             created_on => $now,
-            membership => $item->name
+            membership => $item->id
         });
 
         # Also create an order for this signup
+        my $order;
         if ($item->price <= 0) {
 #            if (DEBUG) {
                 print STDERR "new member does not require a fee\n";
@@ -40,13 +42,14 @@ sub create {
             # proof (a copy of their school ID)
         } else {
             my $order_api = Pixis::Registry->get(api => 'Order');
-            return $order_api->create( {
+            $order = $order_api->create( {
                 member_id   => $args->{member_id}, # pixis member ID
                 amount      => $item->price,
                 description => $item->description,
                 created_on  => $now,
             });
         }
+        return ($member, $order);
     }, $schema, $args, $item);
 }
 
