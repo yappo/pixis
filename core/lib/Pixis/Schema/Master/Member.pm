@@ -1,4 +1,3 @@
-# $Id: /mirror/pixis/Pixis-Core/trunk/lib/Pixis/Schema/Master/Member.pm 101267 2009-02-27T05:47:54.228365Z daisuke  $
 
 package Pixis::Schema::Master::Member;
 use strict;
