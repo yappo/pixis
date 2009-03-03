@@ -9,10 +9,12 @@ with 'Pixis::Plugin';
 
 has '+navigation' => (
    default => sub {
-       { 
-           text => "Conference",
-           url => "/conference"
-       }
+       [
+           { 
+               text => "Conference",
+               url => "/conference"
+           }
+        ]
     }
 );
 

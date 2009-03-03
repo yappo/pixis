@@ -7,10 +7,16 @@ with 'Pixis::Plugin';
 
 has '+navigation' => (
     default => sub {
-        {
-            text => "JPA",
-            url  => "/jpa"
-        }
+        [
+            {
+                text => "JPA",
+                url  => "/jpa"
+            },
+            {
+                text => "Wiki",
+                url  => "http://wiki.perlassociation.org"
+            }
+        ]
     }
 );
 
