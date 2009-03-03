@@ -11,7 +11,9 @@ sub COMPONENT {
     my ($self, $c, $config) = @_;
 
     $self = $self->NEXT::COMPONENT($c, $config);
-    $self->site_index($config->{site_index}) if $config->{site_index};
+
+    my $site_index = $config->{site_index} || $c->config->{site}->{index};
+    $self->site_index($site_index) if $site_index;
     return $self;
 }
 
