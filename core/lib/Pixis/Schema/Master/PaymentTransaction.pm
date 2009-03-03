@@ -50,7 +50,6 @@ __PACKAGE__->add_columns(
     },
 );
 __PACKAGE__->set_primary_key("id");
-__PACKAGE__->has_many('logs' => 'Pixis::Schema::Master::PaymentTransactionLog' => 'txn_id');
 
 sub sqlt_deploy_hook {
     my ($self, $sqlt_table) = @_;
