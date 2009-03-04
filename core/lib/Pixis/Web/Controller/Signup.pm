@@ -84,21 +84,25 @@ sub experience :Local :Args(1) :FormConfig {
 }
 
 # All done, save
-sub commit :Local :Args(1) {
+sub commit :Local :Args(1) :FormConfig {
     my ($self, $c, $subsession) = @_;
 
-    my $p = $self->get_subsession($c, $subsession);
-    # submit element will exist... remove
-    delete $p->{submit};
-    delete $p->{current_step};
-    $p->{activation_token} = $c->generate_session_id;
-    my $member = $c->registry(api => 'Member')->create($p);
-    if ($member) {
-        $p->{current_step} = 'commit';
-        $p->{activation_token} = $member->activation_token;
-        $self->set_subsession($c, $subsession, $p);
-        $c->detach('next_step', [$subsession]);
-    } 
+    my $form = $c->stash->{form};
+    if ($form->submitted_and_valid) {
+        my $p = $self->get_subsession($c, $subsession);
+        # submit element will exist... remove
+        delete $p->{submit};
+        delete $p->{current_step};
+        $p->{activation_token} = $c->generate_session_id;
+        my $member = $c->registry(api => 'Member')->create($p);
+        if ($member) {
+            $p->{current_step} = 'commit';
+            $p->{activation_token} = $member->activation_token;
+            $self->set_subsession($c, $subsession, $p);
+            $c->detach('next_step', [$subsession]);
+        } 
+    }
+    $c->stash->{dummy} = $self->get_subsession($c, $subsession);
 }
 
 sub activate :Local :Args(0) :FormConfig {

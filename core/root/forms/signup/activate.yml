@@ -2,14 +2,18 @@
 elements:
     - type: Text
       name: email
+      label_loc: Email
       constraints:
         - Required
         - Email
     - type: Text
       name: token
+      label_loc: Token
       constraints:
         - Required
         - type: Length
           min: 40
           max: 40
-
+    - type: Submit
+      name: submit
+      value_loc: Submit

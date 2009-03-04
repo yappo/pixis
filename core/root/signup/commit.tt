@@ -1,0 +1,13 @@
+[% WRAPPER wrapper.tt %]
+
+<h2>登録情報確認</h2>
+
+[% USE dumper %]
+[% dumper.dump_html(dummy) %]
+
+
+<p>以上でよろしければ、「送信」を押してください</p>
+[% form %]
+
+
+[% END %]
