@@ -5,7 +5,7 @@ use warnings;
 use base qw(Pixis::Schema::Base::MySQL);
 use DateTime;
 
-__PACKAGE__->load_components("PK::Auto", "VirtualColumns", "InflateColumn::DateTime", "Core");
+__PACKAGE__->load_components("PK::Auto", "UTF8Columns", "VirtualColumns", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("pixis_member");
 __PACKAGE__->add_columns(
     "id" => {
@@ -103,6 +103,7 @@ __PACKAGE__->add_columns(
     },
 );
 __PACKAGE__->add_virtual_columns('password');
+__PACKAGE__->utf8_columns(qw(nickname firstname lastname));
 
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint(unique_email => ['email']);
