@@ -9,13 +9,17 @@ with 'Pixis::API::Base::DBIC';
 
 __PACKAGE__->meta->make_immutable;
 
+sub _build_resultset_constraints {
+    return +{ is_active => 1 }
+}
+
 sub load_from_email {
     my ($self, $email) = @_;
-    my $member = Pixis::Registry->get(schema => 'master')->resultset('Member')->search(
+    my $member = $self->resultset()->search(
         { email => $email },
         { select => [ qw(id) ] }
     )->first;
-    return $self->find($member->id);
+    return $member ? $self->find($member->id) : ();
 }
 
 sub create {
@@ -55,7 +59,7 @@ sub search_members {
     my @ids = $self->cache_get($cache_key);
 
     my $schema = Pixis::Registry->get(schema => 'master');
-    my $rs     = $schema->resultset('Member');
+    my $rs     = $self->resultset();
     if (! @ids) {
         @ids = map { $_->id } $rs->search(
             {
