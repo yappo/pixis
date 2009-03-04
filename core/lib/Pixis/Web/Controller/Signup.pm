@@ -102,7 +102,7 @@ sub commit :Local :Args(1) :FormConfig {
             $c->detach('next_step', [$subsession]);
         } 
     }
-    $c->stash->{dummy} = $self->get_subsession($c, $subsession);
+    $c->stash->{confirm} = $self->get_subsession($c, $subsession);
 }
 
 sub activate :Local :Args(0) :FormConfig {
