@@ -82,6 +82,16 @@ __PACKAGE__->add_columns(
         data_type => "TEXT",
         is_nullable => 1,
     },
+    activation_token => {
+        data_type => "CHAR",
+        is_nullable => 1,
+        size => 40,
+    },
+    is_active => {
+        data_type => 'TINYINT',
+        is_nullable => 0,
+        default_value => 0
+    },
     modified_on => {
         data_type => "TIMESTAMP",
         is_nullable => 0,
@@ -96,6 +106,7 @@ __PACKAGE__->add_virtual_columns('password');
 
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint(unique_email => ['email']);
+__PACKAGE__->add_unique_constraint(unique_activation_token => ['activation_token']);
 
 sub gravatar_url {
     my $self = shift;
@@ -107,6 +118,10 @@ sub gravatar_url {
 sub sqlt_deploy_hook {
     my ($self, $sqlt_table) = @_;
 
+    $sqlt_table->add_index(
+        name => 'is_active_idx',
+        fields => [ 'is_active' ]
+    );
     my ($c) = grep { $_->name eq 'unique_email' } $sqlt_table->get_constraints();
     $c->fields([ 'email(255)' ]);
     $self->next::method($sqlt_table);
@@ -116,8 +131,8 @@ sub populate_initial_data {
     my ($self, $schema) = @_;
     $schema->populate(
         Member => [
-            [ qw(email nickname firstname lastname roles created_on) ],
-            [ qw(me@example.jp admin Admin Admin), join('|', qw(admin)), DateTime->now ],
+            [ qw(email nickname firstname lastname is_active roles created_on) ],
+            [ qw(me@example.jp admin Admin Admin 1), join('|', qw(admin)), DateTime->now ],
         ],
     );
 }
