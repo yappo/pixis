@@ -1,8 +1,8 @@
 
-[% site %] にご登録ありがとうございます。
+[% c.config.site.title %] にご登録ありがとうございます。
 
-このメールは[% site %]に登録された際に自動送信されるメールです。
+このメールは[% c.config.site.title %]に登録された際に自動送信されるメールです。
 登録を完了させるには、以下のURLをクリックしてください
 
-    [% c.uri_for('/signup/activate', [ 'token', activate_token ]) %]
+    [% c.uri_for('/signup/activate', { 'token' =>  activate_token }) %]
 

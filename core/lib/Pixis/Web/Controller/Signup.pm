@@ -48,7 +48,6 @@ sub next_step :Private {
         my $cur   = $p->{current_step};
         my $steps = $self->steps;
         foreach my $i (0..$#{$steps}) {
-warn "checking $cur against $steps->[$i]";
             if ($steps->[$i] eq $cur) {
                 if ($i == $#{$steps}) {
                     $step = 'done';
@@ -58,7 +57,6 @@ warn "checking $cur against $steps->[$i]";
             }
         }
     }
-warn "step is $step";
 
     if (! $step) {
         $self->delete_subsession($c, $subsession);
@@ -126,9 +124,12 @@ sub send_activate :Local :Args(1) {
     $c->stash->{email} = {
         to => $p->{email},
         from => 'no-reply@pixis',
-        subject => Encode::encode('MIME-Header', "登録アクティベーションメール"),
+        subject => "登録アクティベーションメール",
         body    => $body,
-        content_type => 'text/plain; charset=iso-20220-jp',
+        content_type => 'text/plain; charset=iso-2022-jp',
+        headers => [
+            Content_Encoding => '7bit'
+        ]
     };
         
     $c->forward( $c->view('Email' ) );
