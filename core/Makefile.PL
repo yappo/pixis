@@ -25,6 +25,7 @@ requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Plugin::Unicode';
 requires 'Catalyst::View::TT';
 requires 'Catalyst::View::JSON';
+requires 'Catalyst::View::Email';
 requires 'Catalyst::Action::RenderView';
 requires 'parent';
 requires 'YAML'; # This should reflect the config file format you've chosen
