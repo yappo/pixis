@@ -91,6 +91,7 @@ sub commit :Local :Args(1) {
     # submit element will exist... remove
     delete $p->{submit};
     delete $p->{current_step};
+    $p->{activation_token} = $c->generate_session_id;
     my $member = $c->registry(api => 'Member')->create($p);
     if ($member) {
         $p->{current_step} = 'commit';
