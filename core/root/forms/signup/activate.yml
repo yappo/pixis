@@ -1,0 +1,15 @@
+---
+elements:
+    - type: Text
+      name: email
+      constraints:
+        - Required
+        - Email
+    - type: Text
+      name: token
+      constraints:
+        - Required
+        - type: Length
+          min: 40
+          max: 40
+
