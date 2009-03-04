@@ -43,6 +43,27 @@ sub create {
     return $member;
 }
 
+sub activate {
+    my ($self, $args) = @_;
+
+    my $schema = Pixis::Registry->get(schema => 'master');
+    $schema->txn_do( sub {
+        my ($self, $args) = @_;
+        local $self->{resultset_constraints} = {};
+        my $member = $self->resultset()->search({
+            is_active => 0,
+            activation_token => $args->{token},
+            email => $args->{email},
+        })->single;
+        if ($member) {
+            $member->activation_token(undef);
+            $member->is_active(1);
+            $member->update;
+        }
+        return $member;
+    }, $self, $args );
+}
+
 sub search_members {
     my ($self, $form) = @_;
 
