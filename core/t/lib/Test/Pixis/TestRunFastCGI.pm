@@ -1,19 +1,28 @@
 package Test::Pixis::TestRunFastCGI;
-use strict;
-use base qw(Apache::TestRun);
+use Moose;
 use Path::Class::Dir;
 use Path::Class::File;
 use POSIX 'setsid';
 
-sub start {
-    my $self = shift;
+sub register {
+    my ($self, $runner) = @_;
 
-    if (! $ENV{NO_FASTCGI}) {
-        $self->start_fastcgi(@_);
-        print "started fastcgi\n";
-    }
-
-    $self->SUPER::start(@_);
+    my $meta = $runner->meta;
+    $meta->add_before_method_modifier('start', sub {
+        if (! $ENV{NO_FASTCGI}) {
+            $self->start_fastcgi(@_);
+            print "started fastcgi\n";
+        }
+    });
+    $meta->add_after_method_modifier('stop', sub {
+        if (! $ENV{NO_FASTCGI}) {
+            $self->stop_fastcgi(@_);
+            print "stopped fastcgi\n";
+        }
+    });
+    $meta->add_after_method_modifier('install_sighandlers', sub {
+        $self->install_sighandlers();
+    });
 }
 
 sub start_fastcgi {
@@ -80,8 +89,6 @@ sub start_fastcgi {
 
 sub install_sighandlers {
     my $self = shift;
-    $self->SUPER::install_sighandlers(@_);
-
     my $old = $SIG{__DIE__}; # capture this sucker
     $SIG{__DIE__} = sub {
         return unless $_[0] =~ /^Failed/i; #dont catch Test::ok failures
@@ -89,12 +96,6 @@ sub install_sighandlers {
         $self->stop_fastcgi;
         $old->(@_);
     };
-}
-
-sub stop {
-    my $self = shift;
-    $self->stop_fastcgi;
-    $self->SUPER::stop(@_);
 }
 
 sub stop_fastcgi {
