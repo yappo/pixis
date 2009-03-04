@@ -1,4 +1,14 @@
-pixis - Catalyst-Based, SNS, Plugin, Conference
+pixis -
+     A Perl Based Web App.
+        * Catalyst
+        * HTML::FormFu
+        * Mini-SNS features
+        * Pluggable Mechanism to extend your site
+        * TODO: Conference Administration
 
 Very much in development. 
 Here be dragons
+
+This application will be used to power http://japan.perlassociation.org/
+
+Volunteers welcome.
