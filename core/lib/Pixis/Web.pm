@@ -38,7 +38,7 @@ __PACKAGE__->config(
         dirs => [ 'static' ]
     },
     'Controller::HTML::FormFu' => {
-        language_from_context  => 1,
+        languages_from_context  => 1,
         localize_from_context  => 1,
     },
     'Plugin::Authentication' => {
