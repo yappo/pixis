@@ -21,6 +21,12 @@ use base qw(Catalyst::Controller::HTML::FormFu);
 
 sub index :Index :Args(0) {}
 
+sub contd :Local :Args(1) {
+    my ($self, $c, $subsession) = @_;
+    $c->stash->{subsession} = $subsession;
+    $c->forward('/auth/assert_logged_in') or return;
+}
+
 sub basic :Local :Args(0) :FormConfig {
     my ($self, $c) = @_;
 
