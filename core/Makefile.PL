@@ -1,10 +1,10 @@
 # IMPORTANT: if you delete this file your app will not work as
 # expected.  you have been warned
 use inc::Module::Install;
-# use Apache::TestMM;
+use Apache::TestMM qw(test clean);
 
-# Apache::TestMM::filter_args();
-# Apache::TestMM::generate_script('t/TEST');
+Apache::TestMM::filter_args();
+Apache::TestMM::generate_script('t/TEST');
 
 name 'Pixis-Web';
 all_from 'lib/Pixis/Web.pm';
@@ -33,7 +33,7 @@ requires 'YAML'; # This should reflect the config file format you've chosen
 requires 'HTML::FormFu';
 requires 'HTML::FormFu::Model::DBIC';
 requires 'Data::Localize';
-requires 'Catalyst::Model::Data::Localize', 0.00003;
+requires 'Catalyst::Model::Data::Localize', '0.00003';
 requires 'DateTime';
 requires 'DBIx::Class';
 requires 'DBIx::Class::VirtualColumns';
@@ -44,6 +44,7 @@ requires 'Module::Pluggable';
 
 catalyst;
 
+tests("t/*.t t/*/*.t");
 install_script glob('script/*.pl');
 auto_install;
 WriteAll;
