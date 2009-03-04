@@ -48,7 +48,6 @@ sub next_step :Private {
         my $cur   = $p->{current_step};
         my $steps = $self->steps;
         foreach my $i (0..$#{$steps}) {
-warn "checking $cur against $steps->[$i]";
             if ($steps->[$i] eq $cur) {
                 if ($i == $#{$steps}) {
                     $step = 'done';
@@ -58,7 +57,6 @@ warn "checking $cur against $steps->[$i]";
             }
         }
     }
-warn "step is $step";
 
     if (! $step) {
         $self->delete_subsession($c, $subsession);
@@ -93,6 +91,7 @@ sub commit :Local :Args(1) {
     # submit element will exist... remove
     delete $p->{submit};
     delete $p->{current_step};
+    $p->{activation_token} = $c->generate_session_id;
     my $member = $c->registry(api => 'Member')->create($p);
     if ($member) {
         $p->{current_step} = 'commit';
@@ -102,15 +101,22 @@ sub commit :Local :Args(1) {
     } 
 }
 
-sub activate :Loca :Args(0) :FormConfig {
+sub activate :Local :Args(0) :FormConfig {
     my ($self, $c) = @_;
 
     my $form = $c->stash->{form};
-    if ($c->registry(api => 'Member')->activate($form->param('key'))) {
-        # we've activated. now start a new subsession, so we can forward to
-        # whatever next step 
-        my $subsession = $self->new_subsession($c, {current_step => 'activate'});
-        $c->detach('next_step', [$subsession]);
+    if ($form->submitted_and_valid) {
+        if ($c->registry(api => 'Member')->activate({
+                token => $form->param('token'),
+                email => $form->param('email')
+        })) {
+            # we've activated. now start a new subsession, so we can forward to
+            # whatever next step 
+            my $subsession = $self->new_subsession($c, {current_step => 'activate'});
+            $c->detach('next_step', [$subsession]);
+        }
+        $form->form_error_message("指定されたユーザーは存在しませんでした");
+        $form->force_error_message(1);
     }
 }
 
@@ -120,15 +126,19 @@ sub send_activate :Local :Args(1) {
     my $p = $self->get_subsession($c, $subsession);
 
     $c->stash->{ activation_token } = $p->{activation_token};
+    $c->stash->{ email } = $p->{email};
 
     my $body = $c->view('TT')->render($c, 'signup/activation_email.tt');
     $body = Encode::encode('iso-2022-jp', $body);
     $c->stash->{email} = {
         to => $p->{email},
         from => 'no-reply@pixis',
-        subject => Encode::encode('MIME-Header', "登録アクティベーションメール"),
+        subject => "登録アクティベーションメール",
         body    => $body,
-        content_type => 'text/plain; charset=iso-20220-jp',
+        content_type => 'text/plain; charset=iso-2022-jp',
+        headers => [
+            Content_Encoding => '7bit'
+        ]
     };
         
     $c->forward( $c->view('Email' ) );
