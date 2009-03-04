@@ -4,7 +4,7 @@
 
 <h2>Technology</h2>
 <ul>
-    <li><a href="[% c.uri_for('/resource') %]">Perl</a></li>
+    <li><a href="http://wiki.perlassociation.org/Perl"">Perl</a></li>
     <ul>
         <li><a href="http://moose.perl.org">Moose</a> - Perl5 で強力なオブジェクト指向プログラミングを具現化するツール</li>
         <li><a href="http://search.cpan.org/dist/DBIx-Class">DBIx::Class</a> - 協力なオブジェクト・リレーショナル・マッパー</li>
