@@ -59,16 +59,18 @@ sub login :Local :FormConfig {
             # XXX - there *HAS* to be a better way
 
             my $member = Pixis::Registry->get(api => 'Member')->load_from_email($auth->email);
-            $member->password($auth->auth_data);
-            my $dummy = FudgeWorkAround->new($member);
+            if ($member) {
+                $member->password($auth->auth_data);
+                my $dummy = FudgeWorkAround->new($member);
 
-            $c->log->debug("Authenticating against user $member") if $c->log->is_debug;
-            if ($c->authenticate({ password => $form->param('password'), dbix_class => { resultset => $dummy } }, 'members')) {
-                $c->res->redirect(
-                    $c->session->{next_uri} ||
-                    $c->uri_for('/member', $c->user->id)
-                );
-                return;
+                $c->log->debug("Authenticating against user $member") if $c->log->is_debug;
+                if ($c->authenticate({ password => $form->param('password'), dbix_class => { resultset => $dummy } }, 'members')) {
+                    $c->res->redirect(
+                        $c->session->{next_uri} ||
+                        $c->uri_for('/member', $c->user->id)
+                    );
+                    return;
+                }
             }
         }
 
