@@ -1,0 +1,11 @@
+[% WRAPPER jpa/wrapper.tt %]
+
+<h2>登録ありがとうございます。</h2>
+
+<ul>
+    <li>現時点であなたはJapan Perl AssociationサイトがベースとなっているPixisシステムのアカウント登録を完了しました。</li>
+    <li>Japan Perl Associationの会員になっていただける場合は、<a href="[% c.uri_for('/jpa/signup/basic') %]">こちらから引き続き登録を行ってください</a>
+</li>
+</ul>
+
+[% END %]
