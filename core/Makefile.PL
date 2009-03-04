@@ -32,7 +32,7 @@ requires 'YAML'; # This should reflect the config file format you've chosen
 requires 'HTML::FormFu';
 requires 'HTML::FormFu::Model::DBIC';
 requires 'Data::Localize';
-requires 'Catalyst::Model::Data::Localize';
+requires 'Catalyst::Model::Data::Localize', 0.00003;
 requires 'DateTime';
 requires 'DBIx::Class';
 requires 'DBIx::Class::VirtualColumns';
