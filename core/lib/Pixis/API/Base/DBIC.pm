@@ -6,7 +6,15 @@ use namespace::clean -except => qw(meta);
 
 has 'resultset_moniker' => (
     is => 'rw',
+    isa => 'Str',
     required => 1,
+    lazy_build => 1,
+);
+
+has 'resultset_constraints' => (
+    is => 'rw',
+    isa => 'Maybe[HashRef]',
+    predicate => 'has_resultset_constraints',
     lazy_build => 1,
 );
 
@@ -23,6 +31,18 @@ sub _build_resultset_moniker {
     (split(/::/, ref $self))[-1];
 }
 
+sub _build_resultset_constraints { +{} }
+
+sub resultset {
+    my $self = shift;
+    my $schema = Pixis::Registry->get('schema' => 'master');
+    my $rs     = $schema
+        ->resultset($self->resultset_moniker)
+        ->search($self->resultset_constraints)
+    ;
+    return $rs;
+}
+
 sub find {
     my ($self, $id) = @_;
 
@@ -32,8 +52,7 @@ sub find {
         return $obj;
     }
 
-    my $schema = Pixis::Registry->get('schema' => 'master');
-    $obj   = $schema->resultset($self->resultset_moniker)->find($id);
+    $obj   = $self->resultset->find($id);
     if ($obj) {
         $self->cache_set($cache_key, $obj);
     }
@@ -45,7 +64,7 @@ sub load_multi {
     my $schema = Pixis::Registry->get('schema' => 'master');
 
     # keys is a bit of a hassle
-    my $rs = $schema->resultset($self->resultset_moniker);
+    my $rs = $self->resultset();
     my $h = $self->cache_get_multi(map { [ 'pixis', ref $self, $_ ] } @ids);
     my @ret = $h ? values %{$h->{results}} : ();
     foreach my $id ($h ? (map { $_->[2] } @{$h->{missing}}) : @ids) {
@@ -66,7 +85,7 @@ sub _build_primary_key {
     my $self = shift;
 
     my $schema = Pixis::Registry->get('schema' => 'master');
-    my $rs = $schema->resultset($self->resultset_moniker);
+    my $rs = $self->resultset();
 
     my @pk = $rs->result_source->primary_columns;
     if (@pk != 1) {
@@ -81,8 +100,7 @@ sub search {
 
     $attrs ||= {};
 
-    my $schema = Pixis::Registry->get('schema' => 'master');
-    my $rs = $schema->resultset($self->resultset_moniker);
+    my $rs = $self->resultset();
     my $pk = $self->primary_key();
 
     $attrs->{select} ||= [ $pk ];
@@ -100,8 +118,7 @@ sub create_from_form {
 
 sub create {
     my ($self, $args) = @_;
-    my $schema = Pixis::Registry->get('schema' => 'master');
-    my $rs = $schema->resultset($self->resultset_moniker);
+    my $rs = $self->resultset();
     $rs->create($args);
 }
 
@@ -109,17 +126,20 @@ sub update {
     my ($self, $args) = @_;
 
     my $schema = Pixis::Registry->get('schema' => 'master');
-    my $rs = $schema->resultset($self->resultset_moniker);
-    my $pk = $self->primary_key();
 
-    my $key = delete $args->{$pk};
-    my $row = $self->find($key);
-    if ($row) {
-        while (my ($field, $value) = each %$args) {
-            $row->$field( $value );
+    my $row = $schema->txn_do(sub {
+        my ($self, $schema, $args) = @_;
+        my $pk = $self->primary_key();
+        my $rs = $self->resultset();
+        my $key = delete $args->{$pk};
+        my $row = $self->find($key);
+        if ($row) {
+            while (my ($field, $value) = each %$args) {
+                $row->$field( $value );
+            }
+            $row->update;
         }
-    }
-    $row->update;
+    }, $self, $schema, $args );
     return $row;
 }
 
