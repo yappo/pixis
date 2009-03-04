@@ -11,7 +11,7 @@ sub COMPONENT {
     my ($self, $c, $config) = @_;
     $self = $self->NEXT::COMPONENT($c, $config);
 
-    $self->steps(['experience', 'commit', 'send_activate' ]) unless $self->steps;
+    $self->steps(['experience', 'commit', 'send_activate', 'activate' ]) unless $self->steps;
     $self;
 }
 
