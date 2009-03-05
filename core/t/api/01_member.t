@@ -1,6 +1,6 @@
 use strict;
 use lib "t/lib";
-use Test::More (tests => 16);
+use Test::More (tests => 18);
 use Test::Pixis;
 use Test::Exception;
 
@@ -43,10 +43,10 @@ my $api = $t->make_api('Member');
         $found = $api->load_from_email($data{email});
         ok(! $found, "non active member should not be loaded by email");
 
-        TODO: {
-            todo_skip("search_members needs tweaking", 1);
-            my @list = $api->search_members();
-        }
+        my @list = $api->search_members({
+            email => $data{email}
+        });
+        ok( !@list, "non active member should not be loaded from search");
     };
 
     lives_ok(\&$expected_load_failure, "member load (non-active)");
@@ -78,6 +78,15 @@ my $api = $t->make_api('Member');
             is($found->id, $data{id}, "id match");
         } else {
             fail("id match skipped (no member loaded)");
+        }
+
+        my @list = $api->search_members({
+            email => $data{email}
+        });
+        if (is(scalar @list, 1, "search member turns up 1 result")) {
+            is($list[0]->email, $data{email}, "email matches");
+        } else {
+            fail("nothing turned up from search");
         }
     } "member load";
 

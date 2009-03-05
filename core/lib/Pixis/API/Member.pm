@@ -80,23 +80,16 @@ sub search_members {
         $where{$param} = { -like => sprintf('%%%s%%', $value) };
     }
 
-    my $cache_key = [ 'member', 'search', \%where ];
-    my @ids = $self->cache_get($cache_key);
-
     my $schema = Pixis::Registry->get(schema => 'master');
     my $rs     = $self->resultset();
-    if (! @ids) {
-        @ids = map { $_->id } $rs->search(
-            {
-                -or => \%where
-            },
-            {
-                select => [ qw(id) ],
-            }
-        );
-        $self->cache_set($cache_key, \@ids, 600);
-    }
-
+    my @ids = map { $_->id } $rs->search(
+        {
+            -or => \%where
+        },
+        {
+            select => [ qw(id) ],
+        }
+    );
     return $self->load_multi(@ids);
 }
 
