@@ -62,7 +62,7 @@ my $api = $t->make_api('Member');
             email => $data{email},
             token => $data{activation_token},
         });
-    }, "member activation";
+    } "member activation";
 
     lives_ok {
         my $found = $api->find($data{id});
