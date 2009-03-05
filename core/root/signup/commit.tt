@@ -2,10 +2,21 @@
 
 <h2>登録情報確認</h2>
 
-[% USE dumper %]
-[% dumper.dump_html(dummy) %]
+[% SET fields = [
+    { field => "lastname", label => "Last Name" },
+    { field => "firstname", label => "First Name" },
+    { field => "email", label => "Email" }
+    { field => "nickname", label => "Nickname" },
+] %]
 
+[% FOREACH field IN fields %]
+<div style="width: 400px; clear: both">
+    <div style="float: left">[% loc(field.label) %]</div>
+    <div style="float: right">[% confirm.item(field.field) %]</div>
+</div>
+[% END # FOREACH %]
 
+<br />
 <p>以上でよろしければ、「送信」を押してください</p>
 [% form %]
 

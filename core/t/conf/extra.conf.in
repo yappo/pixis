@@ -1,0 +1,4 @@
+LoadModule fastcgi_module /usr/local/apache2/modules/mod_fastcgi.so
+FastCgiExternalServer /pixis.fcgi -socket @Top_Dir@/t/fastcgi.sock
+
+Alias / /pixis.fcgi/
