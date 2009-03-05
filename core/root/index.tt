@@ -2,6 +2,8 @@
 
 <h1>[% loc('Pixis - a Perl-Based Social Networking Systems Platform') %]</h1>
  
-<div><a href="/auth/login">[% loc('Login Now!') %]</a></div>
+<div>
+  <a href="/auth/login">[% loc('Login Now!') %]</a>
+</div>
 
 [% END # WRAPPER %]
