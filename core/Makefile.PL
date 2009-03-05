@@ -10,7 +10,7 @@ name 'Pixis-Web';
 all_from 'lib/Pixis/Web.pm';
 
 requires 'namespace::clean';
-requires 'Apache:Test';
+requires 'Apache::Test';
 requires 'Catalyst::Runtime' => '5.7015';
 requires 'Catalyst::Controller::HTML::FormFu';
 requires 'Catalyst::Plugin::Authentication';
