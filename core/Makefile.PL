@@ -35,10 +35,15 @@ requires 'HTML::FormFu::Model::DBIC';
 requires 'Data::Localize';
 requires 'Catalyst::Model::Data::Localize', 0.00003;
 requires 'DateTime';
+requires 'DateTime::Format::Duration';
+requires 'DBD::mysql';
 requires 'DBIx::Class';
 requires 'DBIx::Class::VirtualColumns';
 requires 'Digest::SHA1';
+requires 'MooseX::Getopt';
+requires 'MooseX::Types::Path::Class';
 requires 'MooseX::WithCache';
+requires 'SQL::Translator';
 requires 'Template::Provider::Encoding';
 requires 'Module::Pluggable';
 
