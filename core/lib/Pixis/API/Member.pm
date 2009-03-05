@@ -46,6 +46,9 @@ sub create {
 sub activate {
     my ($self, $args) = @_;
 
+    $args->{token} or die "no token";
+    $args->{email} or die "no email";
+
     my $schema = Pixis::Registry->get(schema => 'master');
     $schema->txn_do( sub {
         my ($self, $args) = @_;
@@ -59,8 +62,9 @@ sub activate {
             $member->activation_token(undef);
             $member->is_active(1);
             $member->update;
+            return $self->find($member->id);
         }
-        return $member;
+        return ();
     }, $self, $args );
 }
 
