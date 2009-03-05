@@ -1,6 +1,6 @@
 use strict;
 use lib "t/lib";
-use Test::More (tests => 18);
+use Test::More (tests => 14);
 use Test::Pixis;
 use Test::Exception;
 
@@ -30,7 +30,7 @@ my %data = (
 {
     my $member;
 
-    lives_ok {
+    lives_and {
         $member = $api->create(\%data);
         $data{id} = $member->id;
     } "member creation";
@@ -49,9 +49,9 @@ my %data = (
         ok( !@list, "non active member should not be loaded from search");
     };
 
-    lives_ok(\&$expected_load_failure, "member load (non-active)");
+    lives_and(\&$expected_load_failure, "member load (non-active)");
 
-    lives_ok {
+    lives_and {
         $api->activate({
             email => $data{email},
             token => 'dummy',
@@ -64,7 +64,7 @@ my %data = (
         });
     } "member activation";
 
-    lives_ok {
+    lives_and {
         my $found = $api->find($data{id});
         if (ok($found, "member loaded by primary key ok")) {
             is($found->email, $data{email}, "email match");
