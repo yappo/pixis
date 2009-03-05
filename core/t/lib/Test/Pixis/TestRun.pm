@@ -9,7 +9,7 @@ extends 'Apache::TestRun';
 after 'new' => sub {
     my $self = shift;
     my $plugins = Module::Pluggable::Object->new(
-        search_path => "Test::Pixis",
+        search_path => "Test::Pixis::TestRun",
         search_dirs => "t/lib",
         except      => [ "Test::Pixis::TestRun" ],
         instantiate => 'new',

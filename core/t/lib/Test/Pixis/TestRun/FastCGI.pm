@@ -1,4 +1,4 @@
-package Test::Pixis::TestRunFastCGI;
+package Test::Pixis::TestRun::FastCGI;
 use Moose;
 use Path::Class::Dir;
 use Path::Class::File;
