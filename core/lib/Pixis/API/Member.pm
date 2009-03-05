@@ -69,12 +69,12 @@ sub activate {
 }
 
 sub search_members {
-    my ($self, $form) = @_;
+    my ($self, $args) = @_;
 
     my %where;
     foreach my $param qw(name nickname email) {
-        my $value = $form->param($param);
-        next unless $value;
+        next unless exists $args->{$param};
+        my $value = $args->{$param};
 
         $value =~ s/%/%%/g;
         $where{$param} = { -like => sprintf('%%%s%%', $value) };

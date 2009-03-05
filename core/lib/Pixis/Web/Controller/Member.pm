@@ -73,7 +73,7 @@ sub search :Local :Args(0) :FormConfig {
 
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
-        $c->stash->{members} = $c->registry(api => 'Member')->search_members($form);
+        $c->stash->{members} = $c->registry(api => 'Member')->search_members($form->params);
     }
 }
 
