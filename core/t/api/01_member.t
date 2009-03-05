@@ -12,6 +12,14 @@ BEGIN
 
 my $t = Test::Pixis->instance;
 my $api = $t->make_api('Member');
+my %data = (
+    email     => 'test@perlassociation.org',
+    nickname  => 'testuser',
+    firstname => '太郎',
+    lastname  => 'テスト',
+    password  => 'testing',
+    activation_token => Digest::SHA1::sha1_hex($$, rand(), time()),
+);
 
 {
     my $registry = Pixis::Registry->instance();
@@ -21,14 +29,6 @@ my $api = $t->make_api('Member');
 
 {
     my $member;
-    my %data = (
-        email     => 'test@perlassociation.org',
-        nickname  => 'testuser',
-        firstname => '太郎',
-        lastname  => 'テスト',
-        password  => 'testing',
-        activation_token => Digest::SHA1::sha1_hex($$, rand(), time()),
-    );
 
     lives_ok {
         $member = $api->create(\%data);
@@ -89,6 +89,11 @@ my $api = $t->make_api('Member');
             fail("nothing turned up from search");
         }
     } "member load";
+}
 
+END {
+    eval {
+        $api->delete($data{id});
+    }
 }
 
