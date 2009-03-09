@@ -1,11 +1,8 @@
 <!-- START header -->
-  <div id="header">
-[% IF c.user_exists %]
-      <a href="/member/settings">[% loc("Member Settings") %]</a> | 
-      <a href="/auth/logout">[% loc("Logout") %]</a>
-[% ELSE %]
-      <a href="/auth/login">[% loc("Login") %]</a>
-[% END %]
-  </div>
-  <div id="topleft" [% IF (site_config.logo) %]style="background: #f4f4f4 url([% site_config.logo %]) top left no-repeat;"[% END %]></div>
+<div id="header">[% IF c.user_exists %] <a href="/member/settings">[%
+loc("Member Settings") %]</a> | <a href="/auth/logout">[% loc("Logout")
+%]</a> [% ELSE %] <a href="/auth/login">[% loc("Login") %]</a> [% END %]</div>
+<div id="topleft">
+  [% IF (site_config.logo) %]<img src="[% site_config.logo %]" border="0" alt="JPAlogo" />[% END %]
+</div>
 <!-- END header -->
