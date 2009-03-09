@@ -68,10 +68,10 @@ height: 84px;
 margin: 0 0 10px 0;
 padding: 0;
 font-size: 0.9em;
-background: #f4f4f4 url(/static/img/topleft.gif) top left no-repeat;
+background: #f4f4f4 url(/static/img/topmenu.gif) top left no-repeat;
 }
 
-#left {
+#menu {
 clear: left;
 float: left;
 width: 150px;
@@ -80,7 +80,7 @@ padding: 0;
 font-size: 0.9em;
 }
 
-#left ul {  
+#menu ul {  
 list-style: none;
 width: 150px;
 margin: 0 0 10px 0;
@@ -88,11 +88,11 @@ padding: 0;
 font-size: 1.1em;
 }   
 
-#left li {
+#menu li {
 margin-bottom: 4px;
 }
 
-#left li a {
+#menu li a {
 font-weight: bold;
 height: 20px;
 text-decoration: none;
@@ -103,7 +103,7 @@ background: #ffffff;
 border-left: 5px solid #86C32A;
 }   
     
-#left li a:hover {
+#menu li a:hover {
 background: #86C32A;
 color: #ffffff;
 border-left: 5px solid #86C32A;
