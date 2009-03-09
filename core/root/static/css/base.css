@@ -10,7 +10,7 @@ CSS layout: */
 body {
 margin: 0 auto;
 padding: 0;
-font: 76% Arial, Helvetica, sans-serif;
+font: 76% "ＭＳ Ｐゴシック", "ヒラギノ角ゴ Pro W3", Osaka, Arial, Halvetica, sans-serif;
 background: #f4f4f4 url(/static/img/backround.gif) top center repeat-y;
 }
 
@@ -23,7 +23,6 @@ margin:0 0 5px 10px;
 padding:0 10px 0 10px;
 background:#F7F9F7;
 color:#000000;
-font-family:Arial, Helvetica, sans-serif;
 font-size:.9em;
 }
 
