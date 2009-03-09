@@ -1,3 +1,0 @@
-[% WRAPPER wrapper.tt, footer_tt => 'jpa/footer.tt' %]
-[% content %]
-[% END # WRAPPER %]
