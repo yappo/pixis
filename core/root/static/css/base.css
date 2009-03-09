@@ -273,3 +273,7 @@ visibility: hidden;
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
 /* End hide from IE-mac */
+
+h1 {color: #86C32A;}
+h2 {color: #FF9933;}
+h3 {color: #999999;}
