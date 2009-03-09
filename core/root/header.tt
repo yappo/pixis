@@ -1,4 +1,4 @@
 <!-- START header -->
 <img id="header" src="/static/img/header.jpg" width="760" height="35" alt="header" />
-  <div id="topmenu"></div>
+  <div id="topleft"></div>
 <!-- END header -->
