@@ -1,4 +1,4 @@
 <!-- START header -->
 <img id="header" src="/static/img/header.jpg" width="760" height="35" alt="header" />
-  <div id="topleft"></div>
+  <div id="topleft" [% IF (site_config.logo) %]style="background: #f4f4f4 url([% site_config.logo %]) top left no-repeat;"[% END %]></div>
 <!-- END header -->

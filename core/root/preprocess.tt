@@ -4,5 +4,9 @@ MACRO loc(text, args) BLOCK;
     c.localize(text, args);
 END;
 
+# Site wide, template specific config. For example, site title,
+# log URL, and more
+PROCESS site_config.tt;
+
  -%]
 [%- SET lang = c.session.lang || 'ja' -%]

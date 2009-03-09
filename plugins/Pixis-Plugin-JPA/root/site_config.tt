@@ -1,0 +1,8 @@
+[%-
+
+SET site_config = {
+    title => 'Japan Perl Association (JPA)',
+    logo => '/static/jpa/img/jpa_logo_small.jpg',
+}
+
+-%]
