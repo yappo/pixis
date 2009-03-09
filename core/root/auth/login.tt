@@ -1,5 +1,6 @@
 [% WRAPPER wrapper.tt %]
+    <div class="greenbox loginbox">
 [% form %]
-
+    </div>
 <a href="[% c.uri_for('/signup') %]">[% loc("No Account? Sign up now!") %]</a>
 [% END # WRAPPER %]

@@ -277,3 +277,17 @@ visibility: hidden;
 h1 {color: #86C32A;}
 h2 {color: #FF9933;}
 h3 {color: #999999;}
+
+.loginbox form {padding:0; margin:0;}
+.loginbox fieldset {
+    margin:0;
+    border:none;
+    text-align: center;
+}
+.loginbox .label {
+    margin-top:10px;
+    width: 80%;
+    text-align: right;
+}
+.loginbox .label input {width:70%;}
+.loginbox .submit input {margin-top:10px; width:100px;}
