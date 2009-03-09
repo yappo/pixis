@@ -10,7 +10,7 @@ CSS layout: */
 body {
 margin: 0 auto;
 padding: 0;
-font: 76% "ＭＳ Ｐゴシック", "ヒラギノ角ゴ Pro W3", Osaka, Arial, Halvetica, sans-serif;
+font: 76% "ＭＳ Ｐゴシック", 'メイリオ',Meiryo,"ヒラギノ角ゴ Pro W3", Osaka, Arial, Halvetica, sans-serif;
 background: #f4f4f4 url(/static/img/backround.gif) top center repeat-y;
 }
 
