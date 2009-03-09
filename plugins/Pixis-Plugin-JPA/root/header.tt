@@ -1,0 +1,4 @@
+<!-- START header -->
+<img id="header" src="/static/img/header.jpg" width="760" height="35" alt="header" />
+  <div id="topleft" style="background: #f4f4f4 url(/static/jpa/img/jpa_logo_small.jpg) top left no-repeat;"></div>
+<!-- END header -->
