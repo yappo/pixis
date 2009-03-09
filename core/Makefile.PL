@@ -34,15 +34,20 @@ requires 'YAML'; # This should reflect the config file format you've chosen
 requires 'Cache::Memcached';
 requires 'Data::Localize';
 requires 'DateTime';
+requires 'DateTime::Format::Duration';
+requires 'DBD::mysql';
 requires 'DBIx::Class';
 requires 'DBIx::Class::VirtualColumns';
 requires 'Digest::SHA1';
+requires 'MooseX::Getopt';
+requires 'MooseX::Types::Path::Class';
 requires 'HTML::FormFu';
 requires 'HTML::FormFu::Model::DBIC';
 requires 'Module::Pluggable';
 requires 'Moose';
 requires 'MooseX::Singleton';
 requires 'MooseX::WithCache';
+requires 'SQL::Translator';
 requires 'Template::Provider::Encoding';
 
 test_requires 'Test::More', '0.82';

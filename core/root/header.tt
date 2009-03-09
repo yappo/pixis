@@ -1,3 +1,4 @@
 <!-- START header -->
-[% PROCESS navigation.tt %]
+<img id="header" src="/static/img/header.jpg" width="760" height="35" alt="header" />
+  <div id="topmenu"></div>
 <!-- END header -->
