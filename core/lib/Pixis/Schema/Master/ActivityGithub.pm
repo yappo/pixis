@@ -33,6 +33,10 @@ __PACKAGE__->add_columns(
         data_type => "TEXT",
         is_nullable => 0,
     },
+    activity_on => {
+        data_type => "DATETIME",
+        is_nullable => 0,
+    },
     modified_on => {
         data_type => "TIMESTAMP",
         is_nullable => 0,
