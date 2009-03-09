@@ -13,6 +13,6 @@
     <li> 個人の方は、Paypalを利用することにより、500円の割引を受けることができる（予定) </li>
 </ul>
 
-<p><a href="/jpa/signup/basic">登録はこちらから</a></p>
+<p><a href="[% IF c.user_exists %]/jpa/signup/basic[% ELSE %]/signup[% END %]">登録はこちらから</a></p>
 
 [% END # WRAPPER %]
