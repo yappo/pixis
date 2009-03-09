@@ -1,0 +1,7 @@
+[%
+
+SET site_config = {
+    title => 'Pixis',
+}
+
+%]
