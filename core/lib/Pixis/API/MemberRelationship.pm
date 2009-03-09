@@ -18,7 +18,6 @@ sub follow {
     }
 
     my $schema = Pixis::Registry->get(schema => 'master');
-    $schema->txn_do(sub {
 
     # Does the other person have a follow status to me? if so,
     # I say we have feelings for each other
@@ -76,7 +75,5 @@ sub is_mutual {
     my $there_to_here = $rs->find({from_id => $to->id, to_id => $from->id});
     return ($here_to_there && $there_to_here) ? 1 : ();
 }
-
-sub break_all
 
 1;
