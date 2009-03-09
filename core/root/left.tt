@@ -1,18 +1,11 @@
+[% DEFAULT submenu = site_config.submenu %]
 <!-- START left -->
   <div id="menu">
 [% PROCESS navigation.tt %]
-    <div class="leftnews"> <a href="#">You can add info here:</a><br />
-      <br />
-      <span class="style3">Like your site updates: <br />
-      <br />
-      This is some filler text <br />
-      <br />
-      This is some filler text </span><br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <img src="/static/img/Bullet_green.gif" alt="right blue" width="19" height="16" /> </div>
+    <div class="leftnews"> 
+      [% FOREACH smenu IN submenu -%]
+       <div><img src="/static/img/Bullet_green.gif" alt="right blue" width="19" height="16" /> <a href="[% smenu.link %]">[% smenu.text %]</a></div>
+      [%- END %]
+      </div>
   </div>
 <!-- END left -->
