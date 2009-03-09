@@ -1,3 +1,5 @@
 [% WRAPPER wrapper.tt %]
+<h2>Pixis Member Signup</h2>
+
 [% form %]
 [% END # WRAPPER %]

@@ -1,4 +1,0 @@
-<div><a href="[% c.uri_for("/jpa/poweredby") %]">Powered By</a></div>
-<div><a href="[% c.uri_for("/jpa/sponsors") %]">賛同企業・会員</a></div>
-
-[% PROCESS footer.tt %]

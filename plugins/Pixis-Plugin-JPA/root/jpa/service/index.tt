@@ -1,4 +1,4 @@
-[% WRAPPER jpa/wrapper.tt %]
+[% WRAPPER wrapper.tt %]
 
 <h1>JPA サービス内容</h1>
 <ul>

@@ -10,7 +10,7 @@
 -%]
 <html>
 <head>
-    <title>[% IF title %][% title %] - [% c.config.site.title || 'Pixis' %][% ELSE %][% c.config.site.title || 'Pixis' %][% END %]</title>
+    <title>[% IF title %][% title %] - [% site_config.title || 'Pixis' %][% ELSE %][% site_config.title || 'Pixis' %][% END %]</title>
 [% FOREACH script IN base_scripts %]
     <script src="[% script %]" type="text/javascript"></script>
 [% END %] 

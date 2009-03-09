@@ -2,6 +2,7 @@
 package Pixis::Plagger::Plugin::MemberActivity;
 use strict;
 use base qw( Plagger::Plugin );
+use DBI;
 
 sub register {
     my($self, $context) = @_;
@@ -58,7 +59,7 @@ sub publish_feed {
 
     $dbh->begin_work();
     for my $e ($f->entries) {
-        $sth->execute($e->id, $e->permalink, $e->title, $e->body, $e->issued);
+        $sth->execute($e->id, $e->permalink, $e->title, $e->body, $e->date);
     }
     $dbh->commit();
 }
