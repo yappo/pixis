@@ -50,6 +50,8 @@ requires 'MooseX::WithCache';
 requires 'SQL::Translator';
 requires 'Template::Provider::Encoding';
 
+test_requires 'Test::More', '0.82';
+
 catalyst;
 
 tests("t/*.t t/*/*.t");

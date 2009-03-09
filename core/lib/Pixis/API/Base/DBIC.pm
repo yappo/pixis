@@ -143,4 +143,21 @@ sub update {
     return $row;
 }
 
+sub delete {
+    my ($self, $id) = @_;
+
+    my $schema = Pixis::Registry->get('schema' => 'master');
+    $schema->txn_do( sub {
+        my ($self, $schema, $id) = @_;
+        my $obj = $schema->resultset($self->resultset_moniker)->find($id);
+        if ($obj) {
+            $obj->delete;
+        }
+
+        my $cache_key = ['pixis', ref $self, $id ];
+        $self->cache_del($cache_key);
+    
+    }, $self, $schema, $id );
+}
+
 1;
