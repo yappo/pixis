@@ -7,7 +7,10 @@ use namespace::clean -except => qw(meta);
 
 with 'Pixis::API::Base::DBIC';
 
-__PACKAGE__->meta->make_immutable;
+after 'delete' => sub {
+    my ($self, $id) = @_;
+    Pixis::Registry->get(api => 'MemberRelationship')->break_all($id);
+};
 
 sub _build_resultset_constraints {
     return +{ is_active => 1 }
@@ -139,4 +142,14 @@ sub load_followers {
     return $self->load_multi(@ids);
 }
 
-1;
+sub follow {
+    my ($self, $from, $to)  = @_;
+    Pixis::Registry->get(api => 'MemberRelationship')->follow($from, $to);
+}
+
+sub unfollow {
+    my ($self, $from, $to)  = @_;
+    Pixis::Registry->get(api => 'MemberRelationship')->unfollow($from, $to);
+}
+
+__PACKAGE__->meta->make_immutable;

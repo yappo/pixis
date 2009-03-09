@@ -155,7 +155,7 @@ sub delete {
         }
 
         my $cache_key = ['pixis', ref $self, $id ];
-        $self->cache_delete($cache_key);
+        $self->cache_del($cache_key);
     
     }, $self, $schema, $id );
 }

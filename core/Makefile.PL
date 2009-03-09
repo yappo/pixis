@@ -45,6 +45,8 @@ requires 'MooseX::Singleton';
 requires 'MooseX::WithCache';
 requires 'Template::Provider::Encoding';
 
+test_requires 'Test::More', '0.82';
+
 catalyst;
 
 tests("t/*.t t/*/*.t");
