@@ -56,8 +56,16 @@ width: 760px;
 
 #header {
 margin: 0 0 8px 0;
+padding-top:10px;
+padding-right:30px;
 border: 0;
+background: #86C32A url(/static/img/header.jpg) top center no-repeat;
+width: 730px;
+height: 25px;
+text-align: right;
 }
+
+#header a {color: #FFF;}
 
 #topleft {
 clear: left;
