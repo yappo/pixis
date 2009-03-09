@@ -7,7 +7,7 @@
     <li><a href="http://wiki.perlassociation.org/Perl"">Perl</a></li>
     <ul>
         <li><a href="http://moose.perl.org">Moose</a> - Perl5 で強力なオブジェクト指向プログラミングを具現化するツール</li>
-        <li><a href="http://search.cpan.org/dist/DBIx-Class">DBIx::Class</a> - 協力なオブジェクト・リレーショナル・マッパー</li>
+        <li><a href="http://search.cpan.org/dist/DBIx-Class">DBIx::Class</a> - 強力なオブジェクト・リレーショナル・マッパー</li>
         <li><a href="http://github.com/lestrrat/pixis/tree/master">Pixis</a> - プラグイン対応したCatalystアプリケーション</li>
         <ul>
             <li><a href="http://catalyst.perl.org">Catalyst</a> - 強力なMVC Webアプリケーションフレームワーク</li>
