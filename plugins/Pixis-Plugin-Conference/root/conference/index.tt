@@ -3,7 +3,7 @@
 <h1>[% loc("Conferences") %]</h1>
 
 <ul>
-    <li><a href="/conference/create">[% loc('Organize a conference') %]</a> ([% c.log("Requires Admin priviledges") %]</li>
+    <li><a href="/conference/create">[% loc('Organize a conference') %]</a> ([% loc("Requires Admin priviledges") %]</li>
 </ul>
 
 [% IF conferences.size > 0 %]
