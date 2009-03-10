@@ -45,17 +45,17 @@ __PACKAGE__->config(
         use_session => 1,
         default_realm => 'members',
         realms => {
-            openid  => {
-                credential => {
-                    class => 'OpenID',
-                },
-                extension_args => [
-                    "http://openid.net/extensions/sreg/1.1" => {
-                         required => join(",", qw/email nickname fullname/)
-                    },
-                ],
-                ua_class => 'LWPx::ParanoidAgent'
-            },
+#            openid  => {
+#                credential => {
+#                    class => 'OpenID',
+#                },
+#                extension_args => [
+#                    "http://openid.net/extensions/sreg/1.1" => {
+#                         required => join(",", qw/email nickname fullname/)
+#                    },
+#                ],
+#                ua_class => 'LWPx::ParanoidAgent'
+#            },
             members => {
                 credential => {
                     class => 'Password',
