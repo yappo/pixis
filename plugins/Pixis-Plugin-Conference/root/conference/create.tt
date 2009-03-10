@@ -1,3 +1,4 @@
 [% WRAPPER wrapper.tt %]
+<h1>[% loc("Conference Details") %]</h1>
 [% form %]
 [% END # WRAPPER %]

@@ -1,16 +1,18 @@
 [% WRAPPER wrapper.tt %]
 
+<h1>[% loc("Conferences") %]</h1>
 
 <ul>
-    <li><a href="/conference/create">[% loc('Organize a conference') %]</a></li>
+    <li><a href="/conference/create">[% loc('Organize a conference') %]</a> ([% c.log("Requires Admin priviledges") %]</li>
 </ul>
 
+[% IF conferences.size > 0 %]
 <h2>開催予定のカンファレンス</h2>
 <ul>
 [% FOREACH conference IN conferences %]
     <li><a href="[% c.uri_for("/conference", conference.id) %]">[% conference.title | html %]</a></li>
 [% END %]
 </ul>
-    
+[% END %]
 
 [% END # WRAPPER %]
