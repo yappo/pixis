@@ -1,4 +1,7 @@
 [% WRAPPER wrapper.tt %]
+
+<h1>[% loc("Login") %]</h1>
+
     <div class="greenbox loginbox">
 [% form %]
     </div>
