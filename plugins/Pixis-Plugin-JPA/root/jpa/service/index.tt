@@ -1,8 +1,11 @@
 [% WRAPPER wrapper.tt %]
 
 <h1>JPA サービス内容</h1>
-<ul>
-    <li><a href="[% c.uri_for("training") %]">研修・トレーニング</a></li>
-</ul>
 
+<h2>研修・トレーニング</h2>
+
+<p> JPA ではPerlを使い始めの方から、実践的な業務効率化のためのテクニックまで、様々な内容をカバーします。[<a href="[% c.uri_for("training") %]">詳細</a>]</p>
+
+<h2> YAPC::Asia Tokyo </h2>
+<p> Perl エンジニア達の祭典、YAPCの日本版であるYAPC::Asia Tokyoを開催します。2009年度は 9月〜10月に開催予定です。</p>
 [% END %]
