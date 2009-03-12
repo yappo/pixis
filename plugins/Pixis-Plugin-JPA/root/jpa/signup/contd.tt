@@ -1,4 +1,4 @@
-[% WRAPPER jpa/wrapper.tt %]
+[% WRAPPER wrapper.tt %]
 
 <h2>登録ありがとうございます。</h2>
 
