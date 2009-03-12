@@ -8,6 +8,8 @@ sub auto :Private {
     $c->forward('/auth/assert_logged_in');
 }
 
+sub bank :Local :Args(0) {}
+
 sub paypal :Local :Args(0) :FormConfig{
     my ($self, $c) = @_;
 
