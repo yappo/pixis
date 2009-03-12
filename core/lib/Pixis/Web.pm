@@ -22,13 +22,8 @@ use Catalyst qw(
     Static::Simple
     Unicode
 );
-use Module::Pluggable
-    require => 1,
-    search_path => [
-        'Pixis::Plugin',
-        'Pixis::Web::Plugin'
-    ]
-;
+use Module::Pluggable::Object;
+
 our $VERSION = '0.01';
 
 __PACKAGE__->config(
@@ -86,8 +81,10 @@ __PACKAGE__->config(
     }
 );
 
-__PACKAGE__->mk_classdata(pixis_registered_plugins => { });
-__PACKAGE__->mk_classdata(navigation => []);
+# mk_classdata is overkill for these.
+my %REGISTERED_PLUGINS = ();
+my %TT_ARGS            = ();
+my @PLUGINS            = ();
 
 our $REGISTRY = Pixis::Registry->instance;
 sub registry {
@@ -116,25 +113,33 @@ sub setup_pixis_plugins {
     $search_path = [ grep { defined $_ && length $_ > 0 } @$search_path ];
     unshift @INC, @$search_path if scalar @$search_path;
 
-    my $seen = $self->pixis_registered_plugins;
-
     # Core must be read-in before everything else
     # (it will be discovered by Module::Pluggable, and we wouldn't
     # load it twice anyway, so we're safe to just stick it in the front)
-    my @plugins = $self->plugins;
-    unshift @plugins, 'Pixis::Web::Plugin::Core';
+    my $mpo = Module::Pluggable::Object->new(
+        require => 1,
+        search_path => [
+            'Pixis::Plugin',
+            'Pixis::Web::Plugin'
+        ]
+    );
+
+    my @plugins = $mpo->plugins;
 
     foreach my $plugin (@plugins) {
         my $pkg = $plugin;
         my $args = $self->config->{plugins}->{config}->{$plugin} || {} ;
         $plugin = $pkg->new(%$args);
-        if (! $plugin->registered && !($seen->{ $pkg }++) ){
+        if (! $plugin->registered && !($REGISTERED_PLUGINS{ $pkg }++) ){
             print STDERR "[Pixis Plugin]: Registring $pkg\n";
             $plugin->register;
             $plugin->registered(1);
+            push @PLUGINS, $plugin;
         }
     }
 }
+
+sub plugins { \@PLUGINS }
 
 # Note: This exists *solely* for the benefit of pixis_web_server.pl
 # In your real app (fastcgi deployment suggested), you need to do something
@@ -168,12 +173,6 @@ sub add_tt_include_path {
         @paths,
         @{ $view->include_path }
     );
-}
-
-sub add_navigation {
-    my $self = shift;
-    my $navigation = $self->navigation;
-    push @$navigation, $_ for @_;
 }
 
 sub add_translation_path {

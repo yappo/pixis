@@ -1,0 +1,30 @@
+[%-
+SET site_config.title = 'Japan Perl Association (JPA)';
+SET site_config.logo  = '/static/jpa/img/jpa_logo_small.jpg';
+SET site_config.submenu = [
+    { link => "/jpa/signup",    text => "会員登録" },
+    { link => "/jpa/sponsors",  text => "賛同企業・会員" },
+    { link => "/jpa/poweredby", text => "Powered By" },
+];
+
+CALL site_config.navigation.push(
+    {
+        text => "JPA",
+        url  => "/jpa"
+    }
+);
+
+CALL site_config.navigation.push(
+    {
+        text => "JPA Wiki",
+        url  => "http://wiki.perlassociation.org"
+    }
+);
+CALL site_config.navigation.push(
+    {
+        text => "JPA Services",
+        url => "/jpa/service"
+    }
+);
+
+-%]

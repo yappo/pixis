@@ -6,7 +6,17 @@ END;
 
 # Site wide, template specific config. For example, site title,
 # log URL, and more
+SET site_config = {
+    navigation => []
+};
+
 PROCESS site_config.tt;
+FOREACH plugin IN c.plugins;
+    SET pt = plugin.tt_preprocess;
+    IF (pt);
+        PROCESS $pt;
+    END;
+END;
 
  -%]
 [%- SET lang = c.session.lang || 'ja' -%]
