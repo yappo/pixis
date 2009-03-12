@@ -1,8 +1,7 @@
 <!-- START navigation -->
-[% SET navlist = c.navigation %]
     <h2 class="hide">Menu:</h2>
     <ul>
-[% FOREACH nav IN navlist %]
+[% FOREACH nav IN site_config.navigation %]
       <li><a href="[% nav.url %]">[% loc(nav.text || 'Link') %]</a></li>
 [% END %]
     </ul>

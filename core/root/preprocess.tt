@@ -6,6 +6,9 @@ END;
 
 # Site wide, template specific config. For example, site title,
 # log URL, and more
+SET site_config = {
+    navigation => []
+};
 PROCESS site_config.tt;
 
  -%]
