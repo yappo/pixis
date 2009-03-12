@@ -90,3 +90,15 @@ msgstr "メンバー検索"
 
 msgid "Basic Settings"
 msgstr "基本設定"
+
+msgid "CodeRepos ID (If Available)"
+msgstr "CodeRepos ID (任意)"
+
+msgid "CPAN ID (If Available)"
+msgstr "CPAN ID (任意)"
+
+msgid "Github ID (If Available)"
+msgstr "Github ID (任意)"
+
+msgid "Pixis Member Signup"
+msgstr "メンバー登録"

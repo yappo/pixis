@@ -15,4 +15,4 @@ elements:
       label_loc: Github ID (If Available)
     - type: Submit
       name: submit
-      value: submit
+      value_loc: Submit
