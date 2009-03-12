@@ -1,6 +1,6 @@
 use strict;
 use lib "t/lib";
-use Test::More (tests => 17);
+use Test::More (tests => 20);
 use Test::Pixis;
 use Test::Exception;
 
@@ -35,6 +35,15 @@ my %MEMBER2 = (
 
     $registry->set(schema => 'master', $t->make_schema('Master'));
     $registry->set(api => 'memberrelationship' => $t->make_api('MemberRelationship'));
+}
+
+{
+    # make sure these don't exist at cleanup
+    lives_ok {
+        local $api->{resultset_constraints} = {};
+        my @members = $api->search({ email => { -in => [ $MEMBER1{email}, $MEMBER2{email} ] } });
+        $api->delete($_->{id}) for @members;
+    } "member deletion";
 }
 
 {
@@ -108,19 +117,19 @@ my %MEMBER2 = (
         $api->activate({
             email => $MEMBER2{email},
             token => $MEMBER2{activation_token},
-        });
+        }) or die;
 
         $api->follow($MEMBER1{id}, $MEMBER2{id});
 
         my @followers = $api->load_followers($MEMBER2{id});
-        is (scalar @followers, 1, "people following $MEMBER2{id}");
+        is (scalar(@followers), 1, "people following $MEMBER2{id}");
         if (! is ($followers[0]->id, $MEMBER1{id}, "member 1 is following member 2")) {
             diag( "got followers: ", explain(@followers));
         }
-#        my @following = $api->load_following($MEMBER1{id});
-#        is (scalar @followers, 1, "1 following $MEMBER2{id}");
+        my @following = $api->load_following($MEMBER1{id});
+        is (scalar(@followers), 1, "should have 1 person following $MEMBER2{id} (got " . scalar @followers . ")");
         
-    }
+    } "check followers with no exception";
 
     lives_and {
         $api->delete($MEMBER1{id});
@@ -130,15 +139,17 @@ my %MEMBER2 = (
 
         $found = $api->load_from_email($MEMBER1{email});
         ok( ! $found);
-    } "member deletion";
+    } "member deletion (at the end)";
 }
 
 END {
     eval {
         $api->delete($MEMBER1{id});
     };
+    print STDERR "# Error at cleanup: $@\n" if $@;
     eval {
         $api->delete($MEMBER2{id});
-    }
+    };
+    print STDERR "# Error at cleanup: $@\n" if $@;
 }
 
