@@ -1,5 +1,7 @@
 [% WRAPPER wrapper.tt %]
-<h2>Pixis Member Signup</h2>
+<h2>[% loc("Pixis Member Signup") %]</h2>
 
+<div class="greenbox signupbox">
 [% form %]
+</div>
 [% END # WRAPPER %]

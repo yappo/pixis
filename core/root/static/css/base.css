@@ -300,4 +300,18 @@ h3 {color: #999999;}
 .loginbox .label input {width:70%;}
 .loginbox .submit input {margin-top:10px; width:100px;}
 
+.signupbox form {padding:0; margin:0;}
+.signupbox fieldset {
+    margin:0;
+    border:none;
+    text-align: center;
+}
+.signupbox .label {
+    margin-top:10px;
+    width: 80%;
+    text-align: right;
+}
+.signupbox .label input {width:60%;}
+.signupbox .submit input {margin-top:10px; width:100px;}
+
 td {font-size:76%;}

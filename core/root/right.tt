@@ -1,19 +1,4 @@
 <!-- START right -->
-  <div class="rightnews"> <img src="/static/img/fresh1.jpg" alt="fresh1" width="90" height="68" /><br />
-    <br />
-    <img src="/static/img/fresh2.jpg" alt="fresh2" width="90" height="63" /> <br />
-    <br />
-    <img src="/static/img/fresh3.jpg" alt="fresh3" width="90" height="65" /> <br />
-    <br />
-    <span class="style3">Links:</span> <br />
-    <img src="/static/img/bullet_blue.gif" alt="blue" width="19" height="16" /><br />
-    STUDIO7DESIGNS <a href="#">Photography<br />
-   </a> <br />
-    <span class="style3">More info:</span> <br />
-    <img src="/static/img/Bullet_green.gif" alt="green bullet" width="19" height="16" /> <br />
-    <a href="#">Deviantart</a> <br />
-    <a href="#">Digg</a> <br />
-    <a href="#">OST.org</a> <br />
-    <br />
+  <div class="rightnews">
   </div>
 <!-- END right -->

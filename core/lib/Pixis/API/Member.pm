@@ -7,9 +7,22 @@ use namespace::clean -except => qw(meta);
 
 with 'Pixis::API::Base::DBIC';
 
-after 'delete' => sub {
-    my ($self, $id) = @_;
-    Pixis::Registry->get(api => 'MemberRelationship')->break_all($id);
+around 'delete' => sub {
+    my ($next, $self, $id) = @_;
+
+    my $obj = $self->find($id);
+    if ($obj) {
+        my $email = $obj->email;
+        $next->($self, $id);
+
+        # This should really be an API...
+        Pixis::Registry->get(schema => 'master')
+            ->resultset('MemberAuth')
+            ->search(
+                { email => $obj->email },
+        )->delete;
+        Pixis::Registry->get(api => 'MemberRelationship')->break_all($id);
+    }
 };
 
 sub _build_resultset_constraints {
@@ -65,6 +78,8 @@ sub activate {
             $member->activation_token(undef);
             $member->is_active(1);
             $member->update;
+            # delete the cache, just in case
+            $self->cache_del([ $self->cache_prefix, $member->id ]);
             return $self->find($member->id);
         }
         return ();
@@ -100,55 +115,59 @@ sub load_following {
     my ($self, $id) = @_;
 
     my $cache_key = [ 'member', 'following', $id ];
-    my @ids = $self->cache_get($cache_key);
+    my $ids = $self->cache_get($cache_key);
 
     my $schema = Pixis::Registry->get(schema => 'master');
     my $rs     = $schema->resultset('MemberRelationship');
-    if (! @ids) {
-        @ids = map { $_->to_id } $rs->search(
+    if (! $ids) {
+        $ids = [ map { $_->to_id } $rs->search(
             {
                 from_id => $id,
             },
             {
                 select => [ qw(to_id) ],
             }
-        );
-        $self->cache_set($cache_key, \@ids, 600);
+        ) ];
+        $self->cache_set($cache_key, $ids, 600);
     }
 
-    return $self->load_multi(@ids);
+    return $self->load_multi(@$ids);
 }
 
 sub load_followers {
     my ($self, $id) = @_;
 
-    my $cache_key = [ 'member', 'following', $id ];
-    my @ids = $self->cache_get($cache_key);
+    my $cache_key = [ 'member', 'followers', $id ];
+    my $ids = $self->cache_get($cache_key);
 
     my $schema = Pixis::Registry->get(schema => 'master');
     my $rs     = $schema->resultset('MemberRelationship');
-    if (! @ids) {
-        @ids = map { $_->from_id } $rs->search(
+    if (! $ids) {
+        $ids = [ map { $_->from_id } $rs->search(
             {
                 to_id => $id,
             },
             {
                 select => [ qw(from_id) ],
             }
-        );
-        $self->cache_set($cache_key, \@ids, 600);
+        ) ];
+        $self->cache_set($cache_key, $ids, 600);
     }
 
-    return $self->load_multi(@ids);
+    return $self->load_multi(@$ids);
 }
 
 sub follow {
     my ($self, $from, $to)  = @_;
+    $self->cache_del([ 'member', 'following', $from ]);
+    $self->cache_del([ 'member', 'followers', $to ]);
     Pixis::Registry->get(api => 'MemberRelationship')->follow($from, $to);
 }
 
 sub unfollow {
     my ($self, $from, $to)  = @_;
+    $self->cache_del([ 'member', 'following', $from ]);
+    $self->cache_del([ 'member', 'followers', $to ]);
     Pixis::Registry->get(api => 'MemberRelationship')->unfollow($from, $to);
 }
 

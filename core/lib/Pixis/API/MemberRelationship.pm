@@ -4,7 +4,7 @@ package Pixis::API::MemberRelationship;
 use Moose;
 use namespace::clean -except => qw(meta);
 
-__PACKAGE__->meta->make_immutable;
+with 'Pixis::API::Base::DBIC';
 
 sub follow {
     my ($self, $from, $to) = @_;
@@ -76,4 +76,24 @@ sub is_mutual {
     return ($here_to_there && $there_to_here) ? 1 : ();
 }
 
-1;
+sub break_all {
+    my ($self, $from) = @_;
+    if (blessed $from) {
+        $from  = $from->id;
+    }
+
+    my $schema = Pixis::Registry->get(schema => 'master');
+    $schema->txn_do( sub {
+        my ($self, $from) = @_;
+
+        my $rs = $self->resultset();
+        $rs->search({
+            -or => {
+                from_id => $from,
+                to_id   => $from
+            }
+        })->delete;
+    }, $self, $from );
+}
+
+__PACKAGE__->meta->make_immutable;

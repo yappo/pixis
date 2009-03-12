@@ -24,6 +24,12 @@ has 'primary_key' => (
     lazy_build => 1
 );
 
+has 'cache_prefix' => (
+    is => 'rw',
+    required => 1,
+    lazy_build => 1,
+);
+
 with_cache 'cache' => (backend => 'Cache::Memcached');
 
 sub _build_resultset_moniker {
@@ -32,6 +38,11 @@ sub _build_resultset_moniker {
 }
 
 sub _build_resultset_constraints { +{} }
+
+sub _build_cache_prefix {
+    my $self = shift;
+    join('.', split(/\./, ref $self));
+}
 
 sub resultset {
     my $self = shift;
@@ -46,15 +57,13 @@ sub resultset {
 sub find {
     my ($self, $id) = @_;
 
-    my $cache_key = ['pixis', ref $self, $id ];
+    my $cache_key = [$self->cache_prefix, $id ];
     my $obj = $self->cache_get($cache_key);
-    if ($obj) {
-        return $obj;
-    }
-
-    $obj   = $self->resultset->find($id);
-    if ($obj) {
-        $self->cache_set($cache_key, $obj);
+    if (! $obj) {
+        $obj   = $self->resultset->find($id);
+        if ($obj) {
+            $self->cache_set($cache_key, $obj);
+        }
     }
     return $obj;
 }
@@ -65,17 +74,10 @@ sub load_multi {
 
     # keys is a bit of a hassle
     my $rs = $self->resultset();
-    my $h = $self->cache_get_multi(map { [ 'pixis', ref $self, $_ ] } @ids);
+    my $h = $self->cache_get_multi(map { [ $self->cache_prefix, $_ ] } @ids);
     my @ret = $h ? values %{$h->{results}} : ();
     foreach my $id ($h ? (map { $_->[2] } @{$h->{missing}}) : @ids) {
-        my $cache_key = [ 'pixis', ref $self, $id ];
-        my $conf = $self->cache_get($cache_key);
-        if (! $conf) {
-            $conf   = $rs->find($id);
-            if ($conf) {
-                $self->cache_set($cache_key, $conf);
-            }
-        }
+        my $conf = $self->find($id);
         push @ret, $conf if $conf;
     }
     return wantarray ? @ret : \@ret;
@@ -154,7 +156,7 @@ sub delete {
             $obj->delete;
         }
 
-        my $cache_key = ['pixis', ref $self, $id ];
+        my $cache_key = [$self->cache_prefix, $id ];
         $self->cache_del($cache_key);
     
     }, $self, $schema, $id );
