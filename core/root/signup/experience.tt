@@ -1,3 +1,8 @@
 [% WRAPPER wrapper.tt %]
+<h1>[% loc("Pixis Member Signup") %] (デベロッパ情報）</h1>
+
+<div class="greenbox signupbox">
 [% form %]
+</div>
+
 [% END # WRAPPER %]
