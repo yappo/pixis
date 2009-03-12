@@ -7,17 +7,6 @@ use DateTime;
 
 with 'Pixis::Plugin';
 
-has '+navigation' => (
-   default => sub {
-       [
-           { 
-               text => "Conference",
-               url => "/conference"
-           }
-        ]
-    }
-);
-
 has '+extra_api' => (
     default => sub {
         [ qw(Conference ConferenceTrack ConferenceSession) ]

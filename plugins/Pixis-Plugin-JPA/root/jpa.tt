@@ -1,5 +1,4 @@
 [%-
-
 SET site_config.title = 'Japan Perl Association (JPA)';
 SET site_config.logo  = '/static/jpa/img/jpa_logo_small.jpg';
 SET site_config.submenu = [

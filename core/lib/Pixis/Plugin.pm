@@ -1,6 +1,8 @@
 package Pixis::Plugin;
 use Moose::Role;
 use Moose::Util::TypeConstraints;
+use YAML ();
+use Path::Class::File;
 use namespace::clean -except => [ qw(meta) ];
 
 has 'registered' => (
@@ -47,17 +49,17 @@ has 'formfu_path' => (
     auto_deref => 1,
 );
 
-has 'navigation' => (
-    is => 'rw',
-    isa => 'ArrayRef[HashRef]',
-    predicate => 'has_navigation',
-);
-
 has 'translation_path' => (
     is => 'rw', 
     isa => 'ArrayRef',
     lazy_build => 1,
     auto_deref => 1,
+);
+
+has 'tt_preprocess' => (
+    is => 'rw',
+    isa => 'Maybe[Str]',
+    lazy_build => 1,
 );
 
 subtype 'Pixis::Plugin::Types::APIList'
@@ -81,6 +83,21 @@ has 'extra_api' => (
     auto_deref => 1,
     coerce => 1,
 );
+
+sub _build_tt_preprocess {
+    my $self = shift;
+    my $name = blessed $self;
+    $name =~ s/Pixis::(?:Web::)?Plugin:://;
+    $name =~ s/::/_/;
+    $name = lc($name) . '.tt';
+    foreach my $path ($self->include_path) {
+        my $file = Path::Class::File->new($path, $name);
+        if (-f $file) {
+            return $name;
+        }
+    }
+    return ();
+}
 
 sub _build_include_path {
     my $self = shift;
@@ -116,13 +133,14 @@ sub register {
 
     my $registry = Pixis::Registry->instance;
     my $c = $registry->get(pixis => 'web');
+
     $c->add_tt_include_path($self->include_path);
     $c->add_static_include_path($self->static_path);
     $c->add_formfu_path($self->formfu_path);
     $c->add_translation_path($self->translation_path);
-    if ($self->has_navigation) {
-        $c->add_navigation($_) for @{$self->navigation};
-    }
+#    if ($self->has_navigation) {
+#        $c->add_navigation($_) for @{$self->navigation};
+#    }
     $registry->set(api => (split(/::/, blessed($_)))[-1], $_)
         for $self->extra_api;
 }

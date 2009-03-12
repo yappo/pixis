@@ -1,7 +1,5 @@
 [%
 
-SET site_config = {
-    title => 'Pixis',
-}
+SET site_config.title = 'Pixis';
 
 %]
