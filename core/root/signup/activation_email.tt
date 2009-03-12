@@ -2,9 +2,16 @@
 [% c.config.site.title %] にご登録ありがとうございます。
 
 このメールは[% c.config.site.title %]に登録された際に自動送信されるメールです。
-登録を完了させるには、以下のURLをクリックしてください
+登録を完了させるには、以下の情報をアクティベーションページで入力してください：
+
+    アクティベーションキー： [% activation_token %]
+    メールアドレス： [% email %]
+
+もしくは、以下のURLをクリックしてください
 
     [% c.uri_for('/signup/activate', { 'token' =>  activation_token, 'email' => email }) %]
+
+
 
 一週間以内に上記URLより登録を完了しないと、登録されたデータを削除されますのでご注意ください。
 
