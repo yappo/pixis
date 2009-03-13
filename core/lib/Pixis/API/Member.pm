@@ -171,4 +171,22 @@ sub unfollow {
     Pixis::Registry->get(api => 'MemberRelationship')->unfollow($from, $to);
 }
 
+sub soft_delete {
+    my ($self, $id) = @_;
+
+    my $schema = Pixis::Registry->get(schema => 'master');
+    $schema->txn_do( sub {
+        my ($self, $id) = @_;
+        $self->resultset->search(
+            {
+                id => $id
+            }
+        )->update(
+            {
+                is_active => 0 
+            }
+        );
+    }, $self, $id);
+}
+
 __PACKAGE__->meta->make_immutable;

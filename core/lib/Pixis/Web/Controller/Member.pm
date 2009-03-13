@@ -34,6 +34,11 @@ sub home :Local {
 }
 
 sub view :Chained('load_member') :PathPart('') Args(0) {
+    my ($self, $c) = @_;
+
+    # Load my latest activities
+
+
 }
 
 # XXX - follow status
@@ -77,5 +82,29 @@ sub search :Local :Args(0) :FormConfig {
     }
 }
 
+sub leave :Local :Args(0) :FormConfig {
+    my ($self, $c) = @_;
+
+    my $form = $c->stash->{form};
+    if ($form->submitted_and_valid) {
+        $c->stash->{template} = 'member/leave_confirm.tt';
+        $form->action('/member/leave/commit');
+    }
+}
+
+sub leave_commit :Path('leave/commit') :Args(0) :FormConfig {
+    my ($self, $c) = @_;
+
+    my $form = $c->stash->{form};
+    if ($form->submitted_and_valid) {
+        $c->registry(api => 'Member')->soft_delete($c->user->id);
+        $c->logout;
+        $c->res->redirect($c->uri_for('/'));
+        return;
+    }
+
+    # why would you get here?!
+    $c->res->redirect($c->uri_for('/member/leave'));
+}
 
 1;
