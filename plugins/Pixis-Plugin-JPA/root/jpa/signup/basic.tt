@@ -1,3 +1,7 @@
 [% WRAPPER wrapper.tt %]
+<h1>JPA 会員登録</h1>
+
+<div class="greenbox">
 [% form %]
+</div>
 [% END # WRAPPER %]

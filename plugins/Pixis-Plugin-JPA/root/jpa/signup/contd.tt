@@ -1,11 +1,11 @@
 [% WRAPPER wrapper.tt %]
 
-<h2>登録ありがとうございます。</h2>
+<h1>Pixis エンジン登録が完了しました</h1>
 
-<ul>
-    <li>現時点であなたはJapan Perl AssociationサイトがベースとなっているPixisシステムのアカウント登録を完了しました。</li>
-    <li>Japan Perl Associationの会員になっていただける場合は、<a href="[% c.uri_for('/jpa/signup/basic') %]">こちらから引き続き登録を行ってください</a>
-</li>
-</ul>
+<p>Pixisエンジンに登録が完了しましたので、今後本サイト上で提供するサービス等に、ご登録いただいたIDとパスワードで参加することができます。</p>
+
+<h2>引き続きJPAに会員登録するには</h2>
+
+<p>JPA会員登録は<a href="[% c.uri_for("/jpa/signup") %]">こちらから行ってください</a>。</p>
 
 [% END %]
