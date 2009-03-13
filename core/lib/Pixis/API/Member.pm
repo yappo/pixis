@@ -19,7 +19,7 @@ around 'delete' => sub {
         Pixis::Registry->get(schema => 'master')
             ->resultset('MemberAuth')
             ->search(
-                { email => $obj->email },
+                { member_id => $obj->id },
         )->delete;
         Pixis::Registry->get(api => 'MemberRelationship')->break_all($id);
     }
@@ -42,19 +42,19 @@ sub create {
     my ($self, $args) = @_;
 
     my $schema = Pixis::Registry->get(schema => 'master');
-    $args->{created_on} ||= DateTime->now;
-    my $auth = {
-        email => $args->{email},
-        auth_type => 'password',
-        auth_data => Digest::SHA1::sha1_hex(delete $args->{password}),
-        created_on => $args->{created_on}
-    };
 
     my $member;
     $schema->txn_do( sub {
         my $schema = shift;
+        $args->{created_on} ||= DateTime->now;
+
         $member = $schema->resultset('Member')->create($args);
-        $schema->resultset('MemberAuth')->create($auth);
+        $schema->resultset('MemberAuth')->create({
+            member_id => $member->id,
+            auth_type => 'password',
+            auth_data => Digest::SHA1::sha1_hex(delete $args->{password}),
+            created_on => $args->{created_on}
+        });
     }, $schema );
     return $member;
 }

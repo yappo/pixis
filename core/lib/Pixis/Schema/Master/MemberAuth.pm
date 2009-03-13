@@ -16,10 +16,10 @@ __PACKAGE__->add_columns(
         is_nullable => 0,
         size => 32,
     },
-    email => {
-        data_type => "VARCHAR",
+    member_id => {
+        data_type => "INTEGER",
         is_nullable => 0,
-        size => 256,
+        size => 32,
     },
     auth_type => {
         data_type => "VARCHAR",
@@ -48,13 +48,13 @@ __PACKAGE__->add_columns(
 );
 
 __PACKAGE__->set_primary_key("id");
-__PACKAGE__->add_unique_constraint(unique_auth_per_user => ["email", "auth_type"]);
+__PACKAGE__->add_unique_constraint(unique_auth_per_user => ["member_id", "auth_type"]);
 
 sub sqlt_deploy_hook {
     my ($self, $sqlt_table) = @_;
 
     my ($c) = grep { $_->name eq 'unique_auth_per_user' } $sqlt_table->get_constraints();
-    $c->fields([ 'email(255)', 'auth_type(8)' ]);
+    $c->fields([ 'member_id', 'auth_type(8)' ]);
     $self->next::method($sqlt_table);
 }
 
@@ -62,8 +62,8 @@ sub populate_initial_data {
     my ($self, $schema) = @_;
     $schema->populate(
         MemberAuth => [
-            [ qw(email auth_type auth_data created_on) ],
-            [ qw(me@example.jp password), sha1_hex('admin'), DateTime->now ],
+            [ qw(member_id auth_type auth_data created_on) ],
+            [ qw(1 password), sha1_hex('admin'), DateTime->now ],
         ],
     );
 }
