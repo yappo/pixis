@@ -117,6 +117,11 @@ sub activate :Local :Args(0) :FormConfig {
             # we've activated. now start a new subsession, so we can forward to
             # whatever next step 
             my $subsession = $self->new_subsession($c, {current_step => 'activate'});
+
+            my $member = $c->registry(api => 'Member')->load_from_email($form->param_value('email'));
+            my ($auth) = $c->registry(api => 'MemberAuth')->load_auth({ email => $form->param_value('email'), 'auth_type' => 'password' });
+            $c->forward('/auth/authenticate', [ $member->email, $auth->auth_data, 'members_internal' ]);
+            
             $c->detach('next_step', [$subsession]);
         }
         $form->form_error_message("指定されたユーザーは存在しませんでした");

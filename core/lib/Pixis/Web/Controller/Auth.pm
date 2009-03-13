@@ -17,6 +17,7 @@ sub assert_logged_in :Private {
         $c->res->redirect($c->uri_for('/auth/login'));
         return ();
     }
+    $c->log->debug("user " . $c->user->email . " asserted");
     return 1;
 }
 
@@ -45,33 +46,15 @@ sub login :Local :FormConfig {
 
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
-        # here's a little trickery
-        my $email = $form->param('email');
-        my ($auth) = Pixis::Registry->get(api => 'MemberAuth')->load_auth({
-            email => $email,
-            auth_type => 'password'
-        });
-        $c->log->debug("Loaded auth information for $email (" . ($auth || ('null')) . ")") if $c->log->is_debug;
-
-        # if no auth, then you're no good
-        if ($auth) {
-            # okie dokie, remember the milk, and load a resultset
-            # XXX - there *HAS* to be a better way
-
-            my $member = Pixis::Registry->get(api => 'Member')->load_from_email($auth->email);
-            if ($member) {
-                $member->password($auth->auth_data);
-                my $dummy = FudgeWorkAround->new($member);
-
-                $c->log->debug("Authenticating against user $member") if $c->log->is_debug;
-                if ($c->authenticate({ password => $form->param('password'), dbix_class => { resultset => $dummy } }, 'members')) {
-                    $c->res->redirect(
-                        $c->session->{next_uri} ||
-                        $c->uri_for('/member', $c->user->id)
-                    );
-                    return;
-                }
-            }
+        my $auth_ok = $c->forward('/auth/authenticate', [ 
+            $form->param('email'), $form->param('password')
+        ] );
+        if ($auth_ok) {
+            $c->res->redirect(
+                $c->session->{next_uri} ||
+                $c->uri_for('/member', $c->user->id)
+            );
+            return;
         }
 
         # if you got here, the login was a failure
@@ -79,6 +62,32 @@ sub login :Local :FormConfig {
             $c->localize("Authentication failed"));
         $form->force_error_message(1);
     }
+}
+
+sub authenticate :Private {
+    my ($self, $c, $email, $password, $realm) = @_;
+    $realm ||= 'members';
+    my ($auth) = Pixis::Registry->get(api => 'MemberAuth')->load_auth({
+        email => $email,
+        auth_type => 'password'
+    });
+    $c->log->debug("Loaded auth information for $email (" . ($auth || ('null')) . ")") if $c->log->is_debug;
+
+    # if no auth, then you're no good
+    if ($auth) {
+        # okie dokie, remember the milk, and load a resultset
+        # XXX - there *HAS* to be a better way
+
+        my $member = Pixis::Registry->get(api => 'Member')->load_from_email($email);
+        if ($member) {
+            $member->password($auth->auth_data);
+            my $dummy = FudgeWorkAround->new($member);
+
+            $c->log->debug("Authenticating against user $member") if $c->log->is_debug;
+            return $c->authenticate({ password => $password, dbix_class => { resultset => $dummy } }, $realm);
+        }
+    }
+    return ();
 }
 
 sub openid :Local :FormConfig {

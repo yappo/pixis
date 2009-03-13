@@ -40,23 +40,25 @@ __PACKAGE__->config(
         use_session => 1,
         default_realm => 'members',
         realms => {
-#            openid  => {
-#                credential => {
-#                    class => 'OpenID',
-#                },
-#                extension_args => [
-#                    "http://openid.net/extensions/sreg/1.1" => {
-#                         required => join(",", qw/email nickname fullname/)
-#                    },
-#                ],
-#                ua_class => 'LWPx::ParanoidAgent'
-#            },
             members => {
                 credential => {
                     class => 'Password',
                     password_field => 'password',
                     password_type  => 'hashed',
                     password_hash_type => 'SHA-1',
+                },
+                store => {
+                    class => 'DBIx::Class',
+                    id_field => 'email',
+                    role_column => 'roles',
+                    user_class => 'DBIC::Member',
+                }
+            },
+            members_internal => {
+                credential => {
+                    class => 'Password',
+                    password_field => 'password',
+                    password_type  => 'clear',
                 },
                 store => {
                     class => 'DBIx::Class',
