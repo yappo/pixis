@@ -7,4 +7,13 @@ CALL site_config.navigation.push(
     }
 );
 
+IF (c.check_user_roles(c.user, 'admin')) ;
+    CALL site_config.submenu.push(
+        {
+            text => loc("Organize a conference"),
+            url  => '/conference/create'
+        }
+    );
+END ;
+
 -%]
