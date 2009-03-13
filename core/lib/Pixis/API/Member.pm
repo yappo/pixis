@@ -177,6 +177,10 @@ sub soft_delete {
     my $schema = Pixis::Registry->get(schema => 'master');
     $schema->txn_do( sub {
         my ($self, $id) = @_;
+
+        # invalidate followings, followers
+        Pixis::Registry->get(api => 'MemberRelationship')->break_all($id);
+
         $self->resultset->search(
             {
                 id => $id
