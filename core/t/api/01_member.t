@@ -1,6 +1,7 @@
 use strict;
+use utf8;
 use lib "t/lib";
-use Test::More (tests => 20);
+use Test::More (tests => 22);
 use Test::Pixis;
 use Test::Exception;
 
@@ -12,6 +13,7 @@ BEGIN
 
 my $t = Test::Pixis->instance;
 my $api = $t->make_api('Member');
+
 my %MEMBER1 = (
     email     => 'taro-test@perlassociation.org',
     nickname  => 'testtaro',
@@ -35,6 +37,8 @@ my %MEMBER2 = (
 
     $registry->set(schema => 'master', $t->make_schema('Master'));
     $registry->set(api => 'memberrelationship' => $t->make_api('MemberRelationship'));
+    $registry->set(api => 'memberauth' => $t->make_api('MemberAuth'));
+    $registry->set(api => 'member' => $api);
 }
 
 {
@@ -42,7 +46,7 @@ my %MEMBER2 = (
     lives_ok {
         local $api->{resultset_constraints} = {};
         my @members = $api->search({ email => { -in => [ $MEMBER1{email}, $MEMBER2{email} ] } });
-        $api->delete($_->{id}) for @members;
+        $api->delete($_->id) for @members;
     } "member deletion";
 }
 
@@ -66,6 +70,12 @@ my %MEMBER2 = (
             email => $MEMBER1{email}
         });
         ok( !@list, "non active member should not be loaded from search");
+
+        my @auth = Pixis::Registry->get(api => 'MemberAuth')->load_auth({
+            email => $MEMBER1{email},
+            auth_type => 'password',
+        });
+        ok( !@auth, "non active member should not have their auth loaded");
     };
 
     lives_and(\&$expected_load_failure, "member load (non-active)");
