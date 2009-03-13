@@ -18,12 +18,12 @@ sub load_auth {
         my $member = Pixis::Registry->get(api => 'member')->load_from_email($args->{email});
         my @ids;
         if ( $member) {
-            @ids = map { $_->id }
-                Pixis::Registry->get(schema => 'master')
-                    ->resultset('MemberAuth')->search({
-                        member_id => $member->id,
-                        auth_type => $args->{auth_tpe},
-                    });
+            @ids = map { $_->id } $self->resultset
+                ->search({
+                    member_id => $member->id,
+                    auth_type => $args->{auth_type},
+                })
+            ;
         }
 
         if (@ids > 0) {
