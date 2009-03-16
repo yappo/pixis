@@ -51,7 +51,7 @@ sub load_coming {
     my ($self, $args) = @_;
 
     my $schema = Pixis::Registry->get('schema' => 'master');
-    my @ids = $schema->resultset('Conference')->search(
+    my @ids = $schema->resultset('Event')->search(
         { 
             -and => [
                 start_on => { '<=' => $args->{max} },
@@ -70,16 +70,16 @@ sub load_tracks {
     my ($self, $id) = @_;
 
     my $schema = Pixis::Registry->get('schema' => 'master');
-    my @ids = map { $_->id } $schema->resultset('ConferenceTrack')->search(
+    my @ids = map { $_->id } $schema->resultset('EventTrack')->search(
         {
-            conference_id => $id
+            event_id => $id
         },
         {
             select => [ qw(id) ]
         }
     );
 
-    return [ Pixis::Registry->get(api => 'ConferenceTrack')->load_multi(@ids) ];
+    return [ Pixis::Registry->get(api => 'EventTrack')->load_multi(@ids) ];
 }
 
 __PACKAGE__->meta->make_immutable;

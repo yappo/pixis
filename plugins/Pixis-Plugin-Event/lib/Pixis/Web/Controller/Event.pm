@@ -7,7 +7,7 @@ use base qw(Catalyst::Controller::HTML::FormFu);
 sub index :Index :Args(0) {
     my ($self, $c) = @_;
 
-    $c->stash->{conferences} = 
+    $c->stash->{events} = 
         $c->registry(api => 'Event')->load_coming(
             { max => DateTime->now(time_zone => 'local')->add(years => 1) });
 }
@@ -19,7 +19,7 @@ sub create :Local :FormConfig :PixisPriv('admin') {
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
         $form->add_valid(created_on => DateTime->now);
-        my $conference = eval {
+        my $event = eval {
             $c->registry(api => 'Event')->create_from_form($c->stash->{form});
         };
 
@@ -27,19 +27,19 @@ sub create :Local :FormConfig :PixisPriv('admin') {
             $c->res->body("Creation failed: $@");
             return;
         }
-        return $c->res->redirect($conference->path);
+        return $c->res->redirect($c->uri_for('/event/' . $event->id));
     }
 }
 
-sub load_conference :Chained :PathPart('conference') :CaptureArgs(1) {
+sub load_event :Chained :PathPart('event') :CaptureArgs(1) {
     my ($self, $c, $id) = @_;
 
-    $c->stash->{conference} = 
+    $c->stash->{event} = 
         eval { $c->registry(api => 'Event')->find($id) };
     if ($@) {
-        $c->log->error("Error at load_conference: $@");
+        $c->log->error("Error at load_event: $@");
     }
-    if (! $c->stash->{conference}) {
+    if (! $c->stash->{event}) {
         $c->forward('/default');
         $c->finalize();
     }
@@ -48,25 +48,25 @@ sub load_conference :Chained :PathPart('conference') :CaptureArgs(1) {
         $c->registry(api => 'Event')->load_tracks($id);
 }
 
-sub view :Chained('load_conference') :PathPart('') :Args(0) {
+sub view :Chained('load_event') :PathPart('') :Args(0) {
 }
 
-sub edit :Chained('load_conference') :PathPart('edit') :Args(0) :FormConfig {
+sub edit :Chained('load_event') :PathPart('edit') :Args(0) :FormConfig {
     my ($self, $c) = @_;
 
     $c->forward('/auth/assert_roles', ['admin']) or return;
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
-        $form->model->update($c->stash->{conference});
+        $form->model->update($c->stash->{event});
     } else {
-        $form->model->default_values($c->stash->{conference});
+        $form->model->default_values($c->stash->{event});
     }
 }
 
-sub attendees :Chained('load_conference') :Args(0) {
+sub attendees :Chained('load_event') :Args(0) {
 }
 
-sub register :Chained('load_conference') :Args(0) {
+sub register :Chained('load_event') :Args(0) {
     my ($self, $c) = @_;
 
     $c->user or $c->res->redirect('/login');
