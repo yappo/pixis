@@ -1,4 +1,3 @@
-# $Id: /mirror/pixis/Pixis-Plugin-Conference/trunk/lib/Pixis/Web/Controller/Conference.pm 101270 2009-02-27T05:52:55.849526Z daisuke  $
 
 package Pixis::Web::Controller::Conference;
 use strict;
