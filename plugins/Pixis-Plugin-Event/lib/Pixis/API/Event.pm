@@ -3,6 +3,7 @@
 package Pixis::API::Event;
 use Moose;
 use Pixis::API::Base::DBIC;
+use POSIX qw(strftime);
 use namespace::clean -except => qw(meta);
 
 with 'Pixis::API::Base::DBIC';
@@ -44,6 +45,41 @@ sub load_sessions {
         $track = $track_api->load_or_create_default_track($args);
     }
     $track_api->load_sessions({ track_id => $track->id });
+}
+
+sub load_coming {
+    my ($self, $args) = @_;
+
+    my $schema = Pixis::Registry->get('schema' => 'master');
+    my @ids = $schema->resultset('Conference')->search(
+        { 
+            -and => [
+                start_on => { '<=' => $args->{max} },
+                start_on => { '>'  => strftime('%Y-%m-%d', localtime) },
+            ]
+        },
+        {
+            select => [ 'id' ]
+        }
+    );
+
+    return $self->load_multi(map { $_->id } @ids);
+}
+
+sub load_tracks {
+    my ($self, $id) = @_;
+
+    my $schema = Pixis::Registry->get('schema' => 'master');
+    my @ids = map { $_->id } $schema->resultset('ConferenceTrack')->search(
+        {
+            conference_id => $id
+        },
+        {
+            select => [ qw(id) ]
+        }
+    );
+
+    return [ Pixis::Registry->get(api => 'ConferenceTrack')->load_multi(@ids) ];
 }
 
 __PACKAGE__->meta->make_immutable;
