@@ -4,7 +4,7 @@ auto_fieldset: 1
 elements:
     - type: Text
       name: title
-      label_loc: Conference Title
+      label_loc: Event Title
       constraints:
         - Required
       filters:
@@ -13,7 +13,7 @@ elements:
       rows: 5
       cols: 40
       name: description
-      label_loc: Conference Description
+      label_loc: Event Description
       constraints:
         - Required
       filters:

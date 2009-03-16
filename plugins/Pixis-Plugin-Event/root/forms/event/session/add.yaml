@@ -1,6 +1,6 @@
 ---
 model_config:
-    resultset: ConferenceSession
+    resultset: EventSession
 javascript: |-
     $(function() { 
         $("#start_on_date_picker").datepicker();

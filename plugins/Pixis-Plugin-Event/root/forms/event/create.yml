@@ -4,7 +4,7 @@ method: POST
 auto_fieldset: 1
 indicator: submit
 model_config:
-    resultset: Conference
+    resultset: Event
 javascript: |-
     $(function() { 
         $("#start_on_picker").datepicker();
@@ -16,7 +16,7 @@ javascript: |-
 elements:
     - type: Text
       name: id
-      label_loc: Conference ID (Will be used in URL)
+      label_loc: Event ID (Will be used in URL)
       constraints:
         - type: Length
           max: 32
@@ -24,7 +24,7 @@ elements:
           regex: '^[a-zA-Z0-9._-]+$'
     - type: Text
       name: title
-      label_loc: Conference Title
+      label_loc: Event Title
       constraints:
         - Required
       filters:
@@ -33,7 +33,7 @@ elements:
       rows: 5
       cols: 40
       name: description
-      label_loc: Conference Description
+      label_loc: Event Description
       constraints:
         - Required
       filters:
