@@ -1,5 +1,5 @@
 
-package Pixis::Web::Controller::Conference;
+package Pixis::Web::Controller::Event;
 use strict;
 use warnings;
 use base qw(Catalyst::Controller::HTML::FormFu);
@@ -8,7 +8,7 @@ sub index :Index :Args(0) {
     my ($self, $c) = @_;
 
     $c->stash->{conferences} = 
-        $c->registry(api => 'Conference')->load_coming(
+        $c->registry(api => 'Event')->load_coming(
             { max => DateTime->now(time_zone => 'local')->add(years => 1) });
 }
 
@@ -20,7 +20,7 @@ sub create :Local :FormConfig :PixisPriv('admin') {
     if ($form->submitted_and_valid) {
         $form->add_valid(created_on => DateTime->now);
         my $conference = eval {
-            $c->registry(api => 'Conference')->create_from_form($c->stash->{form});
+            $c->registry(api => 'Event')->create_from_form($c->stash->{form});
         };
 
         if ($@) {
@@ -35,7 +35,7 @@ sub load_conference :Chained :PathPart('conference') :CaptureArgs(1) {
     my ($self, $c, $id) = @_;
 
     $c->stash->{conference} = 
-        eval { $c->registry(api => 'Conference')->find($id) };
+        eval { $c->registry(api => 'Event')->find($id) };
     if ($@) {
         $c->log->error("Error at load_conference: $@");
     }
@@ -45,7 +45,7 @@ sub load_conference :Chained :PathPart('conference') :CaptureArgs(1) {
     }
 
     $c->stash->{tracks} = 
-        $c->registry(api => 'Conference')->load_tracks($id);
+        $c->registry(api => 'Event')->load_tracks($id);
 }
 
 sub view :Chained('load_conference') :PathPart('') :Args(0) {

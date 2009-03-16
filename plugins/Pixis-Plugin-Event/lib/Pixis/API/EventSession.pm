@@ -1,6 +1,5 @@
-# $Id: /mirror/pixis/Pixis-Plugin-Conference/trunk/lib/Pixis/API/ConferenceSession.pm 101249 2009-02-26T12:14:35.111407Z daisuke  $
 
-package Pixis::API::ConferenceSession;
+package Pixis::API::EventSession;
 use Moose;
 
 with 'Pixis::API::Base::DBIC';
@@ -9,7 +8,7 @@ before 'create_from_form' => sub {
     my ($self, $form) = @_;
 
     my $ok = $self->check_overlap( {
-        conference_id => $form->param('conference_id'),
+        event_id => $form->param('event_id'),
         track_id      => $form->param('track_id'),
         start_on      => $form->param('start_on'),
         end_on        => $form->param('end_on'),
@@ -30,9 +29,9 @@ sub check_overlap {
     my $schema = Pixis::Registry->get(schema => 'master');
     my $start_on = $args->{start_on};
     my $end_on = $args->{end_on};
-    $schema->resultset('ConferenceSession')->search(
+    $schema->resultset('EventSession')->search(
         {   
-            conference_id => $args->{conference_id},
+            event_id => $args->{event_id},
             track_id => $args->{track_id},
             -or => [
                 -and => [
@@ -52,9 +51,9 @@ sub load_from_track {
     my ($self, $args) = @_;
 
     my $schema = Pixis::Registry->get(schema => 'master');
-    my @ids = map { $_->id } $schema->resultset('ConferenceSession')->search(
+    my @ids = map { $_->id } $schema->resultset('EventSession')->search(
         {   
-            conference_id => $args->{conference_id},
+            event_id => $args->{event_id},
             track_id => $args->{track_id},
         },
         {

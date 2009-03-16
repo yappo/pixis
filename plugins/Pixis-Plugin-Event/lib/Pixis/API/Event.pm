@@ -2,16 +2,12 @@
 
 package Pixis::API::Event;
 use Moose;
+use Pixis::API::Base::DBIC;
 use namespace::clean -except => qw(meta);
 
-with 'Pisix::API::Base::DBIC';
+with 'Pixis::API::Base::DBIC';
 
-sub add_session {
-    my ($self, $args) = @_;
-    $schema->txn_do(\&__ad_session, $self, $args);
-}
-
-sub __add_session {
+txn_method add_session => sub {
     my ($self, $args) = @_;
 
     # If this event doesn't have a track, then create one.
@@ -22,7 +18,7 @@ sub __add_session {
     if (my $track_id = $args->{track_id}) {
         $track = $track_api->find($track_id);
     } else {
-        $track = $track_api->load_or_create_default_track($event);
+        $track = $track_api->load_or_create_default_track($args);
     }
 
     $track_api->add_session(
@@ -31,7 +27,7 @@ sub __add_session {
             track_id => $track->id,
         }
     );
-}
+};
 
 sub load_tracks {
     Pixis::Registry->get(api => 'EventTrack')->load_from_event($_[1]);
@@ -39,10 +35,13 @@ sub load_tracks {
 
 sub load_sessions {
     my ($self, $args) = @_;
+
+    my $track_api = Pixis::Registry->get(api => 'EventTrack');
+    my $track;
     if (my $track_id = $args->{track_id}) {
         $track = $track_api->find($track_id);
     } else {
-        $track = $track_api->load_or_create_default_track($event);
+        $track = $track_api->load_or_create_default_track($args);
     }
     $track_api->load_sessions({ track_id => $track->id });
 }
