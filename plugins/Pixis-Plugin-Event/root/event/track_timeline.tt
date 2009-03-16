@@ -24,9 +24,9 @@
 
     $(document).ready( function() {
 [% 
-    cur     = conference.start_on.clone.truncate(to => 'day');
+    cur     = event.start_on.clone.truncate(to => 'day');
     end_day = cur.clone.add(days => 2); 
-    # conference.end_on.clone.truncate(to => 'day');
+    # event.end_on.clone.truncate(to => 'day');
     WHILE(cur <= end_day) %]
         track_dates.push(new Date([% cur.year %], [% cur.month %], [% cur.day %]));
 [%
@@ -59,7 +59,7 @@
 
     $(document).ready( function() {
         console.log("invoking getJSON");
-    $.getJSON("[% c.uri_for('/conference', conference.id, 'track', track.id, 'session', 'list' ) %]", null, function(sessions) {
+    $.getJSON("[% c.uri_for('/event', event.id, 'track', track.id, 'session', 'list' ) %]", null, function(sessions) {
             console.log("got response back");
 console.log($.dump(sessions));
         $.each(sessions, function(i, session) {

@@ -1,9 +1,9 @@
 [% WRAPPER wrapper.tt %]
 
-<h1>[% conference.title %]</h1>
+<h1>[% event.title %]</h1>
 
 <ul>
-    <li><a href="[% c.uri_for( conference.id, 'edit') %]">[% loc("Edit") %]</a></li>
+    <li><a href="[% c.uri_for( event.id, 'edit') %]">[% loc("Edit") %]</a></li>
 </ul>
 
 [%# Safariだと異様にでかいぞw %]
@@ -11,19 +11,19 @@
 <table>
 <tr>
     <td>[% loc("Description") %]</td>
-    <td>[% conference.description %]</td>
+    <td>[% event.description %]</td>
 </tr>
 <tr>
     <td>[% loc("Dates") %]</td>
-    <td>[% conference.start_on.strftime('%Y/%m/%d') %] - [% conference.end_on.strftime('%Y/%m/%d') %]</td>
+    <td>[% event.start_on.strftime('%Y/%m/%d') %] - [% event.end_on.strftime('%Y/%m/%d') %]</td>
 </tr>
 </table>
 
 <div>
     <h3>Tracks</h3>
-    <div><a href="[% c.uri_for( "/conference", conference.id, "track", "add" ) %]">[% loc("Add track") %]</a></div>
+    <div><a href="[% c.uri_for( "/event", event.id, "track", "add" ) %]">[% loc("Add track") %]</a></div>
     [% FOREACH track IN tracks %]
-        <a href="[% c.uri_for('/conference', conference.id, 'track', track.id) %]">[% track.title %]</a>
+        <a href="[% c.uri_for('/event', event.id, 'track', track.id) %]">[% track.title %]</a>
     [% END %]
 </div>
 [% END # WRAPPER %]

@@ -1,9 +1,9 @@
 [% WRAPPER wrapper.tt %]
 
 <h2>[% loc("Add new session") %]</h2>
-<div>[% conference.title %] - [% loc("Track [_1]", track.title) %]</div>
+<div>[% event.title %] - [% loc("Track [_1]", track.title) %]</div>
 
-[% PROCESS conference/track_timeline.tt, editable => 1 %]
+[% PROCESS event/track_timeline.tt, editable => 1 %]
 
 <div>[% loc("Click on the timeline to select the time/date") %]</div>
 [% form %]
