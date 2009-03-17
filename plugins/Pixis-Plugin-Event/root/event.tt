@@ -1,0 +1,19 @@
+[%-
+
+CALL site_config.navigation.push(
+    {
+        text => loc("Conference"),
+        url  => '/event'
+    }
+);
+
+IF (c.check_user_roles(c.user, 'admin')) ;
+    CALL site_config.submenu.push(
+        {
+            text => loc("Organize a conference"),
+            uri  => '/conference/create'
+        }
+    );
+END ;
+
+-%]

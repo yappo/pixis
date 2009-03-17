@@ -4,6 +4,12 @@ use Moose::Role;
 use MooseX::WithCache;
 use namespace::clean -except => qw(meta);
 
+use Moose::Exporter;
+
+Moose::Exporter->setup_import_methods(
+    with_caller => [ qw(txn_method) ],
+);
+
 has 'resultset_moniker' => (
     is => 'rw',
     isa => 'Str',
@@ -160,6 +166,34 @@ sub delete {
         $self->cache_del($cache_key);
     
     }, $self, $schema, $id );
+}
+
+sub txn_method {
+    my $class = shift;
+    my $name  = shift;
+    my $schema_name;
+    if (! ref $_[0]) {
+        $schema_name = shift;
+    } else {
+        $schema_name = 'Master';
+    }
+    my $code   = shift;
+    my $wrapper = sub {
+        my $schema = Pixis::Registry->get(schema => $schema_name);
+        $schema->txn_do($code, @_, $schema);
+    };
+
+    my $method = Moose::Meta::Method->wrap(
+        body         => $wrapper,
+        package_name => $class,
+        name         => $name
+    );
+
+    if (! defined wantarray ) { # void context
+        $class->meta->add_method($name => $method);
+    } else {
+        return ($name => $wrapper);
+    }
 }
 
 1;

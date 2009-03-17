@@ -1,0 +1,18 @@
+[% WRAPPER wrapper.tt %]
+
+<h1>[% loc("Event") %]</h1>
+
+<ul>
+    <li><a href="/event/create">[% loc('Organize an event') %]</a> ([% loc("Requires Admin priviledges") %])</li>
+</ul>
+
+[% IF events.size > 0 %]
+<h2>開催予定のイベント</h2>
+<ul>
+[% FOREACH event IN events %]
+    <li><a href="[% c.uri_for("/event", event.id) %]">[% event.title | html %]</a></li>
+[% END %]
+</ul>
+[% END %]
+
+[% END # WRAPPER %]

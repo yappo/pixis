@@ -1,0 +1,82 @@
+[% WRAPPER wrapper.tt %]
+[% 
+    SET can_edit = c.check_user_roles('admin');
+    SET start_on = event.start_on;
+    SET end_on   = event.end_on;
+%]
+
+<h1>[% event.title %]</h1>
+[% IF can_edit %]
+<ul>
+    <li><a href="[% c.uri_for( event.id, 'edit') %]">[% loc("Edit") %]</a></li>
+</ul>
+[% END %]
+
+[%# Safariだと異様にでかいぞw %]
+<h2>[% loc("Basic Event Information") %]</h2>
+<table border="1">
+<tr>
+    <td>[% loc("Event Description") %]</td>
+    <td>[% event.description %]</td>
+</tr>
+<tr>
+    <td>[% loc("Event Dates") %]</td>
+    <td>[% 
+SET start_on_str = event.start_on.strftime('%Y/%m/%d');
+SET end_on_str   = event.end_on.strftime('%Y/%m/%d');
+IF (start_on_str == end_on_str);
+    GET start_on_str;
+ELSE %][% start_on_str %] - [% end_on_str %][% END %]
+</td>
+</tr>
+</table>
+
+<br />
+
+<div>
+    <h2>[% loc("Event Registration") %]</h2>
+    <div>参加登録は[% event.registration_start_on.strftime('%Y/%m/%d') %] から [% event.registration_end_on.strftime('%Y/%m/%d') %]まで受け付けております。</div>
+[% IF (! c.registr('api', 'Event').is_registration_open) %]
+    <div><span style="color: #f00">現在登録受け付けは行っておりません</span></div>
+[% END %]
+</div>
+
+<div>
+    <h2>[% loc("Event Sessions") %]</h2>
+[%
+    SET cur = event.start_on;
+    SET end_on = event.end_on;
+    SET session_api = c.registry('api', 'EventSession');
+    WHILE(cur <= end_on);
+        SET sessions = session_api.load_from_date({ event_id => event.id, start_on => cur }); %]
+[% IF (start_on_str != end_on_str) %]
+<h3>[% cur.strftime('%Y/%m/%d') %]</h3>
+[% END %]
+[%      IF sessions.length == 0 %]
+<div style="padding-left: 2em">[% loc("No sessions available") %]</div>
+[%      ELSE %]
+<ul>
+[%          FOREACH session IN sessions %]
+<li>[[% session.start_on.strftime('%H:%M') %] - [% session.end_on.strftime('%H:%M') %]] - <a href="[% c.uri_for('/event', event.id, 'session', session.id ) %]">[% session.title %]</a> by [% session.speaker %]</li>
+[% 
+            END; # FOREACH
+        END; # IF
+        CALL cur.add(days => 1);
+    END; # WHILE
+%]
+</ul>
+</div>
+
+<div>
+    <h2>[% loc("Event Tracks") %]</h2>
+    [% IF (can_edit) %]
+    <div><small><a href="[% c.uri_for( "/event", event.id, "track", "add" ) %]">[% loc("Add track") %]</a></small></div>
+    [% END %]
+
+    <ul>
+    [% FOREACH track IN tracks %]
+        <li><a href="[% c.uri_for('/event', event.id, 'track', track.id) %]">[% track.title %]</a> [% IF can_edit %][<a href="[% c.uri_for('/event', event.id, 'track', track.id, 'session', 'add' ) %]">[% loc("Add session") %]</a>][% END %]</li>
+    [% END %]
+    </ul>
+</div>
+[% END # WRAPPER %]

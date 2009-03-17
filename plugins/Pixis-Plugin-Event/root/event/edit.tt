@@ -1,0 +1,4 @@
+[% WRAPPER wrapper.tt %]
+<h2><a href="[% c.uri_for('/event', event.id) %]">[% event.title | html %]</a></h2>
+[% form %]
+[% END # WRAPPER %]

@@ -1,0 +1,24 @@
+---
+auto_fieldset: 1
+
+elements:
+    - type: Text
+      name: title
+      label_loc: Event Title
+      constraints:
+        - Required
+      filters:
+        - HTMLEscape
+    - type: Textarea
+      rows: 5
+      cols: 40
+      name: description
+      label_loc: Event Description
+      constraints:
+        - Required
+      filters:
+        - HTMLEscape
+    - type: Submit
+      name: submit
+      value_loc: Edit
+

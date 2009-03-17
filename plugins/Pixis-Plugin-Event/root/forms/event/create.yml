@@ -1,0 +1,90 @@
+---
+action: 
+method: POST
+auto_fieldset: 1
+indicator: submit
+model_config:
+    resultset: Event
+javascript: |-
+    $(function() { 
+        jQuery.each([ '#start_on_picker', '#end_on_picker', '#registration_start_on_picker', '#registration_end_on_picker' ], function() {
+            console.log(this);
+            $('' + this).datepicker();
+        });
+    });
+
+elements:
+    - type: Text
+      name: id
+      label_loc: Event ID (Will be used in URL)
+      constraints:
+        - Required
+        - type: Length
+          max: 32
+        - type: Regex
+          regex: '^[a-zA-Z0-9._-]+$'
+    - type: Select
+      name: event_type
+      label_loc: Event Type
+      options:
+        - [ 'seminar', 'セミナー' ]
+        - [ 'conference', 'カンファレンス' ]
+      constraints:
+        - Required
+    - type: Text
+      name: title
+      label_loc: Event Title
+      constraints:
+        - Required
+      filters:
+        - HTMLEscape
+    - type: Textarea
+      rows: 5
+      cols: 40
+      name: description
+      label_loc: Event Description
+      constraints:
+        - Required
+      filters:
+        - HTMLEscape
+    - type: Hidden
+      name: category1
+      value: '0002'
+    - type: Text
+      name: start_on
+      id: start_on_picker
+      label_loc: 開催日
+      inflators:
+          - type: DateTime
+            parser:
+                strptime: '%m/%d/%Y'
+    - type: Text
+      name: end_on
+      id: end_on_picker
+      label_loc: 終了日
+      filters:
+        - type: CopyValue
+          field: start_on
+      inflators:
+          - type: DateTime
+            parser:
+                strptime: '%m/%d/%Y'
+    - type: Text
+      name: registration_start_on
+      id: registration_start_on_picker
+      label_loc: 登録開始日
+      inflators:
+          - type: DateTime
+            parser:
+                strptime: '%m/%d/%Y'
+    - type: Text
+      name: registration_end_on
+      id: registration_end_on_picker
+      label_loc: 登録終了日
+      inflators:
+          - type: DateTime
+            parser:
+                strptime: '%m/%d/%Y'
+    - type: Submit
+      name: submit
+      value_loc: Create

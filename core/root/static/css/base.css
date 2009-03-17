@@ -68,6 +68,11 @@ text-align: right;
 #header {color: #FFF;}
 #header a {color: #FFF;}
 
+#left {
+    float: left;
+    width: 160px;
+}
+/*
 #topleft {
 clear: left;
 float: left;
@@ -77,6 +82,7 @@ margin: 0 0 10px 0;
 padding: 0;
 font-size: 0.9em;
 }
+*/
 
 #menu {
 clear: left;
@@ -125,6 +131,11 @@ background-color: #F7F9F7;
 line-height: 1.3em;
 }
 
+#right {
+    float: left;
+    width: 94px;
+}
+/*
 .rightnews {
 float: right;
 width: 94px;
@@ -138,14 +149,18 @@ line-height: 1.5em;
 #rightnews p {
 margin: 0 0 1.5em 0;
 }
+*/
 
 #content {
-margin: 0 110px 20px 160px;
+/*margin: 0 110px 20px 160px;*/
+float: left;
+width: 458px;
 border-left: 1px solid #f0f0f0;
 border-right: 1px solid #f0f0f0;
 padding: 0 10px 0 10px;
 line-height: 1.6em;
 text-align: left;
+margin-bottom: 20px;
 }
 
 #content h2 {
@@ -313,5 +328,29 @@ h3 {color: #999999;}
 }
 .signupbox .label input {width:60%;}
 .signupbox .submit input {margin-top:10px; width:100px;}
+
+.formbox form {padding:0; margin:0;}
+.formbox fieldset {
+    margin:0;
+    border:none;
+    text-align: center;
+}
+.formbox .label {
+    margin-top:10px;
+    width: 80%;
+    text-align: right;
+    vertical-align: top;
+}
+.formbox .label  input {
+    width:70%;
+    vertical-align: top;
+}
+.formbox .label  textarea {
+    width:70%;
+    vertical-align: top;
+}
+.formbox .submit input {margin-top:10px; width:100px;}
+
+
 
 td {font-size:76%;}

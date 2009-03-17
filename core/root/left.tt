@@ -1,5 +1,7 @@
 [% DEFAULT submenu = site_config.submenu %]
 <!-- START left -->
+<div id="left">
+  [% IF (site_config.logo) %]<img src="[% site_config.logo %]" border="0" alt="JPAlogo" />[% END %]
   <div id="menu">
 [% PROCESS navigation.tt %]
     <div class="leftnews"> 
@@ -8,4 +10,5 @@
       [%- END %]
       </div>
   </div>
+</div>
 <!-- END left -->

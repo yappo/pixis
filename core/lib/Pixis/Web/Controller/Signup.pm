@@ -1,9 +1,8 @@
 
 package Pixis::Web::Controller::Signup;
+use Moose;
 use utf8;
-use strict;
-use warnings;
-use parent qw(Catalyst::Controller::HTML::FormFu);
+extends qw(Catalyst::Controller::HTML::FormFu);
 
 __PACKAGE__->mk_accessors($_) for qw(steps);
 
