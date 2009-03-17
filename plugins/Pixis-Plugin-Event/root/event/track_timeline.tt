@@ -28,7 +28,7 @@
     end_day = cur.clone.add(days => 2); 
     # event.end_on.clone.truncate(to => 'day');
     WHILE(cur <= end_day) %]
-        track_dates.push(new Date([% cur.year %], [% cur.month %], [% cur.day %]));
+        track_dates.push(new Date([% cur.year %], [% cur.month %] - 1, [% cur.day %]));
 [%
         CALL cur.add(days => 1);
     END  %]

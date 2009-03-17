@@ -64,4 +64,20 @@ sub load_from_track {
     return $self->load_multi(@ids);
 }
 
+sub load_from_date {
+    my ($self, $args) = @_;
+
+    my @ids = map { $_->id } $self->resultset->search(
+        {
+            event_id => $args->{event_id},
+            start_on => { -between => [ $args->{start_on}, $args->{start_on}->clone->add(days => 1) ] },
+        },
+        {
+            select => [qw(id)]
+        }
+    );
+
+    return $self->load_multi(@ids);
+}
+
 1;

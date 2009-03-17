@@ -70,6 +70,16 @@ sub load_sessions {
     $track_api->load_sessions({ track_id => $track->id });
 }
 
+sub load_sessions_from_date {
+    my ($self, $args) = @_;
+
+    my $event = $self->find($args->{event_id});
+    my $date = $args->{date} || $event->start_on;
+
+    Pixis::Registry->get(api => 'EventSession')
+        ->load_from_date({ event_id => $event->id, start_on => $date });
+}
+
 sub load_coming {
     my ($self, $args) = @_;
 
