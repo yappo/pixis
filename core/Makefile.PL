@@ -32,6 +32,7 @@ requires 'parent';
 requires 'YAML'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
 requires 'Cache::Memcached';
+requires 'Crypt::SSLeay'; # For communication with Paypal
 requires 'Data::Localize';
 requires 'DateTime';
 requires 'DateTime::Format::Duration';
