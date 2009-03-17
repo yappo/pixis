@@ -27,11 +27,11 @@
 <body>
 <div id="container">
 [% PROCESS $header_tt %]
-[% PROCESS $right_tt %]
 [% PROCESS $left_tt %]
   <div id="content">
 [% content %]
   </div>
+[% PROCESS $right_tt %]
 [% PROCESS $footer_tt %]
 </div>
 </body>
