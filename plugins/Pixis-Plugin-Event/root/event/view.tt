@@ -75,7 +75,7 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 
     <ul>
     [% FOREACH track IN tracks %]
-        <li><a href="[% c.uri_for('/event', event.id, 'track', track.id) %]">[% track.title %]</a></li>
+        <li><a href="[% c.uri_for('/event', event.id, 'track', track.id) %]">[% track.title %]</a> [% IF can_edit %][<a href="[% c.uri_for('/event', event.id, 'track', track.id, 'session', 'add' ) %]">[% loc("Add session") %]</a>][% END %]</li>
     [% END %]
     </ul>
 </div>
