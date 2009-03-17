@@ -15,7 +15,7 @@ __PACKAGE__->add_columns(
     "id" => {
         data_type => "VARCHAR",
         is_nullable => 0,
-        size => 8,
+        size => 32,
     },
     "title" => {
         data_type => "TEXT",
