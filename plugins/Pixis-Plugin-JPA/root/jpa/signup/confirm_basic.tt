@@ -1,4 +1,7 @@
 [% WRAPPER wrapper.tt %]
+<h1>JPA 登録情報の確認</h1>
+
+<div>以下であっている場合は「上記で登録する」リンクをクリックしてください</div>
 
 [% SET fields = [
     { field => "lastname", label => "Last Name" },
