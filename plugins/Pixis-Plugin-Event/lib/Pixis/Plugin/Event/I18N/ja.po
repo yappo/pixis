@@ -16,16 +16,28 @@ msgid "Organize an event"
 msgstr "イベントを開催する"
 
 msgid "Event ID (Will be used in URL)"
-msgstr "イベントID "
+msgstr "ID "
 
 msgid "Event Title"
-msgstr "イベント名"
+msgstr "タイトル"
 
 msgid "Event Description"
-msgstr "イベント詳細"
+msgstr "詳細"
 
 msgid "Requires Admin priviledges"
 msgstr "管理者権限が必要です"
 
 msgid "Event Type"
-msgstr "イベント種別"
+msgstr "種別"
+
+msgid "Event Dates"
+msgstr "日程"
+
+msgid "Basic Event Information"
+msgstr "基本情報"
+
+msgid "Event Tracks"
+msgstr "トラック"
+
+msgid "Event Sessions"
+msgstr "セッション"
