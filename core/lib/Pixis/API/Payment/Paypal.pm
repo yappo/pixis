@@ -132,7 +132,7 @@ sub initiate_purchase {
         my $message = "HTTP request to paypal failed: " .  $response->code . ", " . $response->message;
         $order_api->change_status( {
             order_id  => $order_id,
-            status    => &Pixis::Schema::Master::Order::ST_ERROR,
+            status    => &Pixis::Schema::Master::Order::ST_SYSTEM_ERROR,
             message   => $message,
             txn => {
                 id => $txn->id,
