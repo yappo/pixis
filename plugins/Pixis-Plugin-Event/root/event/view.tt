@@ -1,7 +1,11 @@
 [% WRAPPER wrapper.tt %]
+[% 
+    SET can_edit = c.check_user_roles('admin');
+    SET start_on = event.start_on;
+    SET end_on   = event.end_on;
+%]
 
 <h1>[% event.title %]</h1>
-[% SET can_edit = c.check_user_roles('admin') %]
 [% IF can_edit %]
 <ul>
     <li><a href="[% c.uri_for( event.id, 'edit') %]">[% loc("Edit") %]</a></li>
@@ -18,11 +22,11 @@
 <tr>
     <td>[% loc("Event Dates") %]</td>
     <td>[% 
-SET start_on = event.start_on.strftime('%Y/%m/%d');
-SET end_on   = event.end_on.strftime('%Y/%m/%d');
-IF (start_on == end_on);
-    GET start_on;
-ELSE %][% start_on %] - [% end_on %][% END %]
+SET start_on_str = event.start_on.strftime('%Y/%m/%d');
+SET end_on_str   = event.end_on.strftime('%Y/%m/%d');
+IF (start_on_str == end_on_str);
+    GET start_on_str;
+ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 </td>
 </tr>
 </table>
@@ -45,13 +49,15 @@ ELSE %][% start_on %] - [% end_on %][% END %]
     SET session_api = c.registry('api', 'EventSession');
     WHILE(cur <= end_on);
         SET sessions = session_api.load_from_date({ event_id => event.id, start_on => cur }); %]
+[% IF (start_on_str != end_on_str) %]
 <h3>[% cur.strftime('%Y/%m/%d') %]</h3>
+[% END %]
 [%      IF sessions.length == 0 %]
 <div style="padding-left: 2em">[% loc("No sessions available") %]</div>
 [%      ELSE %]
 <ul>
 [%          FOREACH session IN sessions %]
-<li>[[% session.start_on.strftime('%H:%M') %]] - <a href="[% c.uri_for('/event', event.id, 'session', session.id ) %]">[% session.title %]</a> by [% session.speaker %]</li>
+<li>[[% session.start_on.strftime('%H:%M') %] - [% session.end_on.strftime('%H:%M') %]] - <a href="[% c.uri_for('/event', event.id, 'session', session.id ) %]">[% session.title %]</a> by [% session.speaker %]</li>
 [% 
             END; # FOREACH
         END; # IF
