@@ -2,7 +2,7 @@
 
 CALL site_config.navigation.push(
     {
-        text => loc("Conference"),
+        text => loc("Event"),
         url  => '/event'
     }
 );
