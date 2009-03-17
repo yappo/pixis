@@ -169,17 +169,29 @@ sub delete {
 }
 
 sub txn_method {
-    my ($class, $name, $code) = @_;
-
-    $class->meta->add_method(
-        body => sub {
-            my ($self, $args) = @_;
-            my $schema_name = $args->{schema} || 'Master';
-            my $code        = $args->{code};
+    my $class = shift;
+    my $name  = shift;
+    my $schema_name;
+    if (! ref $_[0]) {
+        $schema_name = shift;
+    } else {
+        $schema_name = 'Master';
+    }
+    my $code = shift;
+    my $method = Moose::Meta::Method->wrap(
+        sub {
             my $schema = Pixis::Registry->get(schema => $schema_name);
             $schema->txn_do($code, @_, $schema);
-        }
+        },
+        package_name => $class,
+        name => $name
     );
+
+    if (! defined wantarray ) { # void context
+        $class->meta->add_method($name => $method);
+    } else {
+        return ($name => $code);
+    }
 }
 
 1;
