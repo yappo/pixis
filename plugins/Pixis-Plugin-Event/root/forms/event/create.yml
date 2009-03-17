@@ -24,9 +24,10 @@ elements:
           regex: '^[a-zA-Z0-9._-]+$'
     - type: Radiogroup
       name: event_type
+      label_loc: Event Type
       options:
-        - [ 'seminar', 'Seminar' ]
-        - [ 'conference', 'Conference' ]
+        - [ 'seminar', 'セミナー' ]
+        - [ 'conference', 'カンファレンス' ]
       constraints:
         - Required
     - type: Text
