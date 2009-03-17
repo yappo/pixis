@@ -177,20 +177,22 @@ sub txn_method {
     } else {
         $schema_name = 'Master';
     }
-    my $code = shift;
+    my $code   = shift;
+    my $wrapper = sub {
+        my $schema = Pixis::Registry->get(schema => $schema_name);
+        $schema->txn_do($code, @_, $schema);
+    };
+
     my $method = Moose::Meta::Method->wrap(
-        sub {
-            my $schema = Pixis::Registry->get(schema => $schema_name);
-            $schema->txn_do($code, @_, $schema);
-        },
+        body         => $wrapper,
         package_name => $class,
-        name => $name
+        name         => $name
     );
 
     if (! defined wantarray ) { # void context
         $class->meta->add_method($name => $method);
     } else {
-        return ($name => $code);
+        return ($name => $wrapper);
     }
 }
 
