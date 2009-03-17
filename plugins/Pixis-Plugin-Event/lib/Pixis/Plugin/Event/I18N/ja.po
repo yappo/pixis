@@ -9,17 +9,23 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8    \n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Conference"
-msgstr "カンファレンス"
+msgid "Event"
+msgstr "イベント"
 
-msgid "Organize a conference"
-msgstr "カンファレンスを開催する"
+msgid "Organize an event"
+msgstr "イベントを開催する"
 
-msgid "Conference ID (Will be used in URL)"
-msgstr "カンファレンスID (URLに使用されます）"
+msgid "Event ID (Will be used in URL)"
+msgstr "イベントID "
 
-msgid "Conference Title"
-msgstr "カンファレンス名"
+msgid "Event Title"
+msgstr "イベント名"
 
-msgid "Conference Description"
-msgstr "カンファレンス詳細"
+msgid "Event Description"
+msgstr "イベント詳細"
+
+msgid "Requires Admin priviledges"
+msgstr "管理者権限が必要です"
+
+msgid "Event Type"
+msgstr "イベント種別"
