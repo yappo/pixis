@@ -314,4 +314,28 @@ h3 {color: #999999;}
 .signupbox .label input {width:60%;}
 .signupbox .submit input {margin-top:10px; width:100px;}
 
+.formbox form {padding:0; margin:0;}
+.formbox fieldset {
+    margin:0;
+    border:none;
+    text-align: center;
+}
+.formbox .label {
+    margin-top:10px;
+    width: 80%;
+    text-align: right;
+    vertical-align: top;
+}
+.formbox .label  input {
+    width:70%;
+    vertical-align: top;
+}
+.formbox .label  textarea {
+    width:70%;
+    vertical-align: top;
+}
+.formbox .submit input {margin-top:10px; width:100px;}
+
+
+
 td {font-size:76%;}
