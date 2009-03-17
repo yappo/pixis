@@ -28,6 +28,15 @@ ELSE %][% start_on %] - [% end_on %][% END %]
 </table>
 
 <br />
+
+<div>
+    <h2>[% loc("Event Registration") %]</h2>
+    <div>参加登録は[% event.registration_start_on.strftime('%Y/%m/%d') %] から [% event.registration_end_on.strftime('%Y/%m/%d') %]まで受け付けております。</div>
+[% IF (! c.registr('api', 'Event').is_registration_open) %]
+    <div><span style="color: #f00">現在登録受け付けは行っておりません</span></div>
+[% END %]
+</div>
+
 <div>
     <h2>[% loc("Event Sessions") %]</h2>
 [%
@@ -37,13 +46,17 @@ ELSE %][% start_on %] - [% end_on %][% END %]
     WHILE(cur <= end_on);
         SET sessions = session_api.load_from_date({ event_id => event.id, start_on => cur }); %]
 <h3>[% cur.strftime('%Y/%m/%d') %]</h3>
+[%      IF sessions.length == 0 %]
+<div style="padding-left: 2em">[% loc("No sessions available") %]</div>
+[%      ELSE %]
 <ul>
-[%        FOREACH session IN sessions %]
+[%          FOREACH session IN sessions %]
 <li>[[% session.start_on.strftime('%H:%M') %]] - <a href="[% c.uri_for('/event', event.id, 'session', session.id ) %]">[% session.title %]</a> by [% session.speaker %]</li>
 [% 
-        END;
+            END; # FOREACH
+        END; # IF
         CALL cur.add(days => 1);
-    END;
+    END; # WHILE
 %]
 </ul>
 </div>

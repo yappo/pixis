@@ -83,8 +83,7 @@ sub load_sessions_from_date {
 sub load_coming {
     my ($self, $args) = @_;
 
-    my $schema = Pixis::Registry->get('schema' => 'master');
-    my @ids = $schema->resultset('Event')->search(
+    my @ids = $self->resultset->search(
         { 
             -and => [
                 start_on => { '<=' => $args->{max} },
@@ -97,6 +96,19 @@ sub load_coming {
     );
 
     return $self->load_multi(map { $_->id } @ids);
+}
+
+sub is_registration_open {
+    my ($self, $args) = @_;
+
+    my $event = $self->find($args->{event_id});
+    return () if (! $event);
+
+    my $now = DateTime->now;
+    return $event->is_registration_open &&
+        $event->registration_start_on >= $now &&
+        $event->registration_end_on <= $now
+    ;
 }
 
 

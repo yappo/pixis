@@ -51,6 +51,23 @@ __PACKAGE__->add_columns(
         data_type => "DATETIME",
         is_nullable => 0,
     },
+    capacity => {
+        data_type => "INTEGER",
+        is_nullable => 1,
+    },
+    is_registration_open => {
+        data_type => 'TINYINT',
+        is_nullable => 0,
+        default_value => 1
+    },
+    registration_start_on => {
+        data_type => 'DATETIME',
+        is_nullable => 0,
+    },
+    registration_end_on => {
+        data_type => 'DATETIME',
+        is_nullable => 0,
+    },
     modified_on => {
         data_type => "TIMESTAMP",
         is_nullable => 0,

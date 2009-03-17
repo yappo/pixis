@@ -7,10 +7,10 @@ model_config:
     resultset: Event
 javascript: |-
     $(function() { 
-        $("#start_on_picker").datepicker();
-    });
-    $(function() { 
-        $("#end_on_picker").datepicker();
+        jQuery.each([ '#start_on_picker', '#end_on_picker', '#registration_start_on_picker', '#registration_end_on_picker' ], function() {
+            console.log(this);
+            $('' + this).datepicker();
+        });
     });
 
 elements:
@@ -18,11 +18,12 @@ elements:
       name: id
       label_loc: Event ID (Will be used in URL)
       constraints:
+        - Required
         - type: Length
           max: 32
         - type: Regex
           regex: '^[a-zA-Z0-9._-]+$'
-    - type: Radiogroup
+    - type: Select
       name: event_type
       label_loc: Event Type
       options:
@@ -64,6 +65,22 @@ elements:
       filters:
         - type: CopyValue
           field: start_on
+      inflators:
+          - type: DateTime
+            parser:
+                strptime: '%m/%d/%Y'
+    - type: Text
+      name: registration_start_on
+      id: registration_start_on_picker
+      label_loc: 登録開始日
+      inflators:
+          - type: DateTime
+            parser:
+                strptime: '%m/%d/%Y'
+    - type: Text
+      name: registration_end_on
+      id: registration_end_on_picker
+      label_loc: 登録終了日
       inflators:
           - type: DateTime
             parser:
