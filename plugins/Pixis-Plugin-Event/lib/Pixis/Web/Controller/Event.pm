@@ -22,9 +22,13 @@ sub create :Local :FormConfig :PixisPriv('admin') {
         my $event = eval {
             $c->registry(api => 'Event')->create_from_form($c->stash->{form});
         };
-
         if ($@) {
-            $c->res->body("Creation failed: $@");
+            if ($@ =~ /Duplicate entry/) {
+                $form->form_error_message("Event ID " . $form->param('id') . " already exists");
+                $form->force_error_message(1);
+            } else {
+                $c->res->body("Creation failed: $@");
+            }
             return;
         }
         return $c->res->redirect($c->uri_for('/event/' . $event->id));

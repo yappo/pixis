@@ -8,6 +8,29 @@ use namespace::clean -except => qw(meta);
 
 with 'Pixis::API::Base::DBIC';
 
+around(txn_method create => sub {
+    my ($next, $self, $args) = @_;
+
+    my $event = $next->($self, $args);
+    Pixis::Registry->get(api => 'EventTrack')->create({
+        event_id => $event->id,
+        title    => 'Track 1'
+    });
+    return $event;
+});
+
+around(txn_method create_from_form => sub {
+    my ($next, $self, $args) = @_;
+
+    my $event = $next->($self, $args);
+    Pixis::Registry->get(api => 'EventTrack')->create({
+        event_id => $event->id,
+        title    => 'Track 1',
+        created_on => DateTime->now,
+    });
+    return $event;
+});
+
 txn_method add_session => sub {
     my ($self, $args) = @_;
 
@@ -66,20 +89,5 @@ sub load_coming {
     return $self->load_multi(map { $_->id } @ids);
 }
 
-sub load_tracks {
-    my ($self, $id) = @_;
-
-    my $schema = Pixis::Registry->get('schema' => 'master');
-    my @ids = map { $_->id } $schema->resultset('EventTrack')->search(
-        {
-            event_id => $id
-        },
-        {
-            select => [ qw(id) ]
-        }
-    );
-
-    return [ Pixis::Registry->get(api => 'EventTrack')->load_multi(@ids) ];
-}
 
 __PACKAGE__->meta->make_immutable;
