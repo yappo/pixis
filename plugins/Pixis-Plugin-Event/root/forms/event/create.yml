@@ -22,6 +22,13 @@ elements:
           max: 32
         - type: Regex
           regex: '^[a-zA-Z0-9._-]+$'
+    - type: Radiogroup
+      name: event_type
+      options:
+        - [ 'seminar', 'Seminar' ]
+        - [ 'conference', 'Conference' ]
+      constraints:
+        - Required
     - type: Text
       name: title
       label_loc: Event Title
