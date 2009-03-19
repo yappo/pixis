@@ -15,9 +15,9 @@ __PACKAGE__->add_columns(
         size => 8,
     },
     order_id => {
-        data_type => "INTEGER",
+        data_type => "CHAR",
         is_nullabe => 0,
-        size => 8,
+        size => 12,
     },
     txn_type => {
         data_type => "CHAR",

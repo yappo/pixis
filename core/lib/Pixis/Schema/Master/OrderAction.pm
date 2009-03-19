@@ -13,9 +13,9 @@ __PACKAGE__->add_columns(
         size => 8,
     },
     order_id => {
-        data_type => "INTEGER",
+        data_type => "CHAR",
         is_nullable => 0,
-        size => 8,
+        size => 12,
     },
     message => {
         data_type => "TEXT",
