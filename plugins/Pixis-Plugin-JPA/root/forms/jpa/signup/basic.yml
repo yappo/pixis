@@ -8,6 +8,7 @@ elements:
       options:
         - [ 'JPA-0001', 'JPA一般会員' ]
         - [ 'JPA-0002', 'JPA学生会員' ]
+      default: 'JPA-0001'
       constraints:
         - Required
     - type: Text
@@ -20,12 +21,20 @@ elements:
       label_loc: First Name
       constraints:
         - Required
+    - type: Checkbox
+      name: is_anonymous
+      label_loc: Make Me Anonymous
     - type: Text
       name: email
       label_loc: Email
       constraints:
         - Required
         - Email
+    - type: Text
+      name: postal_code
+      label_loc: Postal Code
+      constraints:
+        - Required
     - type: Select # this option should be refactored or something
       name: state
       label_loc: State / Prefecture
@@ -78,11 +87,6 @@ elements:
         - [ '大分県', '大分県' ]
         - [ '宮崎県', '宮崎県' ]
         - [ '鹿児島県', '鹿児島県' ]
-    - type: Text
-      name: postal_code
-      label_loc: Postal Code
-      constraints:
-        - Required
     - type: Text
       name: address1
       label_loc: Address1

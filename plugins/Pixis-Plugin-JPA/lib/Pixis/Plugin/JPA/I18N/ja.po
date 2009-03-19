@@ -1,0 +1,5 @@
+msgid "Membership Type"
+msgstr "会員種別"
+
+msgid "Make Me Anonymous"
+msgstr "匿名にする"

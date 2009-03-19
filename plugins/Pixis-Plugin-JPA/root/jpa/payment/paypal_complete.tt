@@ -1,3 +1,6 @@
 [% WRAPPER wrapper.tt %]
-<div>Paypalによる支払いを完了しました</div>
+
+<h1>Paypalによる支払い - 完了</h1>
+
+<div>Paypalによる支払いを完了しました。</div>
 [% END # WRAPPER %]
