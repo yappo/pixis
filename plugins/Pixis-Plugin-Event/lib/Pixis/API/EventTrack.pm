@@ -6,7 +6,7 @@ use namespace::clean -except => qw(meta);
 
 with 'Pixis::API::Base::DBIC';
 
-txn_method load_or_create_default_track => sub {
+__PACKAGE__->txn_method(load_or_create_default_track => sub {
     my ($self, $args) = @_;
     my $rs = $self->resultset;
     my $track = $rs->search(
@@ -22,7 +22,7 @@ txn_method load_or_create_default_track => sub {
         } );
     }
     return $track;
-};
+});
 
 sub load_from_event {
     my ($self, $event_id) = @_;

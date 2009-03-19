@@ -4,12 +4,6 @@ use Moose::Role;
 use MooseX::WithCache;
 use namespace::clean -except => qw(meta);
 
-use Moose::Exporter;
-
-Moose::Exporter->setup_import_methods(
-    with_caller => [ qw(txn_method) ],
-);
-
 has 'resultset_moniker' => (
     is => 'rw',
     isa => 'Str',

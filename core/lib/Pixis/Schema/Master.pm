@@ -1,9 +1,8 @@
 package Pixis::Schema::Master;
+use Moose;
+use namespace::clean -except => qw(meta);
 
-use strict;
-use warnings;
-
-use base 'DBIx::Class::Schema';
+extends 'DBIx::Class::Schema';
 
 __PACKAGE__->load_classes;
 
@@ -23,4 +22,4 @@ sub connection {
     $self->next::method(@args);
 }
 
-1;
+__PACKAGE__->meta->make_immutable(inline_constructor => 0);

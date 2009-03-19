@@ -15,10 +15,9 @@ __PACKAGE__->load_components("PK::Auto", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("pixis_order");
 __PACKAGE__->add_columns(
     "id" => {
-        data_type => "INTEGER",
-        is_auto_increment => 1,
+        data_type => "CHAR",
         is_nullable => 0,
-        size => 8,
+        size => 12,
     },
     member_id => {
         data_type => "INTEGER",

@@ -2,11 +2,48 @@
 package Pixis::API::Order;
 use Moose;
 use namespace::clean -except => qw(meta);
+use Pixis::API::Base::DBIC;
 
 with 'Pixis::API::Base::DBIC';
 
-sub __create_txn {
-    my ($self, $schema, $args) = @_;
+around create => sub {
+    my ($next, $self, $args) = @_;
+
+    if (! $args->{id}) {
+        my $key;
+        my $attempt = 0;
+        my $schema = Pixis::Registry->get(schema => 'Master');
+        while (! $key ) {
+            $key = $schema->resultset('OrderUniqueId')->search(
+                {
+                    taken_on => \'IS NULL',
+                },
+                {
+                    rows => 1
+                }
+            )->single;
+            
+            my $updated = $schema->resultset('OrderUniqueId')->search(
+                {
+                    value => $key->value,
+                    taken_on => \'IS NULL'
+                }
+            )->update({ taken_on => \'NOW()' });
+            if (! $updated) {
+                $key = undef;
+            }
+            last if $attempt++ > 100;
+        }
+        if (! $key ) {
+            confess "Failed to get a unique key for order";
+        }
+        $args->{id} = $key->value;
+    }
+    $next->($self, $args);
+};
+
+__PACKAGE__->txn_method(create_txn => sub {
+    my ($self, $args, $schema) = @_;
 
     my $txn_args = $args->{txn};
     $schema->resultset('PaymentTransaction')->create(
@@ -16,14 +53,7 @@ sub __create_txn {
             created_on => \'NOW()',
         }
     );
-}
-
-sub create_txn {
-    my ($self, $args) = @_;
-
-    my $schema = Pixis::Registry->get(schema => 'master');
-    $schema->txn_do( \&__create_txn, $self, $schema, $args );
-}
+});
 
 sub __change_status {
     my ($self, $schema, $args) = @_;

@@ -8,7 +8,7 @@ use namespace::clean -except => qw(meta);
 
 with 'Pixis::API::Base::DBIC';
 
-around(txn_method create => sub {
+around(__PACKAGE__->txn_method(create => sub {
     my ($next, $self, $args) = @_;
 
     my $event = $next->($self, $args);
@@ -17,9 +17,9 @@ around(txn_method create => sub {
         title    => 'Track 1'
     });
     return $event;
-});
+}));
 
-around(txn_method create_from_form => sub {
+around(__PACKAGE__->txn_method(create_from_form => sub {
     my ($next, $self, $args) = @_;
 
     my $event = $next->($self, $args);
@@ -29,9 +29,9 @@ around(txn_method create_from_form => sub {
         created_on => DateTime->now,
     });
     return $event;
-});
+}));
 
-txn_method add_session => sub {
+__PACKAGE__->txn_method(add_session => sub {
     my ($self, $args) = @_;
 
     # If this event doesn't have a track, then create one.
@@ -51,7 +51,7 @@ txn_method add_session => sub {
             track_id => $track->id,
         }
     );
-};
+});
 
 sub load_tracks {
     Pixis::Registry->get(api => 'EventTrack')->load_from_event($_[1]);
