@@ -40,6 +40,7 @@ requires 'DBD::mysql';
 requires 'DBIx::Class';
 requires 'DBIx::Class::VirtualColumns';
 requires 'Digest::SHA1';
+requires 'Exception::Class';
 requires 'MooseX::Getopt';
 requires 'MooseX::Types::Path::Class';
 requires 'HTML::FormFu';
