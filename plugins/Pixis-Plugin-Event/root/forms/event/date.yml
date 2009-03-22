@@ -1,0 +1,15 @@
+---
+elements:
+    - type: Text
+      name: start_on
+      label_loc: Date Start
+      constraints:
+        - Required
+    - type: Text
+      name: end_on
+      label_loc: Date End
+      constraints:
+        - Required
+    - type: Submit
+      name: submit
+      value_loc: Submit
