@@ -1,0 +1,7 @@
+[% WRAPPER wrapper.tt %]
+
+<h1>エラー [% error.status %]</h1>
+
+<p>[% loc(error.public_message) %]</p>
+
+[% END %]
