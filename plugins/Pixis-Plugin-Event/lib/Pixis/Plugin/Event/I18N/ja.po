@@ -47,3 +47,6 @@ msgstr "定員"
 
 msgid "x persons"
 msgstr "%1 名"
+
+msgid "Event Registration"
+msgstr "参加登録"

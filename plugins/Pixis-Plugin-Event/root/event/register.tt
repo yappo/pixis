@@ -15,7 +15,12 @@
 </tr>
 </table>
 
+<h2>参加申し込み</h2>
+[% IF (c.registry('api', 'event').is_registered({ event_id => event.id, member_id => c.user.id })) %]
+すでに登録されています
+[% ELSE %]
 <a href="[% c.uri_for("/event", event.id, "register", { submit => 1 }) %]">参加申し込みをする</a>
+[% END %]
 
 [% END # IF open %]
 [% END # WRAPPER %]

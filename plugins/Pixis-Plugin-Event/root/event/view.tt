@@ -33,19 +33,22 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
     <td>[% loc("Event Capacity") %]</td>
     <td>[% loc("x persons", event.capacity) %]</td>
 </tr>
+<tr>
+    <td>[% loc("Event Registration") %]</td>
+    <td>
+        <div>[% event.registration_start_on.strftime('%Y/%m/%d') %] - [% event.registration_end_on.strftime('%Y/%m/%d') %]</div>
+        <div>
+[% IF ( c.registry('api', 'Event').is_registration_open({ event_id => event.id })) %]
+    [<a href="[% c.uri_for("/event", event.id, "register") %]">参加登録</a>]
+[% ELSE %]
+    <span style="color: #f00; font-weight: bold">現在登録は行っていません</span>
+[%END %]
+        </div>
+    </td>
+</tr>
 </table>
 
 <br />
-
-<div>
-    <h2>[% loc("Event Registration") %]</h2>
-    <div>参加登録は[% event.registration_start_on.strftime('%Y/%m/%d') %] から [% event.registration_end_on.strftime('%Y/%m/%d') %]まで受け付けております。</div>
-[% IF (! c.registry('api', 'Event').is_registration_open({ event_id => event.id })) %]
-    <div><span style="color: #f00">現在登録受け付けは行っておりません</span></div>
-[% ELSE %]
-    <div><a href="[% c.uri_for("/event", event.id, "register") %]">参加登録</a></div>
-[% END %]
-</div>
 
 <div>
     <h2>[% loc("Event Sessions") %]</h2>
