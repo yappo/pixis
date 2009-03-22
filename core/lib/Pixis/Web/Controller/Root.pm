@@ -32,15 +32,12 @@ sub index :Path :Args(0) {
 }
 
 sub default :Path {
-    my ( $self, $c ) = @_;
-    $c->response->body( 'Page not found' );
-    $c->response->status(404);
+    Pixis::Web::Exception::FileNotFound->throw();
 }
 
 sub error :Private {
     my ($self, $c, $comment) = @_;
-    $c->response->body($comment);
-    $c->response->status(500);
+    Pixis::Web::Exception->new(message => $comment);
 }
 
 sub end : ActionClass('RenderView') {}
