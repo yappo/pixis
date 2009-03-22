@@ -42,3 +42,8 @@ msgstr "トラック"
 msgid "Event Sessions"
 msgstr "セッション"
 
+msgid "Event Capacity"
+msgstr "定員"
+
+msgid "x persons"
+msgstr "%1 名"

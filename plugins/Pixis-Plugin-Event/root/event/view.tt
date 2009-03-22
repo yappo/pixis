@@ -29,6 +29,10 @@ IF (start_on_str == end_on_str);
 ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 </td>
 </tr>
+<tr>
+    <td>[% loc("Event Capacity") %]</td>
+    <td>[% loc("x persons", event.capacity) %]</td>
+</tr>
 </table>
 
 <br />
