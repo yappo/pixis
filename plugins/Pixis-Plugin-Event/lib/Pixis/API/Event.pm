@@ -16,6 +16,17 @@ around(__PACKAGE__->txn_method(create => sub {
         event_id => $event->id,
         title    => 'Track 1'
     });
+    my $event_date_api = Pixis::Registry->get(api => 'EventDate');
+    my $cur = $event->start_on->clone;
+    my $end = $event->end_on;
+    while ($cur <= $end) {
+        $event_date_api->create({
+            event_id => $event->id,
+            date => $cur->strftime('%Y/%m/%d'),
+            created_on => \'NOW()',
+        });
+        $cur->add(days => 1);
+    }
     return $event;
 }));
 
@@ -28,6 +39,17 @@ around(__PACKAGE__->txn_method(create_from_form => sub {
         title    => 'Track 1',
         created_on => DateTime->now,
     });
+    my $event_date_api = Pixis::Registry->get(api => 'EventDate');
+    my $cur = $event->start_on->clone;
+    my $end = $event->end_on;
+    while ($cur <= $end) {
+        $event_date_api->create({
+            event_id => $event->id,
+            date => $cur->strftime('%Y/%m/%d'),
+            created_on => \'NOW()',
+        });
+        $cur->add(days => 1);
+    }
     return $event;
 }));
 
@@ -105,10 +127,30 @@ sub is_registration_open {
     return () if (! $event);
 
     my $now = DateTime->now;
+print STDERR ">>>>>>> \n",
+    "is_registration_open ? -> ", ($event->is_registration_open ? "YES" : "NO"), "\n",
+    "registration_start_on -> ", $event->registration_start_on, "\n",
+    "registration_end_on -> ", $event->registration_end_on, "\n",
+    "now -> $now\n";
     return $event->is_registration_open &&
-        $event->registration_start_on >= $now &&
-        $event->registration_end_on <= $now
+        $event->registration_start_on <= $now &&
+        $event->registration_end_on >= $now
     ;
+}
+
+sub get_dates {
+    my ($self, $args) = @_;
+
+    my $schema = Pixis::Registry->get(schema => 'Master');
+    my @dates = $schema->resultset('EventDate')->search(
+        {
+            event_id => $args->{event_id}
+        },
+        {
+            order_by => 'date ASC'
+        }
+    );
+    return wantarray ? @dates : [@dates];
 }
 
 

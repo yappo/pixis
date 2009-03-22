@@ -1,4 +1,12 @@
 [% WRAPPER wrapper.tt %]
 <h2><a href="[% c.uri_for('/event', event.id) %]">[% event.title | html %]</a></h2>
+
+<div class="formbox">
 [% form %]
+</div>
+
+<h2>日程毎の調整</h2>
+[% FOREACH f_date IN dates %]
+[% f_date %]
+[% END %]
 [% END # WRAPPER %]

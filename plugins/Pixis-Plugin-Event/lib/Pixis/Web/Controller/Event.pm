@@ -19,6 +19,8 @@ sub create :Local :FormConfig :PixisPriv('admin') {
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
         $form->add_valid(created_on => DateTime->now);
+        $form->param('end_on')->add(days => 1)->subtract(seconds => 1);
+        $form->param('registration_end_on')->add(days => 1)->subtract(seconds => 1);
         my $event = eval {
             $c->registry(api => 'Event')->create_from_form($c->stash->{form});
         };
@@ -59,11 +61,24 @@ sub edit :Chained('load_event') :PathPart('edit') :Args(0) :FormConfig {
     my ($self, $c) = @_;
 
     $c->forward('/auth/assert_roles', ['admin']) or return;
+    my $event = $c->stash->{event};
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
-        $form->model->update($c->stash->{event});
+        $form->model->update($event);
+        $c->res->redirect($c->uri_for('/event', $event->id));
+        return;
     } else {
-        $form->model->default_values($c->stash->{event});
+        $form->model->default_values($event);
+
+        my @dates;
+        foreach my $date ($c->registry(api => 'Event')->get_dates({ event_id => $event->id })) {
+            my $f = $self->form();
+            $f->load_config_file('event/date.yml');
+            $f->action($c->uri_for('/event', $event->id, 'date', $date->date));
+            $f->model->default_values($date);
+            push @dates, $f;
+        }
+        $c->stash->{dates} = \@dates;
     }
 }
 

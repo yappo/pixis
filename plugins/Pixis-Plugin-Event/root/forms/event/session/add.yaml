@@ -20,6 +20,13 @@ elements:
       filters:
         - HTMLScrubber
     - type: Text
+      label_loc: Presenter
+      name: presenter
+      constraints:
+        - Required
+      filters:
+        - HTMLScrubber
+    - type: Text
       label_loc: Start on
       name: start_on
       id: session_start_on

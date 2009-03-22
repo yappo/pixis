@@ -36,8 +36,10 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 <div>
     <h2>[% loc("Event Registration") %]</h2>
     <div>参加登録は[% event.registration_start_on.strftime('%Y/%m/%d') %] から [% event.registration_end_on.strftime('%Y/%m/%d') %]まで受け付けております。</div>
-[% IF (! c.registr('api', 'Event').is_registration_open) %]
+[% IF (! c.registry('api', 'Event').is_registration_open({ event_id => event.id })) %]
     <div><span style="color: #f00">現在登録受け付けは行っておりません</span></div>
+[% ELSE %]
+    <div><a href="[% c.uri_for("/event", event.id, "register") %]">参加登録</a></div>
 [% END %]
 </div>
 

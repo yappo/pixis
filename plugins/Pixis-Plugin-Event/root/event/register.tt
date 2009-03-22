@@ -2,7 +2,7 @@
 
 <h1>[% event.title %] - 参加申し込み</h1>
 
-[% IF (! c.registry('api', 'Event').is_registration_open({ event_id => event.id }) %]
+[% IF (! c.registry('api', 'Event').is_registration_open({ event_id => event.id })) %]
 <div>このイベントへの参加は締め切られました。また次回のお越しをお待ちしております</div>
 [% ELSE %]
 

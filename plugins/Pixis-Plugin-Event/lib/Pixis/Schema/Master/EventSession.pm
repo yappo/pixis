@@ -31,6 +31,10 @@ __PACKAGE__->add_columns(
         data_type => "TEXT",
         is_nullable => 0
     },
+    presenter => {
+        data_type => "TEXT",
+        is_nullable => 0
+    },
     start_on => {
         data_type => "DATETIME",
         is_nullable => 0,

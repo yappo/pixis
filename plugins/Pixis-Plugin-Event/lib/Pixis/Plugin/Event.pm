@@ -6,7 +6,7 @@ with 'Pixis::Plugin';
 
 has '+extra_api' => (
     default => sub {
-        [ qw(Event EventTrack EventSession) ]
+        [ qw(Event EventDate EventTrack EventSession) ]
     }
 );
 
