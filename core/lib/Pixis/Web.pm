@@ -76,7 +76,8 @@ __PACKAGE__->config(
         PRE_PROCESS => 'preprocess.tt',
         LOAD_TEMPLATES => [
             Template::Provider::Encoding->new(
-                INCLUDE_PATH => [ __PACKAGE__->path_to('root') ]
+                INCLUDE_PATH => [ __PACKAGE__->path_to('root') ],
+                COMPILE_DIR  => __PACKAGE__->path_to('tt2'),
             )
         ],
         STASH   => Template::Stash::ForceUTF8->new,
