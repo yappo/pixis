@@ -6,13 +6,14 @@
 <div>このイベントへの参加は締め切られました。また次回のお越しをお待ちしております</div>
 [% ELSE %]
 
-[%# eventに金額とかを書いてないといけない %]
-
+<h2> 参加費 </h2>
 <table border="1">
+[% FOREACH ticket IN c.registry('api', 'EventTicket').search({ event_id => event.id }) %]
 <tr>
-    <td> 一般参加 </td>
-    <td> 無料 </td>
+    <td>[% ticket.name %]</td>
+    <td>[% IF (ticket.price == 0) %]無料[% ELSE %][% ticket.price %]円[% END %]</td>
 </tr>
+[% END # FOREACH %]
 </table>
 
 <h2>参加申し込み</h2>

@@ -1,0 +1,23 @@
+---
+indicator: submit
+model_config:
+    resultset: EventTicket
+elements:
+    - type: Text
+      name: name
+      label_loc: Name
+      constraints:
+        - Required
+      filters:
+        - HTMLScrubber
+    - type: Text
+      name: price
+      label_loc: Price
+      constraints:
+        - Required
+        - Integer
+      default: 0
+    - type: Submit
+      name: submit
+      value_loc: Submit
+
