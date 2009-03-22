@@ -1,0 +1,7 @@
+---
+indicator: submit
+elements:
+    - type: Submit
+      name: submit
+      value_loc: Submit
+

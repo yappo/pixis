@@ -6,21 +6,21 @@
 <div>このイベントへの参加は締め切られました。また次回のお越しをお待ちしております</div>
 [% ELSE %]
 
-<h2> 参加費 </h2>
+<h2> 参加 </h2>
+
+[% IF (c.registry('api', 'event').is_registered({ event_id => event.id, member_id => c.user.id })) %]
+すでに登録されています
+[% ELSE %]
+
 <table border="1">
 [% FOREACH ticket IN c.registry('api', 'EventTicket').search({ event_id => event.id }) %]
 <tr>
     <td>[% ticket.name %]</td>
     <td>[% IF (ticket.price == 0) %]無料[% ELSE %][% ticket.price %]円[% END %]</td>
+    <td><a href="[% c.uri_for("/event", event.id, "register", ticket.id, "confirm") %]">参加</a></td>
 </tr>
 [% END # FOREACH %]
 </table>
-
-<h2>参加申し込み</h2>
-[% IF (c.registry('api', 'event').is_registered({ event_id => event.id, member_id => c.user.id })) %]
-すでに登録されています
-[% ELSE %]
-<a href="[% c.uri_for("/event", event.id, "register", { submit => 1 }) %]">参加申し込みをする</a>
 [% END %]
 
 [% END # IF open %]

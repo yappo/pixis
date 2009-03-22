@@ -23,6 +23,12 @@ __PACKAGE__->add_columns(
         is_nullable => 0,
         size => 32,
     },
+    is_active => {
+        data_type => 'TINYINT',
+        is_nullable => 0,
+        default_value => 0,
+        size => 1,
+    },
     modified_on => {
         data_type => "TIMESTAMP",
         is_nullable => 0,

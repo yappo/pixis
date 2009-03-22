@@ -85,8 +85,20 @@ sub edit :Chained('load_event') :PathPart('edit') :Args(0) :FormConfig {
 sub attendees :Chained('load_event') :Args(0) {
 }
 
+sub load_ticket :Chained('load_event') :CaptureArgs(1) :PathPart('register') {
+    my ($self, $c, $ticket) = @_;
+
+    $c->stash->{ticket} = $c->registry(api => 'EventTicket')->find($ticket);
+}
+
 sub register :Chained('load_event') :Args(0) :FormConfig {
     my ($self, $c) = @_;
+
+    $c->forward('/auth/assert_logged_in') or return;
+}
+
+sub register_confirm :Chained('load_ticket') :PathPart('confirm') :Args(0) :FormConfig {
+    my ($self, $c, $ticket) = @_;
 
     $c->forward('/auth/assert_logged_in') or return;
 
@@ -95,20 +107,24 @@ sub register :Chained('load_event') :Args(0) :FormConfig {
         my $event = $c->stash->{event};
         my $api = $c->registry(api => 'Event');
         if (! $api->is_registration_open({ event_id => $event->id }) ) {
+$c->log->debug("registration not open");
+            # XXX Proper error handling
             $c->error("stop");
             $c->detach('');
         }
+
         if (! $api->is_registered({ event_id => $event->id, member_id => $c->user->id })) {
             $api->register({
                 event_id => $c->stash->{event}->id,
                 member_id => $c->user->id
             });
         }
-        $c->res->redirect('/event', $event->id, 'registered');
+        $c->res->redirect($c->uri_for('/event', $event->id, 'registered'));
         return;
     }
 }
 
 sub registered :Chained('load_event') :Args(0) {
 }
+
 1;
