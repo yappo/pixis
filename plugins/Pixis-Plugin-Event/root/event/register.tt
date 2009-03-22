@@ -15,5 +15,7 @@
 </tr>
 </table>
 
+<a href="[% c.uri_for("/event", event.id, "register", { submit => 1 }) %]">参加申し込みをする</a>
+
 [% END # IF open %]
 [% END # WRAPPER %]

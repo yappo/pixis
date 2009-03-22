@@ -126,16 +126,65 @@ sub is_registration_open {
     my $event = $self->find($args->{event_id});
     return () if (! $event);
 
+    # check how many people have registered
+    my $count = $self->load_registered_count({ event_id => $args->{event_id} });
+    if ($count >= $event->capacity) {
+        return ();
+    }
+
     my $now = DateTime->now;
-print STDERR ">>>>>>> \n",
-    "is_registration_open ? -> ", ($event->is_registration_open ? "YES" : "NO"), "\n",
-    "registration_start_on -> ", $event->registration_start_on, "\n",
-    "registration_end_on -> ", $event->registration_end_on, "\n",
-    "now -> $now\n";
     return $event->is_registration_open &&
         $event->registration_start_on <= $now &&
         $event->registration_end_on >= $now
     ;
+}
+
+sub load_registered_count {
+    my ($self, $args) = @_;
+
+    my $event = $self->find($args->{event_id});
+    return () if (! $event);
+
+    my $schema = Pixis::Registry->get(schema => 'master');
+    # XXX we need to cache this
+    my $row = $schema->resultset('EventRegistration')->search(
+        undef,
+        {
+            select => [ 'count(*)' ],
+            as     => [ 'count' ]
+        }
+    )->single;
+    return $row->get_column('count');
+}
+
+sub is_registered {
+    my ($self, $args) = @_;
+
+    my $schema = Pixis::Registry->get(schema => 'master');
+    # XXX we need to cache this
+    my ($ok) = $schema->resultset('EventRegistration')->search(
+        {
+            member_id => $args->{member_id},
+            event_id  => $args->{event_id},
+        },
+        {
+            rows => 1,
+        }
+    );
+    return $ok;
+}
+
+sub register {
+    my ($self, $args) = @_;
+
+    my $schema = Pixis::Registry->get(schema => 'master');
+    $schema->resultset('EventRegistration')->create(
+        {
+            member_id => $args->{member_id},
+            event_id  => $args->{event_id},
+            created_on => \'NOW()',
+        },
+    );
 }
 
 sub get_dates {

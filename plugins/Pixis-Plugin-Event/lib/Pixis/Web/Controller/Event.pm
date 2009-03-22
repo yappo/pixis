@@ -85,10 +85,30 @@ sub edit :Chained('load_event') :PathPart('edit') :Args(0) :FormConfig {
 sub attendees :Chained('load_event') :Args(0) {
 }
 
-sub register :Chained('load_event') :Args(0) {
+sub register :Chained('load_event') :Args(0) :FormConfig {
     my ($self, $c) = @_;
 
-    $c->user or $c->res->redirect('/login');
+    $c->forward('/auth/assert_logged_in') or return;
+
+    my $form = $c->stash->{form};
+    if ($form->submitted_and_valid) {
+        my $event = $c->stash->{event};
+        my $api = $c->registry(api => 'Event');
+        if (! $api->is_registration_open({ event_id => $event->id }) ) {
+            $c->error("stop");
+            $c->detach('');
+        }
+        if (! $api->is_registered({ event_id => $event->id, member_id => $c->user->id })) {
+            $api->register({
+                event_id => $c->stash->{event}->id,
+                member_id => $c->user->id
+            });
+        }
+        $c->res->redirect('/event', $event->id, 'registered');
+        return;
+    }
 }
 
+sub registered :Chained('load_event') :Args(0) {
+}
 1;

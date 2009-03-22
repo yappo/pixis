@@ -1,0 +1,6 @@
+[% WRAPPER wrapper.tt %]
+
+<h2>[% event.title %] - 参加申し込み</h2>
+<div>参加申し込みを受け付けました</div>
+
+[% END %]
