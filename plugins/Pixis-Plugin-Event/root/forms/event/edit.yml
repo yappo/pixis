@@ -18,6 +18,12 @@ elements:
         - Required
       filters:
         - HTMLEscape
+    - type: Text
+      name: capacity
+      label_loc: Event Capacity
+      constraints:
+        - Required
+        - Integer
     - type: Submit
       name: submit
       value_loc: Edit
