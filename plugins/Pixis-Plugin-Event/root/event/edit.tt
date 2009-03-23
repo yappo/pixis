@@ -5,8 +5,12 @@
 [% form %]
 </div>
 
+<h2>参加費設定</h2>
+[% f_ticket %]
+
 <h2>日程毎の調整</h2>
 [% FOREACH f_date IN dates %]
-[% f_date %]
+<h3>[% f_date.0 %]</h3>
+[% f_date.1 %]
 [% END %]
 [% END # WRAPPER %]

@@ -132,7 +132,13 @@ sub is_registration_open {
         return ();
     }
 
-    my $now = DateTime->now;
+    my $now = DateTime->now(time_zone => 'local');
+    printf STDERR ("is_open -> %d, start_on -> %s, end_on -> %s, now -> %s\n",
+         $event->is_registration_open,
+        $event->registration_start_on,
+        $event->registration_end_on,
+        $now,
+    );
     return $event->is_registration_open &&
         $event->registration_start_on <= $now &&
         $event->registration_end_on >= $now
@@ -178,13 +184,39 @@ sub register {
     my ($self, $args) = @_;
 
     my $schema = Pixis::Registry->get(schema => 'master');
-    $schema->resultset('EventRegistration')->create(
-        {
-            member_id => $args->{member_id},
-            event_id  => $args->{event_id},
-            created_on => \'NOW()',
-        },
-    );
+    my $order = $schema->txn_do( sub { 
+        my ($self, $args, $schema) = @_;
+        my $event  = $self->find($args->{event_id});
+        my $ticket = $schema->resultset('EventTicket')->search(
+            {
+                id => $args->{ticket_id},
+                event_id => $args->{event_id}
+            }
+        )->single;
+        die "Ticket with id $args->{ticket_id} could not be found" unless $ticket;
+
+        my $order_api = Pixis::Registry->get(api => 'Order');
+        my $order = $order_api->create( {
+            member_id   => $args->{member_id}, # pixis member ID
+            amount      => $ticket->price,
+            description => sprintf('%s - %s', $event->title, $ticket->name),
+            created_on  => \'NOW()',
+        });
+
+        $schema->resultset('EventRegistration')->create(
+            {
+                member_id  => $args->{member_id},
+                event_id   => $args->{event_id},
+                order_id   => $order->id,
+                created_on => \'NOW()',
+            },
+        );
+
+        return $order;
+    }, $self, $args, $schema );
+    die "Failed to register" if $@;
+
+    return $order;
 }
 
 sub get_dates {

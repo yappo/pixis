@@ -1,6 +1,24 @@
 [% WRAPPER wrapper.tt %]
 
 <h2>[% event.title %] - 参加申し込み</h2>
-<div>参加申し込みを受け付けました</div>
+
+<div style="border: 3px solid #f30; text-align: center; font-size: 1.5em; padding: 1em">
+あなたのオーダー番号は[% order.id %]です
+</div>
+
+[% IF order.amount > 0 %]
+<p>参加申し込みタが登録されました。申し込みを完了するためには参加費用をお支払いし>ていただく必要があります。</p>
+
+<p>年会費のお支払い方法は以下からお選びください：</p>
+<ul>
+    <li><a href="[% c.uri_for('/event', 'payment', 'paypal', { order => order.id }) %]">Paypalでのお支払い</a></li>
+
+    [%# XXX This is JPA specific! This needs to be configurable %]
+    <li><a href="[% c.uri_for('/jpa', 'payment', 'bank', { order => order.id }) %]">銀行振り込みでのお支払い</a> (確認に少々時間がかかります)</li>
+</li>
+</ul>
+[% ELSE %]
+<p>本イベントは参加費無料ですので、参加申し込み手続きは以上で完了いたしました。</p>
+[% END %]
 
 [% END %]

@@ -18,7 +18,7 @@ sub create :Local :FormConfig :PixisPriv('admin') {
     $c->forward('/auth/assert_roles', ['admin']);
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
-        $form->add_valid(created_on => DateTime->now);
+        $form->add_valid(created_on => \'NOW()');
         $form->param('end_on')->add(days => 1)->subtract(seconds => 1);
         $form->param('registration_end_on')->add(days => 1)->subtract(seconds => 1);
         my $event = eval {
@@ -46,8 +46,7 @@ sub load_event :Chained :PathPart('event') :CaptureArgs(1) {
         $c->log->error("Error at load_event: $@");
     }
     if (! $c->stash->{event}) {
-        $c->forward('/default');
-        $c->finalize();
+        Pixis::Web::Exception->throw(message => "Requrested event $id was not found");
     }
 
     $c->stash->{tracks} = 
@@ -76,7 +75,7 @@ sub edit :Chained('load_event') :PathPart('edit') :Args(0) :FormConfig {
             $f->load_config_file('event/date.yml');
             $f->action($c->uri_for('/event', $event->id, 'date', $date->date));
             $f->model->default_values($date);
-            push @dates, $f;
+            push @dates, [ $date->date, $f ];
         }
         $c->stash->{dates} = \@dates;
     }
@@ -98,7 +97,7 @@ sub register :Chained('load_event') :Args(0) :FormConfig {
 }
 
 sub register_confirm :Chained('load_ticket') :PathPart('confirm') :Args(0) :FormConfig {
-    my ($self, $c, $ticket) = @_;
+    my ($self, $c) = @_;
 
     $c->forward('/auth/assert_logged_in') or return;
 
@@ -113,18 +112,41 @@ $c->log->debug("registration not open");
             $c->detach('');
         }
 
-        if (! $api->is_registered({ event_id => $event->id, member_id => $c->user->id })) {
-            $api->register({
-                event_id => $c->stash->{event}->id,
-                member_id => $c->user->id
-            });
+        if ($api->is_registered({ event_id => $event->id, member_id => $c->user->id })) {
+            Pixis::Web::Exception->throw(safe_message => 1, message => "You are already registered for this event!");
         }
-        $c->res->redirect($c->uri_for('/event', $event->id, 'registered'));
+        my $order = $api->register({
+            event_id => $c->stash->{event}->id,
+            member_id => $c->user->id,
+            ticket_id => $c->stash->{ticket}->id,
+        });
+
+        $c->res->redirect($c->uri_for('/event', $event->id, 'registered', $order->id));
         return;
     }
 }
 
-sub registered :Chained('load_event') :Args(0) {
+sub registered :Chained('load_event') :Args(1) {
+    my ($self, $c, $order_id) = @_;
+
+    $c->forward('/auth/assert_logged_in') or return;
+    # Now that I'm registered, prompt the user to pay by paypal or by
+    # bank transfer
+
+    my $registration = $c->registry(api => 'EventRegistration')->load_from_order(
+        {
+            event_id  => $c->stash->{event}->id,
+            member_id => $c->user->id,
+            order_id  => $order_id
+        }
+    );
+
+    if (! $registration) {
+        Pixis::Web::Exception->throw(message => "Could not find registration that matches order id $order_id");
+    }
+
+    my $order = $c->registry(api => 'Order')->find($order_id);
+    $c->stash->{order} = $order;
 }
 
 1;

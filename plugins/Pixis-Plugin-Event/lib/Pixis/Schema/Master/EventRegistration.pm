@@ -29,6 +29,11 @@ __PACKAGE__->add_columns(
         default_value => 0,
         size => 1,
     },
+    order_id => {
+        data_type => "CHAR",
+        is_nullable => 1,
+        size => 12,
+    },
     modified_on => {
         data_type => "TIMESTAMP",
         is_nullable => 0,

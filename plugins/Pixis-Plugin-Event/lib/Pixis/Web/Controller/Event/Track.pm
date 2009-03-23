@@ -30,7 +30,7 @@ sub add :Chained('/event/load_event')
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
         my $event = $c->stash->{event};
-        $form->add_valid(created_on => DateTime->now);
+        $form->add_valid(created_on => DateTime->now(time_zone => 'local'));
         $form->add_valid(event_id => $event->id);
         $c->registry(api => 'EventTrack')->create_from_form($form);
         $c->res->redirect($c->uri_for('/event', $event->id));
