@@ -19,6 +19,10 @@
 </div>
 
 <script lang="javascript" type="text/javascript">
+    var Pixis = { Event: { TrackTimeline: {} } };
+    Pixis.Event.TrackTimeline.start_hour = [% start_hour || 0%];
+    Pixis.Event.TrackTimeline.end_hour = [% end_hour || 23 %];
+
     var track_dates = new Array();
     var date_index  = 0;
 
@@ -41,7 +45,7 @@
     } );
     $(document).ready( function() {
         var tl = '';
-        for( var x = 0; x < 24; x++) {
+        for( var x = Pixis.Event.TrackTimeline.start_hour; x <= Pixis.Event.TrackTimeline.end_hour; x++) {
             tl += '<div style="width: [% cell_width %]px; height: [% cell_height - border_width %]px; background-color: ddd; border-bottom: [% border_width %]px solid #[% border_color %];';
             if (x == 0) {
                 tl += 'border-top: [% border_width %]px solid #[% border_color %]';
@@ -63,7 +67,11 @@
             console.log("got response back");
 console.log($.dump(sessions));
         $.each(sessions, function(i, session) {
-            var scaled_start  = (session.start_on / 3600);
+            if (session.start_on < Pixis.Event.TrackTimeline.start_hour * 3600) {
+                return;
+            }
+
+            var scaled_start  = (session.start_on / 3600 - Pixis.Event.TrackTimeline.start_hour);
             var top     = scaled_start * [% cell_height %] + [% border_width %];
             var scaled_duration = session.duration / 3600;
             var height  = scaled_duration * [% cell_height %] - [% border_width %];

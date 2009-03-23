@@ -20,4 +20,15 @@ sub load_from_event {
     return $self->load_multi(@tracks);
 }
 
+sub load_from_event_date {
+    my ($self, $args) = @_;
+
+    $self->resultset->search(
+        {
+            event_id => $args->{event_id},
+            date     => $args->{date}
+        }
+    )->single;
+}
+
 __PACKAGE__->meta->make_immutable;
