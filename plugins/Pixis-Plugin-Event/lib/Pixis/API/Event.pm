@@ -170,7 +170,6 @@ sub get_registration_status {
             rows => 1,
         }
     );
-print STDERR ("here 1");
 
     return () unless $row;
 

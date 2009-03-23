@@ -26,7 +26,7 @@ sub add :Chained('/event/track/load_track')
         $form->add_valid(event_id => $c->stash->{event}->id);
         $form->add_valid(track_id      => $c->stash->{track}->id);
         $form->add_valid(end_on        => $form->param('start_on') + DateTime::Duration->new(minutes => $form->param('duration')) );
-        $form->add_valid(created_on    => DateTime->now);
+        $form->add_valid(created_on    => \'NOW()');
         eval {
             $c->registry(api => 'EventSession')->create_from_form($form);
         };
