@@ -45,6 +45,10 @@ __PACKAGE__->add_columns(
         data_type => "TEXT",
         is_nullable => 0
     },
+    due_on => {
+        data_type => "DATETIME",
+        is_nullable => 1,
+    },
     modified_on => {
         data_type => "TIMESTAMP",
         is_nullable => 0,
