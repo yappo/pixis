@@ -36,6 +36,7 @@ requires 'Crypt::SSLeay'; # For communication with Paypal
 requires 'Data::Localize';
 requires 'DateTime';
 requires 'DateTime::Format::Duration';
+requires 'DateTime::Format::Strptime';
 requires 'DBD::mysql';
 requires 'DBIx::Class';
 requires 'DBIx::Class::VirtualColumns';
@@ -45,8 +46,11 @@ requires 'MooseX::Getopt';
 requires 'MooseX::Types::Path::Class';
 requires 'HTML::FormFu';
 requires 'HTML::FormFu::Model::DBIC';
+requires 'LWP::UserAgent'; 
 requires 'Module::Pluggable';
 requires 'Moose';
+requires 'MooseX::AttributeHelpers';
+requires 'MooseX::Types::Path::Class';
 requires 'MooseX::Singleton';
 requires 'MooseX::WithCache';
 requires 'SQL::Translator';
@@ -63,7 +67,11 @@ WriteAll;
 
 print <<EOM;
 
-To setup your database:
+HOWTO SETUP PIXIS
+
+1. Setup your database
+
+  To setup your database:
 
     # Just the core
     ./script/pixis_setupdb.pl \
@@ -77,11 +85,13 @@ To setup your database:
         --user="...." \
         --password="..."
 
-Add --drop, if you want to drop the old schema
+  Add --drop, if you want to drop the old schema
 
     ./script/pixis_setupdb.pl ... --drop
 
-To start your dev server
+2. Start your server
+
+  To start your dev server
 
     # Just the core
     ./script/pixis_web_server.pl
@@ -89,7 +99,7 @@ To start your dev server
     # to include plugins
     ./script/pixis_cmd.pl ./script/pixis_web_server.pl
 
-To run tests
+3. To run tests
 
     # your regular make test:
 
