@@ -73,7 +73,8 @@ sub load_from_date {
             start_on => { -between => [ $args->{start_on}, $args->{start_on}->clone->add(days => 1) ] },
         },
         {
-            select => [qw(id)]
+            select => [qw(id)],
+            order_by => [ 'start_on' ],
         }
     );
 
