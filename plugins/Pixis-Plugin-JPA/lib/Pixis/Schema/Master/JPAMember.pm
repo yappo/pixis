@@ -106,15 +106,14 @@ sub sqlt_deploy_hook {
 sub populate_initial_data {
     my ($class, $schema) = @_;
 
-    my $now = DateTime->now;
     # XXX - ooh, what's this, you ask? This is a work around for 
     # DBIC 0.08012's broken insert_bulk(). By introducing a () in front,
     # we force list context, and therefore insert_bulk is not used.
     () = $schema->populate( 
         PurchaseItem => [
             [ qw(id store_name name price description created_on) ],
-            [ 'JPA-0001', 'JPA', 'JPA一般会員年会費', '5000', 'JPA 年会費', $now ],
-            [ 'JPA-0002', 'JPA', 'JPA学生会員年会費', '0', 'JPA 年会費', $now ],
+            [ 'JPA-0001', 'JPA', 'JPA一般会員年会費', '5000', 'JPA 年会費', \'NOW()' ],
+            [ 'JPA-0002', 'JPA', 'JPA学生会員年会費', '0', 'JPA 年会費', \'NOW()' ],
         ]
     );
 }

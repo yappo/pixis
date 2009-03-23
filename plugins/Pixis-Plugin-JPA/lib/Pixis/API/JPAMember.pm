@@ -22,12 +22,11 @@ sub create {
     return $schema->txn_do(sub {
         my ($schema, $args, $item) = @_;
 
-        my $now = DateTime->now;
         # JPA Member info (don't confuse it with pixis member!)
         my $member = $schema->resultset('JPAMember')->create({
             %$args,
             is_active  => 0, # must be
-            created_on => $now,
+            created_on => \'NOW()',
             membership => $item->id
         });
 
@@ -46,7 +45,7 @@ sub create {
                 member_id   => $args->{member_id}, # pixis member ID
                 amount      => $item->price,
                 description => $item->description,
-                created_on  => $now,
+                created_on  => \'NOW()',
             });
         }
         return ($member, $order);
