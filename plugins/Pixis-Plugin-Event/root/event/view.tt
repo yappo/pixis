@@ -79,14 +79,14 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 [%      ELSE %]
 <ul>
 [%          FOREACH session IN sessions %]
-<li>[[% session.start_on.strftime('%H:%M') %] - [% session.end_on.strftime('%H:%M') %]] - <a href="[% c.uri_for('/event', event.id, 'session', session.id ) %]">[% session.title %]</a> by [% session.speaker %]</li>
+<li>[[% session.start_on.strftime('%H:%M') %] - [% session.end_on.strftime('%H:%M') %]] - <a href="[% c.uri_for('/event', event.id, 'session', session.id ) %]">[% session.title %]</a> by [% session.presenter %]</li>
 [% 
             END; # FOREACH
         END; # IF
-        CALL cur.add(days => 1);
-    END; # WHILE
-%]
+        CALL cur.add(days => 1); %]
 </ul>
+[%    END; # WHILE
+%]
 </div>
 
 <div>
