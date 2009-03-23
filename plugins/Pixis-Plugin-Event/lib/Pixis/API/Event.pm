@@ -133,12 +133,6 @@ sub is_registration_open {
     }
 
     my $now = DateTime->now(time_zone => 'local');
-    printf STDERR ("is_open -> %d, start_on -> %s, end_on -> %s, now -> %s\n",
-         $event->is_registration_open,
-        $event->registration_start_on,
-        $event->registration_end_on,
-        $now,
-    );
     return $event->is_registration_open &&
         $event->registration_start_on <= $now &&
         $event->registration_end_on >= $now
@@ -161,6 +155,34 @@ sub load_registered_count {
         }
     )->single;
     return $row->get_column('count');
+}
+
+sub get_registration_status {
+    my ($self, $args) = @_;
+    my $schema = Pixis::Registry->get(schema => 'master');
+    # XXX we need to cache this
+    my ($row) = $schema->resultset('EventRegistration')->search(
+        {
+            member_id => $args->{member_id},
+            event_id  => $args->{event_id},
+        },
+        {
+            rows => 1,
+        }
+    );
+print STDERR ("here 1");
+
+    return () unless $row;
+
+    my $order = Pixis::Registry->get(api => 'Order')->find($row->order_id);
+    if ($order) {
+        if ($order->is_pending_accept || $order->is_pending_credit_check || $order->is_init) {
+            return -1; # registered, but unpaid
+        } elsif ($order->is_done) {
+            return 1;
+        }
+    }
+    return ();
 }
 
 sub is_registered {

@@ -38,11 +38,24 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
     <td>
         <div>[% event.registration_start_on.strftime('%Y/%m/%d') %] - [% event.registration_end_on.strftime('%Y/%m/%d') %]</div>
         <div>
-[% IF ( c.registry('api', 'Event').is_registration_open({ event_id => event.id })) %]
-    [<a href="[% c.uri_for("/event", event.id, "register") %]">参加登録</a>]
-[% ELSE %]
-    <span style="color: #f00; font-weight: bold">現在登録は行っていません</span>
-[%END %]
+[%
+    IF ( c.registry('api', 'Event').is_registration_open({ event_id => event.id }));
+        # Check if the user has already
+        #   a) registered, but not paid, 
+        #   b) registered and have paid, or 
+        #   c) haven't the slightest interest in our event
+        SET status = c.registry('api', 'Event').get_registration_status({ event_id => event.id, member_id => c.user.id }) ;
+        IF (status == 1); # registered, paid
+            %][<span style="color: #f00; font-weight: bold">登録済み</span>][%
+        ELSIF (status == -1); # registered, unpaid
+            %][<span style="color: #f00; font-weight: bold">未入金</span>][%
+        ELSE;
+            %][<a href="[% c.uri_for("/event", event.id, "register") %]">参加登録</a>][%
+        END;
+    ELSE;
+%]     <span style="color: #f00; font-weight: bold">現在登録は行っていません</span>[%
+    END;
+%]
         </div>
     </td>
 </tr>
