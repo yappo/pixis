@@ -120,14 +120,36 @@ sub load_coming {
     return $self->load_multi(map { $_->id } @ids);
 }
 
+sub load_tickets {
+    my ($self, $args) = @_;
+
+    my $schema = Pixis::Registry->get(schema => 'master');
+    return $schema->resultset('EventTicket')->search(
+        {
+            event_id => $args->{event_id},
+        },
+        {
+            rows => 1
+        }
+    )->single ? 1 : ();
+}
+
 sub is_registration_open {
     my ($self, $args) = @_;
 
     my $event = $self->find($args->{event_id});
     return () if (! $event);
 
+    # Make sure there are tickets registered for this event
+    my $count;
+
+    $count = $self->load_tickets({ event_id => $args->{event_id} });
+    if ($count <= 0) {
+        return ();
+    }
+
     # check how many people have registered
-    my $count = $self->load_registered_count({ event_id => $args->{event_id} });
+    $count = $self->load_registered_count({ event_id => $args->{event_id} });
     if ($count >= $event->capacity) {
         return ();
     }
