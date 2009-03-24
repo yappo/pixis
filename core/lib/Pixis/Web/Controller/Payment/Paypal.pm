@@ -4,6 +4,19 @@ package Pixis::Web::Controller::Payment::Paypal;
 use strict;
 use base qw(Catalyst::Controller::HTML::FormFu);
 
+__PACKAGE__->mk_accessors($_) for qw(complete_url accept_url cancel_url);
+
+sub COMPONENT {
+    my ($self, $c, $config) = @_;
+
+    $self = $self->NEXT::COMPONENT($c, $config);
+    $self->complete_url( $config->{complete_url} || 'complete' );
+    $self->accept_url( $config->{accept_url} || 'accept' );
+    $self->cancel_url( $config->{cancel_url} || 'cancel' );
+
+    return $self;
+}
+
 sub auto :Private {
     my ($self, $c) = @_;
     $c->forward('/auth/assert_logged_in');
@@ -38,8 +51,8 @@ sub initiate_purchase :Private {
 
     my $args = {
         order_id    => $order->id,
-        return_url  => $c->uri_for('accept', { order => $order->id }),
-        cancel_url  => $c->uri_for('cancel', { order => $order->id }),
+        return_url  => $c->uri_for($self->accept_url, { order => $order->id }),
+        cancel_url  => $c->uri_for($self->cancel_url, { order => $order->id }),
         amount      => $order->amount,
         member_id   => $c->user->id,
         description => $order->description
@@ -102,8 +115,8 @@ sub accept :Local {
 
     # let the payment gateway do its thing. if it's okay, we shall proceed
     $c->controller('Payment::Paypal')->complete_purchase($c, {
-        return_url => $c->uri_for('complete', { order => $form->param('order') }) ,
-        cancel_url  => $c->uri_for('cancel', { order => $c->req->param('order') }),
+        return_url  => $c->uri_for($self->complete_url, { order => $form->param('order') }) ,
+        cancel_url  => $c->uri_for($self->cancel_url, { order => $c->req->param('order') }),
         price       => $order->amount,
         member_id   => $c->user->id,
         description => $order->description,
@@ -115,7 +128,7 @@ sub accept :Local {
     } );
 }
 
-sub paypal_cancel :Local :FormConfig {
+sub cancel :Local :FormConfig {
     my ($self, $c) = @_;
 
     $c->controler('Payment::Paypal')->cancel($c, {
