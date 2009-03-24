@@ -13,7 +13,7 @@ BEGIN {
 use Exception::Class
     'Pixis::Web::Exception' => {
         description => 'Generic exception',
-        fields      => [ qw( headers status status_message payload ) ],
+        fields      => [ qw( headers status status_message payload safe_message ) ],
     },
     'Pixis::Web::Exception::FileNotFound' => {
         isa            => 'Pixis::Web::Exception',
