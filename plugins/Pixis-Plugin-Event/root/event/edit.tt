@@ -1,6 +1,7 @@
 [% WRAPPER wrapper.tt %]
-<h2><a href="[% c.uri_for('/event', event.id) %]">[% event.title | html %]</a></h2>
+<h1><a href="[% c.uri_for('/event', event.id) %]">[% event.title | html %]</a> - 編集</h1>
 
+<h2>基本情報</h2>
 <div class="formbox">
 [% form %]
 </div>
