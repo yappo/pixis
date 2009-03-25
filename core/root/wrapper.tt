@@ -5,12 +5,19 @@
     DEFAULT left_tt = 'left.tt';
     DEFAULT base_scripts = [ '/static/js/jquery-1.3.1.js', '/static/js/jquery-ui-1.6rc6.min.js', '/static/js/jquery.dump.js' ];
     DEFAULT scripts      = [];
-    DEFAULT base_styles = [ '/static/css/base.css', '/static/css/my.css', '/static/css/menu.css', '/static/js/theme/ui.all.css' ];
+    DEFAULT base_styles = [ '/static/css/base.css', '/static/css/my.css', '/static/js/theme/ui.all.css' ];
     DEFAULT styles = [];
+    DEFAULT metas = [];
 -%]
 <html>
 <head>
     <title>[% IF title %][% title %] - [% site_config.title || 'Pixis' %][% ELSE %][% site_config.title || 'Pixis' %][% END %]</title>
+
+[% FOREACH meta IN metas %]
+    <meta[% FOREACH pair IN meta.pairs %] [% pair.key | html %]="[% pair.value | html %]"[% END %]>
+[% END %]
+
+
 [% FOREACH script IN base_scripts %]
     <script src="[% script %]" type="text/javascript"></script>
 [% END %] 

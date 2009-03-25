@@ -1,4 +1,8 @@
-[% WRAPPER wrapper.tt %]
+[% WRAPPER wrapper.tt,
+    metas => [
+        { 'http-equiv' => "Refresh", content => "3;URL=" _ c.uri_for('/member/home') }
+    ]
+%]
 
 <h1>Paypalによる支払い - 完了</h1>
 
