@@ -37,7 +37,7 @@ sub view :Chained('load_member') :PathPart('') Args(0) {
     my ($self, $c) = @_;
 
     # Load my latest activities
-
+    $c->stash->{activities} = [ $c->registry(api => 'Member')->load_recent_activity( { member_id => $c->user->id } ) ];
 
 }
 
