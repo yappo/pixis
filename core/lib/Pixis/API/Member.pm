@@ -46,7 +46,7 @@ sub create {
     my $member;
     $schema->txn_do( sub {
         my $schema = shift;
-        $args->{created_on} ||= DateTime->now;
+        $args->{created_on} ||= \'NOW()';
 
         $member = $schema->resultset('Member')->create($args);
         $schema->resultset('MemberAuth')->create({
