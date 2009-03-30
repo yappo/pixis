@@ -36,6 +36,13 @@ __PACKAGE__->config(
     'Controller::HTML::FormFu' => {
         languages_from_context  => 1,
         localize_from_context  => 1,
+        constructor => {
+            render_method => 'tt',
+            tt_args => {
+                COMPILE_DIR  => __PACKAGE__->path_to('tt2'),
+                INCLUDE_PATH => __PACKAGE__->path_to('root', 'forms')->stringify,
+            }
+        }
     },
     'Plugin::Authentication' => {
         use_session => 1,
