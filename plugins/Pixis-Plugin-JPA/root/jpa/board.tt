@@ -2,12 +2,12 @@
 
 <style type="text/css">
 <!--
-table { margin-bottom: 1em }
+table,th,td { border: none; }
 td {
     vertical-align: top
 }
 td p {
-    padding-left: 1em;
+    padding: 0 0.5em;
 }
 //-->
 </style>
@@ -15,7 +15,7 @@ td p {
 
 <table>
 <tr>
-    <td><img src="/static/jpa/img/maki.jpg" width="90"></td>
+    <td><p><img src="/static/jpa/img/maki.jpg" width="90"></p></td>
     <td>
         <p>代表理事：牧大輔</p>
         <p><a href="http://www.endeworks.jp">株式会社endeworks</a>代表取締役。米Washington University卒業後米Network Appliance, Inc でPerlに目覚める。2004年帰国し、Livedoor（株）などを経て（株）endeworksを設立。事業の傍ら講演や研修を行う。開発・公開しているPerlツールも多数。著書に「モダンPerl入門」(2009年 翔泳社)がある</p>
@@ -24,7 +24,7 @@ td p {
 </table>
 <table>
 <tr>
-    <td><img src="/static/jpa/img/emerson.jpg" width="90"></td>
+    <td><p><img src="/static/jpa/img/emerson.jpg" width="90"></p></td>
     <td>
         <p>理事：Emerson Mills</p>
         <p>orinoco株式会社CTO。東京大学で留学を経て米University of Michiganを卒業。日本企業でPerl開発者として勤務した後Amazon.comにてモバイル、ウエブサービスなどの様々な事業部で活躍。2007年にOrinoco株式会社を起業。Perlでのウェブアプリケーション開発、ウェブサービス、アジャイル開発手法について講演も多数行う。</p>
@@ -33,7 +33,7 @@ td p {
 </table>
 <table>
 <tr>
-    <td><img src="/static/jpa/img/ikebe.jpg" width="90"></td>
+    <td><p><img src="/static/jpa/img/ikebe.jpg" width="90"></p></td>
     <td>
         <p>理事：池邉智洋</p>
         <p>株式会社ライブドア執行役員CTO
@@ -43,7 +43,7 @@ td p {
 </table>
 <table>
 <tr>
-    <td><img src="/static/jpa/img/yamaguchi.jpg" width="90"></td>
+    <td><p><img src="/static/jpa/img/yamaguchi.jpg" width="90"></p></td>
     <td>
         <p>理事：山口徹</p>
         <p><a href="http://dena.jp/">株式会社 DeNA</a> モバイルポータル部システム第１グループ所属の Perl プログラマ。OpenID に関しては国内でも第一人者であり、講演や執筆等多数行う。ネット上では <a href="http://d.hatena.ne.jp/ZIGOROu/">id:ZIGOROu</a> と言うハンドルで知られる。</p>
@@ -52,7 +52,7 @@ td p {
 </table>
 <table>
 <tr>
-    <td><img src="/static/jpa/img/okabe.jpg" width="90"></td>
+    <td><p><img src="/static/jpa/img/okabe.jpg" width="90"></p></td>
     <td>
         <p>監事：岡部恵一</p>
         <p>NTTレゾナント株式会社勤務。1998年に日本で開催されたPerl Conferenceの時からPerlコミュニティに関わっている。 YAPC::Asiaの牽引役。</p></td>
@@ -60,7 +60,7 @@ td p {
 </table>
 <table>
 <tr>
-    <td><img src="/static/jpa/img/oyama.jpg" width="90"></td>
+    <td><p><img src="/static/jpa/img/oyama.jpg" width="90"></p></td>
     <td>
         <p>監事：小山浩之</p>
         <p>フリーランスプログラマ。ソーシャル・ネットワーキングサービス「mixi」に2005年春から開発に

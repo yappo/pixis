@@ -9,16 +9,26 @@
 <p>出張研修の場合、開催場所は受講者様でご用意いただきます。開催日時や場所に関しましては是非ご相談ください</p>
 <p>都市部であれば、基本的に日本中のどちらへも出張可能です。</p>
 
+<style type="text/css">
+<!--
+div#cost h3 {
+    margin: 3px 0;
+    font-size: 100%;
+    color: #303030;
+}
+-->
+</style>
+
+<div id="cost">
 <h2>料金</h2>
 <p>研修は基本1〜3日の期間で行います。料金に関しては以下の表を参考にしてください</p>
 
-    <table border="1">
+    <h3><strong>研修開催費用の目安</strong></h3>
+    <table>
     <tr>
-        <th colspan="3"> 研修開催費用の目安 </th>
+        <th>受講者数</th> <th>一般開催</th> <th>JPA会員(*)</th>
     </tr>
-    <tr>
-        <td>受講者数</td> <td>一般開催</td> <td>JPA会員(*)</td>
-    </tr>
+    <tbody>
     <tr>
         <td>5 - 20人</td> <td> 40,000円/受講生 </td> <td> 32,000円/受講生 </td>
     </tr>
@@ -28,18 +38,19 @@
     <tr>
         <td>41人以上</td> <td> 相談 </td> <td> 相談 </td>
     </tr>
+    </tbody>
     </table>
 
 <p> 場合によっては上記に実費が加算されます。開催費用は受講者数や内容によって調整可能ですので、まずはご相談ください。</p>
-    
+</div><!-- cost -->
 
 <style type="text/css">
 <!--
 // FIXME
-div.course {
+div.course div {
     margin-bottom: 1em;
 }
-div.course p {
+div.course div p {
     padding-left: 1em;
 }
 div.course h3 {
@@ -49,37 +60,39 @@ div.course h3 {
 //-->
 </style>
 
+<div class="course">
 <h2>コース種別</h2>
 
 <p> 下記の内容の他にも内容をカスタマイズして提供することも可能です。ご希望の内容がございましたらご相談ください。 </p>
 
-<div class="course">
+<div>
     <h3>Perl 入門</h3>
     <p> Perl初心者に向けたコース。構文の基礎から、モジュール作成方法、CPANの扱い方までの解説</p>
 </div>
 
-<div class="course">
+<div>
     <h3>モダンなオブジェクト指向</h3>
     <p> 最新のPerlオブジェクト指向を<a href="http://moose.perl.org">Moose</a>を通して学びます</p>
 </div>
 
-<div class="course">
+<div>
     <h3>Perlとクラウドコンピューティング</h3>
     <p> Amazon EC2 / S3などクラウドコンピューティングサービスを用いる際の導入方法、テクニックなどを紹介します </p>
 </div>
 
-<div class="course">
+<div>
     <h3>Catalyst入門</h3>
     <p> Catalystって？MVCって？その基本からCatalystの構造までをカバーします。</p>
 </div>
-<div class="course">
+<div>
     <h3>実践 Catalyst</h3>
     <p> Catalyst入門本やチュートリアルには載ってない、業務で使えるCatalystテクニックを紹介します </p>
 </div>
 
-<div class="course">
+<div>
     <h3>Perlとジョブキュー</h3>
     <p> もはや手放せないツールとなりつつあるジョブキュー。様々な利用法、そして実際の運用ノウハウを紹介します </p>
 </div>
+</div><!-- course -->
 
 [% END %]

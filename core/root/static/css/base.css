@@ -10,8 +10,36 @@ CSS layout: */
 body {
 margin: 0 auto;
 padding: 0;
-font: 76% "ＭＳ Ｐゴシック", 'メイリオ',Meiryo,"ヒラギノ角ゴ Pro W3", Osaka, Arial, Halvetica, sans-serif;
+font: 12px "ＭＳ Ｐゴシック", 'メイリオ',Meiryo,"ヒラギノ角ゴ Pro W3", Osaka, Arial, Halvetica, sans-serif;
 background: #f4f4f4 url(/static/img/backround.gif) top center repeat-y;
+text-align: center;
+}
+
+ul,ol {
+margin: 0;
+padding-left: 20px;
+}
+
+h1 {
+margin: 0 0 1.5em 0;
+padding: 0.5em 0 0 0;
+}
+
+table {
+    border-top: 1px solid #f0f0f0;
+    border-left: 1px solid #f0f0f0;
+    border-collapse: collapse;
+}
+caption {
+    font-weight: bold;
+    caption-side: top;
+    display: block;
+}
+th { font-weight: bold; }
+th,td {
+    padding: 3px 10px;
+    border-right: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .box_right {
@@ -52,6 +80,7 @@ background: #ffffff;
 color: #303030;
 margin: 0 auto;
 width: 760px;
+text-align: left;
 }
 
 #header {
@@ -96,7 +125,7 @@ font-size: 0.9em;
 #menu ul {  
 list-style: none;
 width: 150px;
-margin: 0 0 10px 0;
+margin: 10px 0;
 padding: 0;
 font-size: 1.1em;
 }   
@@ -129,6 +158,14 @@ width: 130px;
 color: #505050;
 background-color: #F7F9F7;
 line-height: 1.3em;
+}
+
+.leftnews div {
+margin: 3px 0;
+}
+
+.leftnews div img {
+vertical-align: middle;
 }
 
 #right {
@@ -165,7 +202,7 @@ margin-bottom: 20px;
 
 #content h2 {
 font-size: 1.5em;
-margin: 0 0 0.5em 0;
+margin: 2em 0 0.5em 0;
 }
 
 #content img {
@@ -353,4 +390,4 @@ h3 {color: #999999;}
 
 
 
-td {font-size:76%;}
+td {font-size:100%;}

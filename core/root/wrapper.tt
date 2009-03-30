@@ -8,7 +8,8 @@
     DEFAULT base_styles = [ '/static/css/base.css', '/static/css/my.css', '/static/css/menu.css', '/static/js/theme/ui.all.css' ];
     DEFAULT styles = [];
 -%]
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
 <head>
     <title>[% IF title %][% title %] - [% site_config.title || 'Pixis' %][% ELSE %][% site_config.title || 'Pixis' %][% END %]</title>
 [% FOREACH script IN base_scripts %]
