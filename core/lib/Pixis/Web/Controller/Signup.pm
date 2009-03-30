@@ -66,6 +66,7 @@ sub next_step :Private {
     my $uri = $c->uri_for($step, $subsession );
     $c->log->debug("Next step is forwading to $uri") if $c->log->is_debug;
     $c->res->redirect( $uri );
+    $c->finalize();
 }
 
 # Ask things like coderepos/github accounts

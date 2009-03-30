@@ -18,6 +18,7 @@ sub create :Local :FormConfig :PixisPriv('admin') {
     $c->forward('/auth/assert_roles', ['admin']);
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
+        # XXX Make a subsession + confirm later
         $form->add_valid(created_on => \'NOW()');
         $form->param('end_on')->add(days => 1)->subtract(seconds => 1);
         $form->param('registration_end_on')->add(days => 1)->subtract(seconds => 1);
@@ -68,6 +69,10 @@ sub edit :Chained('load_event') :PathPart('edit') :Args(0) :FormConfig {
         return;
     } else {
         $form->model->default_values($event);
+
+        $c->stash->{f_ticket} = $self->form;
+        $c->stash->{f_ticket}->load_config_file('event/ticket/create.yml');
+        $c->stash->{f_ticket}->action($c->uri_for('/event', $event->id, 'ticket', 'create'));
 
         my @dates;
         foreach my $date ($c->registry(api => 'Event')->get_dates({ event_id => $event->id })) {

@@ -37,7 +37,7 @@ sub view :Chained('load_member') :PathPart('') Args(0) {
     my ($self, $c) = @_;
 
     # Load my latest activities
-
+    $c->stash->{activities} = [ $c->registry(api => 'Member')->load_recent_activity( { member_id => $c->user->id } ) ];
 
 }
 
@@ -55,7 +55,15 @@ sub unfollow :Chained('load_member') :Args(0) {
     $c->registry(api => 'Relationship')->unfollow($c->user, $c->stash->{member});
 }
 
-sub settings :Local :Args(0) {}
+sub settings :Local :Args(0) {
+    my ($self, $c) = @_;
+
+    my $form = $self->form;
+    $form->load_config_filestem('member/settings_basic');
+    my $user = $c->registry(api => 'Member')->find($c->user->id);
+    $form->model->default_values($user);
+    $c->stash->{form} = $form;
+}
 
 sub settings_basic :Path('settings/basic') :Args(0) :FormConfig {
     my ($self, $c) = @_;

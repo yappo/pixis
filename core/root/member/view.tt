@@ -37,4 +37,11 @@
 [% END %]
 </div>
 
+<h2>[% loc("Recent Activity") %]
+<ul>
+[% FOREACH activity IN activities %]
+<li><a href="[% activity.link | html %]">[% activity.title | html %]</a></li>
+[% END %]
+</ul>
+
 [% END # WRAPPER %]

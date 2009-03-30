@@ -46,7 +46,7 @@ sub create {
     my $member;
     $schema->txn_do( sub {
         my $schema = shift;
-        $args->{created_on} ||= DateTime->now;
+        $args->{created_on} ||= \'NOW()';
 
         $member = $schema->resultset('Member')->create($args);
         $schema->resultset('MemberAuth')->create({
@@ -192,5 +192,17 @@ sub soft_delete {
         );
     }, $self, $id);
 }
+
+sub load_recent_activity {
+    my ($self, $args) = @_;
+
+    my $schema = Pixis::Registry->get(schema => 'master');
+    my @list = $schema->resultset('ActivityGithub')->search(
+        undef,
+        { rows => 10, order_by => 'activity_on DESC' }
+    );
+    return wantarray ? @list : [@list];
+}
+
 
 __PACKAGE__->meta->make_immutable;
