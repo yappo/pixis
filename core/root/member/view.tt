@@ -1,11 +1,11 @@
 [% WRAPPER wrapper.tt %]
 [% SET owner = (c.user.id == member.id) %]
 
-<div>[% loc('Welcome x', member.nickname) %]</div> 
+<p>[% loc('Welcome x', member.nickname) %]</p> 
 
 [% # ナビバーみたいなのがここに来る感じかなぁ %]
 <!-- navbar? -->
-<ul>
+<ul id="member_menu" class="clearfix">
 [% IF (! owner) %]
     <li><a href="/member/home">[% loc("Member Home") %]</a></li>
     <li>[% IF (c.registry(api => 'Relationship').is_mutual(c.user, member.id)) -%]
@@ -16,32 +16,38 @@
     </li>
 [% ELSE %]
     <li><a href="/member/home">[% loc("Member Home") %]</a></li>
-    <li><a href="/member/setting">[% loc("Member Settings") %]</a></li>
+    <li><a href="/member/settings">[% loc("Member Settings") %]</a></li>
 [% END %]
     <li><a href="/member/search">[% loc("Member Search") %]</a></li>
 </ul>
 
-<img src="[% member.gravatar_url %]" />
-
-<div id="following">
-<div>[% loc("Following") %]</div>
+<div class="clearfix">
+<p id="gravatar"><img src="[% member.gravatar_url %]" width="80" /></p>
+<div id="info">
+<dl id="following">
+<dt>[% loc("Following") %]</dt>
 [% FOREACH m IN following %]
-<a href="[% c.uri_for(m.id) %]"><img src="[% m.gravatar_url(size => 20) %]"></a>
+<dd><a href="[% c.uri_for(m.id) %]"><img src="[% m.gravatar_url(size => 20) %]"></a></dd>
 [% END %]
-</div>
+</dl>
 
-<div id="followers">
-<div>[% loc("Followers") %]</div>
+<dl id="followers">
+<dt>[% loc("Followers") %]</dt>
 [% FOREACH m IN followers %]
-<a href="[% c.uri_for(m.id) %]"><img src="[% m.gravatar_url(size => 20) %]"></a>
+<dd><a href="[% c.uri_for(m.id) %]"><img src="[% m.gravatar_url(size => 20) %]"></a></dd>
 [% END %]
-</div>
+</dl>
+</div><!-- info -->
+</div><!-- clearfix -->
 
+<!--
 <h2>[% loc("Recent Activity") %]
+[% IF activities %]
 <ul>
-[% FOREACH activity IN activities %]
+[%   FOREACH activity IN activities %]
 <li><a href="[% activity.link | html %]">[% activity.title | html %]</a></li>
-[% END %]
+[%   END %]
 </ul>
-
+[% END %]
+-->
 [% END # WRAPPER %]
