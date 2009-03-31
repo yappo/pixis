@@ -35,6 +35,8 @@ elements:
       label_loc: Postal Code
       constraints:
         - Required
+        - type: Regex
+          regex: ^\d{3}-\d{4}$
     - type: Select # this option should be refactored or something
       name: state
       label_loc: State / Prefecture
