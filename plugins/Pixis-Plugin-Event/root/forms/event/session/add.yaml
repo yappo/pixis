@@ -5,7 +5,7 @@ javascript: |-
     $(function() { 
         $("#start_on_date_picker").datepicker();
     });
-
+auto_fieldset: 1
 elements:
     - type: Text
       label_loc: Title

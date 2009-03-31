@@ -3,11 +3,11 @@
 <h2>[% event.title %] - 参加申し込み</h2>
 
 <div style="border: 3px solid #f30; text-align: center; font-size: 1.5em; padding: 1em">
-あなたのオーダー番号は[% order.id %]です
+あなたのオーダー番号は<strong>[% order.id %]</strong>です
 </div>
 
 [% IF order.amount > 0 %]
-<p>参加申し込みタが登録されました。申し込みを完了するためには参加費用をお支払いし>ていただく必要があります。</p>
+<p>参加申し込みが登録されました。申し込みを完了するためには参加費用をお支払いしていただく必要があります。</p>
 
 <p>年会費のお支払い方法は以下からお選びください：</p>
 <ul>

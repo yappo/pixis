@@ -12,7 +12,12 @@
 すでに登録されています
 [% ELSE %]
 
-<table border="1">
+<table>
+<tr>
+    <th>イベント名</th>
+    <th>参加費</th>
+    <th>&nbsp;</th>
+</tr>
 [% FOREACH ticket IN c.registry('api', 'EventTicket').search({ event_id => event.id }) %]
 <tr>
     <td>[% ticket.name %]</td>
