@@ -1,7 +1,7 @@
 [% WRAPPER wrapper.tt %]
 <h1>[% loc("Event Details") %]</h1>
 
-<div class="greenbox formbox">
+<div class="greenbox">
 [% form %]
 </div>
 [% END # WRAPPER %]

@@ -9,7 +9,7 @@ elements:
         - Email
     - type: Text
       name: token
-      label_loc: Token
+      label_loc: アクティベーションキー
       constraints:
         - Required
         - type: Length
