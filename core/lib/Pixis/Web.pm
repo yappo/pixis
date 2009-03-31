@@ -209,7 +209,11 @@ sub add_formfu_path {
             $orig = [$orig];
             $code->($controller)->{constructor}{config_file_path} = $orig;
         }
-        push @$orig, @paths;
+        my %seen = map { ($_ => 1) } @$orig;
+        foreach my $path (@paths) {
+            next if $seen{$path};
+            push @$orig, $path;
+        }
     }
 }
 
