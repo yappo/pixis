@@ -1,7 +1,10 @@
 .error_message {
+    margin: 3px 0;
+    padding-left: 0.5em;
     color: #f00;
     font-weight: bold;
-    float: right;
+/*    float: right;*/
+    clear: both;
 }
 
 /* This is my first designs using CSS, Please visit me at http://www.studio7designs.com or email aran@studio7designs.com if you have any questions. Thanks, and have fun!
@@ -344,12 +347,6 @@ h3 {color: #999999;}
     border:none;
     text-align: center;
 }
-.loginbox .label {
-    margin-top:10px;
-    width: 80%;
-    text-align: right;
-}
-.loginbox .label input {width:70%;}
 .loginbox .submit input {margin-top:10px; width:100px;}
 
 .signupbox form {padding:0; margin:0;}
@@ -358,36 +355,74 @@ h3 {color: #999999;}
     border:none;
     text-align: center;
 }
-.signupbox .label {
-    margin-top:10px;
-    width: 80%;
-    text-align: right;
-}
-.signupbox .label input {width:60%;}
 .signupbox .submit input {margin-top:10px; width:100px;}
+div.signupbox div.label {
+    margin-top:10px;
+    float: left;
+    width: 140px;
+    text-align: right;
+    write-space: nowrap;
+}
+body div.loginbox div.text,
+body div.signupbox div.text,
+body div.loginbox div.password,
+body div.signupbox div.password,
+body div.signupbox div.select,
+body div.signupbox div.checkbox {
+    float: left;
+    width: 280px;
+    text-align: left;
+}
+div.loginbox div.text input,
+div.signupbox div.text input {
+    width: 260px;
+    vertical-align: top;
+}
 
-.formbox form {padding:0; margin:0;}
-.formbox fieldset {
+form {padding:0; margin:0;}
+fieldset {
     margin:0;
     border:none;
     text-align: center;
 }
-.formbox .label {
+div.label {
     margin-top:10px;
-    width: 80%;
+    float: left;
+    width: 80px;
     text-align: right;
+}
+body div.text,
+body div.password,
+body div.select,
+body div.checkbox {
+    float: left;
+    width: 370px;
+    text-align: left;
+}
+div.text input {
+    width: 300px;
     vertical-align: top;
 }
-.formbox .label  input {
+.label  textarea {
     width:70%;
     vertical-align: top;
 }
-.formbox .label  textarea {
-    width:70%;
-    vertical-align: top;
+div.submit {
+    text-align: center;
 }
-.formbox .submit input {margin-top:10px; width:100px;}
+.submit input {margin-top:10px; width:100px;}
 
+div#confirm {
+    margin: 10px 0;
+}
+div#confirm table {
+    margin: 0 auto;
+}
+div#confirm table th,
+div#confirm table td {
+    width: 200px;
+    text-align: left;
+}
 
 
 td {font-size:100%;}

@@ -21,7 +21,7 @@
 </blockquote>
 [% ELSE %]
 <div style="border: 3px solid #f30; text-align: center; font-size: 1.5em; padding: 1em">
-あなたのオーダー番号は[% order.id %]です
+あなたのオーダー番号は<strong>[% order.id %]</strong>です
 </div>
 
 <p>会員データが登録されました。会員データを有効にするためには年会費をお支払いしていただく必要があります。</p>
