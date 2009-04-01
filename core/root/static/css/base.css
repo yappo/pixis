@@ -464,3 +464,29 @@ dl#followers dd {
     padding-right: 10px;
     display: inline;
 }
+
+
+
+/* sponsors */
+div#platinum li,
+div#gold li,
+div#silver li,
+div#bronze li {
+    line-height: 1.6;
+}
+
+div#platinum li {
+    font-size: 18px;
+}
+
+div#gold li {
+    font-size: 16px;
+}
+
+div#silver li {
+    font-size: 14px;
+}
+
+div#bronze li {
+    font-size: 12px;
+}
