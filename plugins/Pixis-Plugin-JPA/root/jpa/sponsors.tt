@@ -1,0 +1,32 @@
+[% WRAPPER wrapper.tt %]
+<h1>会員リスト</h1>
+<div id="platinum">
+<h2>プラチナ会員</h2>
+<ul>
+<li>S2ファクトリー株式会社</li>
+<li>株式会社 エンデワークス</li>
+<li>株式会社 ガイアックス</li>
+<li>株式会社 ディー・エヌ・エー</li>
+<li>株式会社 ミクシィ</li>
+<li>株式会社 ライブドア</li>
+</ul>
+</div><!-- platinum -->
+<!--<div id="gold">
+<h2>ゴールド会員</h2>
+</div>--><!-- gold -->
+<div id="silver">
+<h2>シルバー会員</h2>
+<ul>
+<li>株式会社 paperboy&co.</li>
+<li>株式会社 Plugin and Core</li>
+<li>株式会社 アドウェイズ</li>
+<li>シーサー 株式会社</li>
+</ul>
+</div><!-- silver -->
+<div id="bronze">
+<h2>ブロンズ会員</h2>
+<ul>
+<li>株式会社 ソフリット</li>
+</ul>
+</div><!-- bronze -->
+[% END %]
