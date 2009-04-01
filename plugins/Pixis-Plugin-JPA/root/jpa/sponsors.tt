@@ -1,14 +1,15 @@
 [% WRAPPER wrapper.tt %]
-<h1>会員リスト</h1>
+<h1>賛同企業</h1>
+
 <div id="platinum">
 <h2>プラチナ会員</h2>
 <ul>
-<li>S2ファクトリー株式会社</li>
-<li>株式会社 エンデワークス</li>
-<li>株式会社 ガイアックス</li>
-<li>株式会社 ディー・エヌ・エー</li>
-<li>株式会社 ミクシィ</li>
-<li>株式会社 ライブドア</li>
+<li><a href="http://s2factory.jp">S2ファクトリー株式会社</a></li>
+<li><a href="http://www.endeworks.jp">株式会社 エンデワークス</a></li>
+<li><a href="http://www.gaiax.co.jp">株式会社 ガイアックス</a></li>
+<li><a href="http://www.dena.jp">株式会社 ディー・エヌ・エー</a></li>
+<li><a href="http://mixi.jp">株式会社 ミクシィ</a></li>
+<li><a href="http://www.livedoor.com">株式会社 ライブドア</a></li>
 </ul>
 </div><!-- platinum -->
 <!--<div id="gold">
@@ -17,16 +18,17 @@
 <div id="silver">
 <h2>シルバー会員</h2>
 <ul>
-<li>株式会社 paperboy&co.</li>
-<li>株式会社 Plugin and Core</li>
-<li>株式会社 アドウェイズ</li>
-<li>シーサー 株式会社</li>
+<li><a href="http://www.paperboy.co.jp/">株式会社 paperboy&co.</a></li>
+<li><a href="http://www.plucore.jp">株式会社 Plugin and Core</a></li>
+<li><a href="http://www.adways.net">株式会社 アドウェイズ</a></li>
+<li><a href="http://www.seesaa.jp">シーサー 株式会社</a></li>
 </ul>
 </div><!-- silver -->
 <div id="bronze">
 <h2>ブロンズ会員</h2>
 <ul>
-<li>株式会社 ソフリット</li>
+<li><a href="http://soffritto.org/">株式会社 ソフリット</a></li>
 </ul>
 </div><!-- bronze -->
+<p>（名称順）</p>
 [% END %]
