@@ -12,15 +12,19 @@
 <li><a href="http://www.livedoor.com">株式会社 ライブドア</a></li>
 </ul>
 </div><!-- platinum -->
-<!--<div id="gold">
+<div id="gold">
 <h2>ゴールド会員</h2>
-</div>--><!-- gold -->
+<ul>
+<li><a href="http://www.paypal.com/j1">Paypal KK</a></li>
+</ul>
+</div><!-- gold -->
 <div id="silver">
 <h2>シルバー会員</h2>
 <ul>
 <li><a href="http://www.paperboy.co.jp/">株式会社 paperboy&co.</a></li>
 <li><a href="http://www.plucore.jp">株式会社 Plugin and Core</a></li>
 <li><a href="http://www.adways.net">株式会社 アドウェイズ</a></li>
+<li>株式会社オリノコ</li>
 <li><a href="http://www.seesaa.jp">シーサー 株式会社</a></li>
 </ul>
 </div><!-- silver -->
