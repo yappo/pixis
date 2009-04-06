@@ -1,5 +1,9 @@
 <!-- START header -->
-<div id="header">[% IF c.user_exists %] <a href="/member/settings">[%
-loc("Member Settings") %]</a> | <a href="/auth/logout">[% loc("Logout")
-%]</a> [% ELSE %] <a href="/auth/login">[% loc("Login") %]</a> [% END %]</div>
+<div id="header">
+[% IF c.user_exists %]
+<a href="/member/home">ホーム</a> | <a href="/member/settings">[% loc("Member Settings") %]</a> | <a href="/auth/logout">[% loc("Logout") %]</a>
+[% ELSE %]
+<a href="/auth/login">[% loc("Login") %]</a>
+[% END %]
+</div>
 <!-- END header -->
