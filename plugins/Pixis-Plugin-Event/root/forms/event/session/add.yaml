@@ -46,6 +46,7 @@ elements:
       label_loc: Description
       name: description
       id: session_description
+      rows: 10
       filters:
         - HTMLScrubber
     - type: Submit

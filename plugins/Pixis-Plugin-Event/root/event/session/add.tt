@@ -5,7 +5,9 @@
 
 [% PROCESS event/track_timeline.tt, editable => 1 %]
 
+<div id="sessionbox">
 <div>[% loc("Click on the timeline to select the time/date") %]</div>
 [% form %]
+</div><!-- sessionbox -->
 
 [% END # WRAPPER %]

@@ -13,10 +13,10 @@
 <div [% IF timeslot_container_id %]id="[% timeslot_container_id %]" [% END %]style="position: absolute; font-size: 9pt; background-color: #[% timeslot_bgcolor %]; border: [% border_width %]px solid #000; width: [% timeslot_width %]; height: [% cell_height - 2 * border_width %]px; left: [% timeslot_left %]"><div [% IF timeslot_id %]id="[% timeslot_id %]" [% END %]style="overflow: hidden; height: inherit; width: inherit">[% timeslot_content %]</div></div>
 [%- END # MACRO %]
 
-<div style="float: right">
+<div id="schedule_container">
 <div id="timeline_date"></div>
 <div id="[% timeline_id %]" style="position:relative"></div>
-</div>
+</div><!-- schedule_container -->
 
 <script lang="javascript" type="text/javascript">
     var Pixis = { Event: { TrackTimeline: {} } };

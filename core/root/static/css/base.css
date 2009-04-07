@@ -341,13 +341,22 @@ h1 {color: #86C32A;}
 h2 {color: #FF9933;}
 h3 {color: #999999;}
 
-.loginbox form {padding:0; margin:0;}
-.loginbox fieldset {
+.loginbox form,
+.formbox form {
+    margin:0;
+    padding:0;
+}
+.loginbox fieldset,
+.formbox fieldset {
     margin:0;
     border:none;
     text-align: center;
 }
-.loginbox .submit input {margin-top:10px; width:100px;}
+.loginbox .submit input,
+.formbox .submit input {
+    margin-top: 10px;
+    width:100px;
+}
 
 .greenbox form {padding:0; margin:0;}
 .greenbox fieldset {
@@ -364,10 +373,13 @@ div.greenbox div.label {
     write-space: nowrap;
 }
 body div.loginbox div.text,
+body div.formbox div.text,
 body div.greenbox div.text,
 body div.loginbox div.password,
+body div.formbox div.password,
 body div.greenbox div.password,
 body div.greenbox div.select,
+body div.formbox div.textarea,
 body div.greenbox div.textarea,
 body div.greenbox div.checkbox {
     float: left;
@@ -375,6 +387,7 @@ body div.greenbox div.checkbox {
     text-align: left;
 }
 div.loginbox div.text input,
+div.formbox div.text input,
 div.greenbox div.text input {
     width: 260px;
     vertical-align: top;
@@ -489,4 +502,45 @@ div#silver li {
 
 div#bronze li {
     font-size: 12px;
+}
+
+
+
+/* event ------------- */
+
+/* event-view */
+
+h1 span {
+    font-weight: normal;
+    font-size: 12px;
+    color: #303030;
+}
+
+
+
+/* session-add */
+
+div#schedule_container {
+    float: right;
+    width: 150px;
+}
+div#sessionbox {
+    float: left;
+    width: 295px;
+}
+
+div#sessionbox div.label {
+    margin-right: 10px;
+    float: left;
+    width: 70px;
+}
+div#sessionbox div.text,
+div#sessionbox div.textarea {
+    width: 180px;
+}
+div#sessionbox div.text input {
+    width: 170px;
+}
+div#sessionbox div.textarea textarea {
+    width: 170px;
 }

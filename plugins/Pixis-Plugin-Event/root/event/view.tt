@@ -5,22 +5,19 @@
     SET end_on   = event.end_on;
 %]
 
-<h1>[% event.title %]</h1>
-[% IF can_edit %]
-<ul>
-    <li><a href="[% c.uri_for( event.id, 'edit') %]">[% loc("Edit") %]</a></li>
-</ul>
-[% END %]
+<h1>[% event.title %]
+<span>[% IF can_edit %][<a href="[% c.uri_for( event.id, 'edit') %]">[% loc("Edit") %]</a>]</span>[% END %]
+</h1>
 
 [%# Safariだと異様にでかいぞw %]
 <h2>[% loc("Basic Event Information") %]</h2>
-<table border="1">
+<table>
 <tr>
-    <td>[% loc("Event Description") %]</td>
+    <th>[% loc("Event Description") %]</th>
     <td>[% event.description %]</td>
 </tr>
 <tr>
-    <td>[% loc("Event Dates") %]</td>
+    <th>[% loc("Event Dates") %]</th>
     <td>[% 
 SET start_on_str = event.start_on.strftime('%Y/%m/%d');
 SET end_on_str   = event.end_on.strftime('%Y/%m/%d');
@@ -30,14 +27,13 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 </td>
 </tr>
 <tr>
-    <td>[% loc("Event Capacity") %]</td>
+    <th>[% loc("Event Capacity") %]</th>
     <td>[% loc("x persons", event.capacity) %]</td>
 </tr>
 <tr>
-    <td>[% loc("Event Registration") %]</td>
+    <th>[% loc("Event Registration") %]</th>
     <td>
-        <div>[% event.registration_start_on.strftime('%Y/%m/%d') %] - [% event.registration_end_on.strftime('%Y/%m/%d') %]</div>
-        <div>
+        [% event.registration_start_on.strftime('%Y/%m/%d') %] - [% event.registration_end_on.strftime('%Y/%m/%d') %]<br />
 [%
     IF ( c.registry('api', 'Event').is_registration_open({ event_id => event.id }));
         # Check if the user has already
@@ -56,14 +52,11 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 %]     <span style="color: #f00; font-weight: bold">現在登録は行っていません</span>[%
     END;
 %]
-        </div>
     </td>
 </tr>
 </table>
 
-<br />
-
-<div>
+<div id="sessions">
     <h2>[% loc("Event Sessions") %]</h2>
 [%
     SET cur = event.start_on;
@@ -75,7 +68,7 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 <h3>[% cur.strftime('%Y/%m/%d') %]</h3>
 [% END %]
 [%      IF sessions.length == 0 %]
-<div style="padding-left: 2em">[% loc("No sessions available") %]</div>
+<div>[% loc("No sessions available") %]</div>
 [%      ELSE %]
 <ul>
 [%          FOREACH session IN sessions %]
@@ -87,18 +80,20 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 </ul>
 [%    END; # WHILE
 %]
-</div>
+</div><!-- sessions -->
 
-<div>
+<div id="tracks">
     <h2>[% loc("Event Tracks") %]</h2>
     [% IF (can_edit) %]
-    <div><small><a href="[% c.uri_for( "/event", event.id, "track", "add" ) %]">[% loc("Add track") %]</a></small></div>
+    <div>[<a href="[% c.uri_for( "/event", event.id, "track", "add" ) %]">[% loc("Add track") %]</a>]</div>
     [% END %]
 
     <ul>
     [% FOREACH track IN tracks %]
-        <li><a href="[% c.uri_for('/event', event.id, 'track', track.id) %]">[% track.title %]</a> [% IF can_edit %][<a href="[% c.uri_for('/event', event.id, 'track', track.id, 'session', 'add' ) %]">[% loc("Add session") %]</a>][% END %]</li>
+        <li><a href="[% c.uri_for('/event', event.id, 'track', track.id) %]">[% track.title %]</a>
+[% IF can_edit %][<a href="[% c.uri_for('/event', event.id, 'track', track.id, 'session', 'add' ) %]">[% loc("Add session") %]</a>][% END %]
+        </li>
     [% END %]
     </ul>
-</div>
+</div><!-- tracks -->
 [% END # WRAPPER %]

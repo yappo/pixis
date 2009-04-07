@@ -1,4 +1,6 @@
 ---
+auto_fieldset: 1
+
 elements:
     - type: Text
       name: start_on
