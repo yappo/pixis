@@ -11,7 +11,7 @@ IF (c.check_user_roles(c.user, 'admin')) ;
     CALL site_config.submenu.push(
         {
             text => loc("Organize an event"),
-            uri  => '/event/create'
+            url  => '/event/create'
         }
     );
 END ;
