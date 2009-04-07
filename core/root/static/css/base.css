@@ -28,6 +28,10 @@ margin: 0 0 1.5em 0;
 padding: 0.5em 0 0 0;
 }
 
+h2 {
+    line-height: 1.4;
+}
+
 table {
     border-top: 1px solid #f0f0f0;
     border-left: 1px solid #f0f0f0;
@@ -544,3 +548,5 @@ div#sessionbox div.text input {
 div#sessionbox div.textarea textarea {
     width: 170px;
 }
+
+/* session-view */
