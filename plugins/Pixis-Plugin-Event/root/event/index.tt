@@ -2,9 +2,11 @@
 
 <h1>[% loc("Event") %]</h1>
 
+[% IF (c.check_user_roles('admin')) %]
 <ul>
-    <li><a href="/event/create">[% loc('Organize an event') %]</a> ([% loc("Requires Admin priviledges") %])</li>
+    <li><a href="/event/create">[% loc('Organize an event') %]</a></li>
 </ul>
+[% END %]
 
 [% IF events.size > 0 %]
 <h2>開催予定のイベント</h2>

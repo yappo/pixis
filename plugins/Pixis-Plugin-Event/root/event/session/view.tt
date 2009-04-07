@@ -1,3 +1,10 @@
 [% WRAPPER wrapper.tt %]
-<h1>[% session.title %]</h1>
+<h1>[% event.title %]</h1>
+<h2>[% session.title %]</h2>
+
+<div>時間：[% session.start_on.strftime('%H:%M') %] - [% session.end_on.strftime('%H:%M') %]</div> 
+
+<div>講師：[% session.presenter %] 氏</div>
+<br>
+<div>[% session.description.replace("\n", "<br>") %]</div>
 [% END %]

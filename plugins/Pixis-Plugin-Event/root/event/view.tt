@@ -14,7 +14,7 @@
 <table>
 <tr>
     <th>[% loc("Event Description") %]</th>
-    <td>[% event.description %]</td>
+    <td>[% event.description.replace("\n", "<br>") %]</td>
 </tr>
 <tr>
     <th>[% loc("Event Dates") %]</th>
@@ -82,6 +82,7 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 %]
 </div><!-- sessions -->
 
+[% IF (tracks.size > 1) %]
 <div id="tracks">
     <h2>[% loc("Event Tracks") %]</h2>
     [% IF (can_edit) %]
@@ -96,4 +97,5 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
     [% END %]
     </ul>
 </div><!-- tracks -->
+[% END %]
 [% END # WRAPPER %]
