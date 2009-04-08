@@ -11,5 +11,5 @@
 </tr>
 </table>
 <p>[% session.description.replace("\n", "<br />") %]</p>
-<a href="/event/"
+<p><a href="[% c.uri_for( "/event", event.id ) %]">&lt;&lt;&nbsp;イベントに戻る</a></p>
 [% END %]

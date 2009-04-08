@@ -82,7 +82,7 @@ ELSE %][% start_on_str %] - [% end_on_str %][% END %]
 %]
 </div><!-- sessions -->
 
-[% IF (tracks.size > 1) %]
+[% IF (can_edit || tracks.size > 1) %]
 <div id="tracks">
     <h2>[% loc("Event Tracks") %]</h2>
     [% IF (can_edit) %]
