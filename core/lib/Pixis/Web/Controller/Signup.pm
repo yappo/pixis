@@ -30,7 +30,7 @@ sub start :Index :Path :Args(0) :FormConfig {
         delete $params->{password_check}; # no need to include it here
         delete $params->{current_step};
         my $subsession = $self->new_subsession($c, $params);
-        $c->detach('next_step', [$subsession]);
+        return $c->forward('next_step', [$subsession]);
     }
 }
 
@@ -78,7 +78,7 @@ sub experience :Local :Args(1) :FormConfig {
         my $p = $self->get_subsession($c, $subsession);
         my $params = Catalyst::Utils::merge_hashes($p, scalar $form->params);
         $self->set_subsession($c, $subsession, $params);
-        $c->detach('next_step', [$subsession]); 
+        return $c->forward('next_step', [$subsession]); 
     }
 }
 
@@ -98,7 +98,7 @@ sub commit :Local :Args(1) :FormConfig {
             $p->{current_step} = 'commit';
             $p->{activation_token} = $member->activation_token;
             $self->set_subsession($c, $subsession, $p);
-            $c->detach('next_step', [$subsession]);
+            return $c->forward('next_step', [$subsession]);
         } 
     }
     $c->stash->{confirm} = $self->get_subsession($c, $subsession);
@@ -121,7 +121,7 @@ sub activate :Local :Args(0) :FormConfig {
             my ($auth) = $c->registry(api => 'MemberAuth')->load_auth({ email => $form->param_value('email'), 'auth_type' => 'password' });
             $c->forward('/auth/authenticate', [ $member->email, $auth->auth_data, 'members_internal' ]);
             
-            $c->detach('next_step', [$subsession]);
+            return $c->forward('next_step', [$subsession]);
         }
         $form->form_error_message("指定されたユーザーは存在しませんでした");
         $form->force_error_message(1);
@@ -168,7 +168,7 @@ sub new_subsession {
 
 sub get_subsession {
     my ($self, $c, $subsession) = @_;
-    $c->session->{__subsessions}->{$subsession};
+    $c->session->{__subsessions}->{$subsession} || {};
 }
 
 sub set_subsession {
