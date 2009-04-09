@@ -279,7 +279,10 @@ sub handle_exception {
 
 $SIG{ __DIE__ } = sub {
     return if Scalar::Util::blessed( $_[ 0 ] );
-    Pixis::Web::Exception->throw( message => join '', @_ );
+    die $_[0] if $_[0] eq 'catalyst_detach';
+    if ($_[0] ne 'No such file or directory') {
+        Pixis::Web::Exception->throw( message => join '', @_ );
+    }
 };
 
 1;
