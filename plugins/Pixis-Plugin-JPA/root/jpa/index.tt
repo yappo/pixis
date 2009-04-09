@@ -33,4 +33,10 @@
 
 <p>本サイトは<a href="http://catalyst.perl.org">Catalyst MVCフレームワーク</a>、<a href="http://www.perlfoundation.org/perl5/index.cgi?dbix_class">DBIx::Class オブジェクトマッパー</a>、<a href="http://code.google.com/p/html-formfu/">HTML::FormFu フォーム作成・バリデーションツール</a>、<a href="http://search.cpan.org/dist/Data-Localize">Data::Localize 国際化用ツール</a>等を用いて、プラッガブルなWebアプリケーションシステムを可能にする<a href="http://github.com/lestrrat/pixis/tree/master">Pixis エンジン</a>上で動作しています。</p>
 
+<h2>お問い合わせ</h2>
+<p>株式会社endeworks内　一般社団法人 Japan Perl Association<br />
+TEL: 03-6416-1160<br />
+FAX: 03-6416-1161<br />
+MAIL: pr@perlassociation.org</p>
+
 [% END # WRAPPER %]
