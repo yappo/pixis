@@ -4,7 +4,7 @@
 <div id="platinum">
 <h2>プラチナ会員</h2>
 <ul>
-<li><a href="http://s2factory.jp">S2ファクトリー株式会社</a></li>
+<li><a href="http://www.s2factory.co.jp">S2ファクトリー株式会社</a></li>
 <li><a href="http://www.endeworks.jp">株式会社 エンデワークス</a></li>
 <li><a href="http://www.gaiax.co.jp">株式会社 ガイアックス</a></li>
 <li><a href="http://www.dena.jp">株式会社 ディー・エヌ・エー</a></li>
@@ -21,11 +21,13 @@
 <div id="silver">
 <h2>シルバー会員</h2>
 <ul>
+<li><a href="http://www.kddi-webcommunications.co.jp/">株式会社KDDI ウェブコミュニケーションズ</a></li>
 <li><a href="http://www.paperboy.co.jp/">株式会社 paperboy&co.</a></li>
 <li><a href="http://www.plucore.jp">株式会社 Plugin and Core</a></li>
 <li><a href="http://www.adways.net">株式会社 アドウェイズ</a></li>
 <li>株式会社オリノコ</li>
 <li><a href="http://www.seesaa.co.jp">シーサー 株式会社</a></li>
+<li><a href="http://www.mobilefactory.jp/">株式会社モバイルファクトリー</a></li>
 </ul>
 </div><!-- silver -->
 <div id="bronze">
