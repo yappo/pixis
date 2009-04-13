@@ -5,7 +5,7 @@
     DEFAULT left_tt = 'left.tt';
     DEFAULT base_scripts = [ '/static/js/jquery-1.3.1.js', '/static/js/jquery-ui-1.6rc6.min.js', '/static/js/jquery.dump.js' ];
     DEFAULT scripts      = [];
-    DEFAULT base_styles = [ '/static/css/base.css', '/static/css/my.css', '/static/js/theme/ui.all.css' ];
+    DEFAULT base_styles = [ '/static/css/base.css', '/static/js/theme/ui.all.css' ];
     DEFAULT styles = [];
     DEFAULT metas = [];
 -%]
