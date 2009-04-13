@@ -141,8 +141,11 @@ sub register {
 #    if ($self->has_navigation) {
 #        $c->add_navigation($_) for @{$self->navigation};
 #    }
-    $registry->set(api => (split(/::/, blessed($_)))[-1], $_)
-        for $self->extra_api;
+    foreach my $api ($self->extra_api) {
+        my $pkg = blessed($api);
+        $pkg =~ s/^Pixis::API:://;
+        $registry->set(api => split(/::/, $pkg), $api);
+    }
 }
 
 1;

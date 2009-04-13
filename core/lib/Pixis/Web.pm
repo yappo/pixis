@@ -143,7 +143,7 @@ sub setup_pixis_plugins {
         $plugin = $pkg->new(%$args);
         if (! $plugin->registered && !($REGISTERED_PLUGINS{ $pkg }++) ){
             print STDERR "[Pixis Plugin]: Registring $pkg\n";
-            $plugin->register;
+            $plugin->register($self);
             $plugin->registered(1);
             push @PLUGINS, $plugin;
         }

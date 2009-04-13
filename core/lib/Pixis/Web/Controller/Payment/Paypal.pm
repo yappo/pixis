@@ -59,10 +59,11 @@ sub initiate_purchase :Private {
     };
 
     my $url = eval {
+        local $SIG{__DIE__} = 'DEFAULT';
         $c->registry(api => 'payment' => 'paypal')->initiate_purchase($args);
     };
     if ($@) {
-        $c->log->debug("Communication Paypal failed: $@") if $c->log->is_debug;
+        $c->log->debug("Communication with Paypal failed: $@") if $c->log->is_debug;
         $c->detach('/error', "Communication with PayPal failed");
         return;
     }
@@ -74,6 +75,7 @@ sub complete_purchase :Private {
     my ($self, $c, $args) = @_;
 
     eval {
+        local $SIG{__DIE__} = 'DEFAULT';
         $c->registry(api => 'payment' => 'paypal')->complete_purchase($args);
     };
     if ($@) {

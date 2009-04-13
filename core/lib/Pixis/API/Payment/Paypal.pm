@@ -16,7 +16,7 @@ has 'user_agent' => (
 
 has 'mode' => (
     is => 'rw',
-    isa => enum([ qw(producation development) ]),
+    isa => enum([ qw(production development) ]),
     required => 1,
     default => 'development'
 );
