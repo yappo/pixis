@@ -197,7 +197,7 @@ sub get_registration_status {
 
     my $order = Pixis::Registry->get(api => 'Order')->find($row->order_id);
     if ($order) {
-        if ($order->is_pending_accept || $order->is_pending_credit_check || $order->is_init) {
+        if ($order->amount > 0 && ($order->is_pending_accept || $order->is_pending_credit_check || $order->is_init)) {
             return -1; # registered, but unpaid
         } elsif ($order->is_done) {
             return 1;
