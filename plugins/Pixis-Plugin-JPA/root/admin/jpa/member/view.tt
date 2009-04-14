@@ -1,0 +1,25 @@
+[% WRAPPER wrapper.tt %]
+
+<h1>[% jpa_member.lastname %] [% jpa_member.firstname %]</h1>
+
+<table>
+<tr>
+    <td>姓</td>
+    <td>[% jpa_member.lastname %]</td>
+</tr>
+<tr>
+    <td>名</td>
+    <td>[% jpa_member.firstname %]</td>
+</tr>
+<tr>
+    <td>会員ステータス</td>
+    <td>[% IF jpa_member.is_active -%]
+        <span style="color:blue">有効</span> [<a href="[% c.uri_for("/admin/jpa/member", jpa_member.id, "disable") %]">無効化</a>]
+        [%- ELSE -%]
+        <span style="color:red">無効</span> [<a href="[% c.uri_for("/admin/jpa/member", jpa_member.id, "enable") %]">有効化</a>]
+        [%- END %]
+    </td>
+</tr>
+</table>
+
+[% END %]
