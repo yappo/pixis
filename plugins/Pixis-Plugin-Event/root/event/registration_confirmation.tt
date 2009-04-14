@@ -1,1 +1,7 @@
-登録したお！
+
+[% event.title %]にお申し込みいただきありがとうございました。
+
+登録が完了いたしました。
+[% event.start_on.strftime('%Y-%m-%d') %]にお越しください。
+
+[% event.address %]
