@@ -7,14 +7,6 @@ use utf8;
 use Encode();
 use DateTime::Format::Strptime;
 
-sub COMPONENT {
-    my ($self, $c, $config) = @_;
-    $self = $self->NEXT::COMPONENT($c, $config);
-
-    $self->config($config);
-    $self;
-}
-
 sub index :Index :Args(0) {
     my ($self, $c) = @_;
 
@@ -193,21 +185,14 @@ sub send_confirmation : Private {
     my ($self, $c) = @_;
     my $body = $c->view('TT')->render($c, 'event/registration_confirmation.tt');
 
-    $body = Encode::encode('iso-2022-jp', $body);
-
-    $c->stash->{email} = {
-        header => [
+    $c->controller('Email')->send($c, {
+        header => {
             To      => $c->user->email,
-            Bcc     => $self->config->{bcc},
             From    => 'no-reply@perlassociation.org',
-            Subject => Encode::encode("MIME-Header-ISO_2022_JP", "イベント登録確認"),
-            Content_Encoding => '7bit'
-        ],
-        body    => $body,
-        content_type => 'text/plain; charset=iso-2022-jp',
-    };
-
-    $c->forward( $c->view('Email') );
+            Subject => "イベント登録確認",
+        },
+        body    => $body
+    });
 }
 
 sub done :Local {

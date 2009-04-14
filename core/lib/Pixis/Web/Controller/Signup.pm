@@ -137,19 +137,16 @@ sub send_activate :Local :Args(1) {
     $c->stash->{ email } = $p->{email};
 
     my $body = $c->view('TT')->render($c, 'signup/activation_email.tt');
-    $body = Encode::encode('iso-2022-jp', $body);
-    $c->stash->{email} = {
-        to => $p->{email},
-        from => 'no-reply@pixis',
-        subject => "登録アクティベーションメール",
-        body    => $body,
-        content_type => 'text/plain; charset=iso-2022-jp',
-        headers => [
-            Content_Encoding => '7bit'
-        ]
-    };
-        
-    $c->forward( $c->view('Email' ) );
+
+    $c->controller('Email')->send($c, {
+        header => {
+            To   => $p->{email},
+            From => 'no-reply@pixis.local',
+            Subject => "登録アクティベーションメール",
+        },
+        body => $body
+    });
+
     $c->res->redirect($c->uri_for('activate'));
 }
 
