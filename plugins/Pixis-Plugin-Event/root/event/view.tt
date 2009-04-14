@@ -17,6 +17,10 @@
     <td>[% event.description.replace("\n", "<br>") %]</td>
 </tr>
 <tr>
+    <th>[% loc("Event Venue") %]</th>
+    <td>[% event.address.replace("\n", "<br>") %]</td>
+</tr>
+<tr>
     <th>[% loc("Event Dates") %]</th>
     <td>[% 
 SET start_on_str = event.start_on.strftime('%Y/%m/%d');

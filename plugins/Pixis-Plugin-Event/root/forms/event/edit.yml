@@ -12,6 +12,15 @@ elements:
     - type: Textarea
       rows: 5
       cols: 40
+      name: address
+      label_loc: Event Venue
+      constraints:
+        - Required
+      filters:
+        - HTMLEscape
+    - type: Textarea
+      rows: 5
+      cols: 40
       name: description
       label_loc: Event Description
       constraints:
