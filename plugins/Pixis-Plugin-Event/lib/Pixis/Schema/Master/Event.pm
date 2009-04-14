@@ -51,6 +51,10 @@ __PACKAGE__->add_columns(
         data_type => "DATETIME",
         is_nullable => 0,
     },
+    address => {
+        data_type => 'TEXT',
+        is_nullable => 0,
+    },
     capacity => {
         data_type => "INTEGER",
         is_nullable => 1,
