@@ -14,7 +14,7 @@ elements:
       tag: div
       content: パスワードは5文字以上、24文字以下である必要があります
       attrs_xml:
-        style: "font-size: 90%; color: red"
+        style: "font-size: 90%; color: red; clear: left"
     - type: Password
       name: password
       label_loc: Password
