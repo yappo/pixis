@@ -28,6 +28,7 @@ requires 'Catalyst::Plugin::Unicode';
 requires 'Catalyst::View::TT';
 requires 'Catalyst::View::JSON';
 requires 'Catalyst::View::Email';
+requires 'Catalyst::View::Download::CSV';
 requires 'Catalyst::Action::RenderView';
 requires 'parent';
 requires 'YAML'; # This should reflect the config file format you've chosen
@@ -55,6 +56,7 @@ requires 'MooseX::Types::Path::Class';
 requires 'MooseX::Singleton';
 requires 'MooseX::WithCache';
 requires 'SQL::Translator';
+requires 'Text::CSV_XS';
 requires 'Template::Provider::Encoding';
 
 test_requires 'Test::More', '0.82';
