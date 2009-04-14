@@ -3,6 +3,17 @@ package Pixis::Web::Controller::Event;
 use strict;
 use warnings;
 use base qw(Catalyst::Controller::HTML::FormFu);
+use utf8;
+use Encode();
+use DateTime::Format::Strptime;
+
+sub COMPONENT {
+    my ($self, $c, $config) = @_;
+    $self = $self->NEXT::COMPONENT($c, $config);
+
+    $self->config($config);
+    $self;
+}
 
 sub index :Index :Args(0) {
     my ($self, $c) = @_;
@@ -17,6 +28,7 @@ sub create :Local :FormConfig :PixisPriv('admin') {
 
     $c->forward('/auth/assert_roles', ['admin']);
     my $form = $c->stash->{form};
+
     if ($form->submitted_and_valid) {
         # XXX Make a subsession + confirm later
         $form->add_valid(created_on => \'NOW()');
@@ -111,7 +123,6 @@ sub register_confirm :Chained('load_ticket') :PathPart('confirm') :Args(0) :Form
         my $event = $c->stash->{event};
         my $api = $c->registry(api => 'Event');
         if (! $api->is_registration_open({ event_id => $event->id }) ) {
-$c->log->debug("registration not open");
             # XXX Proper error handling
             $c->error("stop");
             $c->detach('');
@@ -152,6 +163,57 @@ sub registered :Chained('load_event') :Args(1) {
 
     my $order = $c->registry(api => 'Order')->find($order_id);
     $c->stash->{order} = $order;
+
+    if ($order->amount <= 0) {
+        $c->forward('send_confirmation');
+    }
+}
+
+my $fmt = DateTime::Format::Strptime->new(pattern => '%Y-%m-%d', time_zone => 'local');
+sub date :Chained('load_event')
+         :Args(1)
+         :PathPart('date')
+{
+    my ($self, $c, $date) = @_;
+
+    if ($c->req->method eq 'POST') {
+        $c->forward('/auth/assert_roles', [ 'admin' ]) or return;
+    }
+
+    $c->stash->{date} = $fmt->parse_datetime($date);
+    my $d = Pixis::Registry->get(api => 'EventDate')->load_from_event_date({ event_id => $c->stash->{event}->id, date => $date });
+    $d->start_on =~ /^(\d+)/;
+    $c->stash->{start_hour} = int( $1 );
+    $d->end_on =~ /^(\d+)/;
+    $c->stash->{end_hour} = int( $1 );
+}
+
+# XXX this sucks. later!
+sub send_confirmation : Private {
+    my ($self, $c) = @_;
+    my $body = $c->view('TT')->render($c, 'event/registration_confirmation.tt');
+
+    $body = Encode::encode('iso-2022-jp', $body);
+
+    $c->stash->{email} = {
+        header => [
+            To      => $c->user->email,
+            Bcc     => $self->config->{bcc},
+            From    => 'no-reply@perlassociation.org',
+            Subject => Encode::encode("MIME-Header-ISO_2022_JP", "イベント登録確認"),
+            Content_Encoding => '7bit'
+        ],
+        body    => $body,
+        content_type => 'text/plain; charset=iso-2022-jp',
+    };
+
+    $c->forward( $c->view('Email') );
+}
+
+sub done :Local {
+    my ($self, $c, $subsession) =  @_;
+    my $id = delete $c->session->{signup}->{$subsession};
+
 }
 
 1;
