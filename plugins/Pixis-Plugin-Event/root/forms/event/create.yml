@@ -38,6 +38,11 @@ elements:
         - Required
       filters:
         - HTMLEscape
+    - type: Textarea
+      rows: 5
+      cols: 40
+      name: address
+      label_loc: Event Venue
     - type: Text
       name: capacity
       label_loc: Event Capacity
@@ -60,14 +65,21 @@ elements:
       name: start_on
       id: start_on_picker
       label_loc: 開催日
+      constraints:
+        - Required
       inflators:
-          - type: DateTime
-            parser:
-                strptime: '%m/%d/%Y'
+        - type: DateTime
+          time_zone: local
+          parser: 
+            regex: '^(\d{2})/(\d{2})/(\d{4})$'
+            params: [month, day, year]
     - type: Text
       name: end_on
       id: end_on_picker
       label_loc: 終了日
+      constraints:
+        - type: Regex
+          regex: ^\d{2}/\d{2}/\d{4}$
       filters:
         - type: CopyValue
           field: start_on
