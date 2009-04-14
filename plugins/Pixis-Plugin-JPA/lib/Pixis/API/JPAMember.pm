@@ -52,4 +52,30 @@ sub create {
     }, $schema, $args, $item);
 }
 
+sub activate {
+    my ($self, $args) = @_;
+
+    my $schema = Pixis::Registry->get(schema => 'Master');
+    $schema->txn_do( sub {
+        $self->resultset->search(
+            { id => $args->{jpa_member_id} }
+        )->update(
+            { is_active => 1 }
+        );
+    } );
+}
+
+sub deactivate {
+    my ($self, $args) = @_;
+
+    my $schema = Pixis::Registry->get(schema => 'Master');
+    $schema->txn_do( sub {
+        $self->resultset->search(
+            { id => $args->{jpa_member_id} }
+        )->update(
+            { is_active => 0 }
+        );
+    } );
+}
+
 1;

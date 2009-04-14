@@ -1,13 +1,28 @@
 ---
+auto_fieldset: 1
+
 elements:
     - type: Select
       name: limit
+      label_loc: Entries Per Page
       options:
         - [ 10, 10 ]
         - [ 25, 25 ]
         - [ 50, 50 ]
         - [ 75, 75 ]
         - [ 100, 100 ]
-    - type: Hidden
+    - type: Text
       name: page
+      label_loc: Page
       default: 1
+    - type: Radiogroup
+      label_loc: Output Format
+      name: view
+      options:
+        - [ 'HTML', 'HTML' ]
+        - [ 'CSV',  'CSV' ]
+      default: HTML
+    - type: Submit
+      name: submit
+      value_loc: Submit
+

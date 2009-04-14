@@ -1,6 +1,26 @@
 [% WRAPPER wrapper.tt %]
-[% USE dumper %]
+<h1>メンバー</h1>
+
+[% form %]
+
+<table>
+<tr>
+    <td>姓名</td>
+    <td>PixisメンバーID</td>
+    <td>会員ステータス</td>
+    <td>会員費／学生証確認</td>
+</tr>
 [% FOREACH member IN list %]
-[% dumper.dump_html(member) %]
+<tr>
+    <td><a href="[% c.uri_for("/admin/jpa/member", member.id) %]">[% member.lastname %] [% member.firstname %]</a></td>
+    <td><a href="[% c.uri_for("/member", member.member_id) %]">[% member.member_id %]</a></td>
+    <td>[% IF member.is_active -%]
+        <span style="color:blue">有効</span> [<a href="[% c.uri_for("/admin/jpa/member", member.id, "disable") %]">無効化</a>]
+        [%- ELSE -%]
+        <span style="color:red">無効</span> [<a href="[% c.uri_for("/admin/jpa/member", member.id, "enable") %]">有効化</a>]
+        [%- END %]
+    </td>
+</tr>
 [% END %]
+</table>
 [% END %]
