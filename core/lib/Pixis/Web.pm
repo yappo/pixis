@@ -11,7 +11,6 @@ use Pixis::Registry;
 use Catalyst::Runtime '5.70';
 use parent qw(Catalyst);
 use Catalyst qw(
-    -Debug
     Authentication
     Authorization::Roles
     ConfigLoader
@@ -112,6 +111,7 @@ sub setup {
 
     # for various reasons, we /NEED/ to have Catalyst setup itself before
     # we setup our plugins.
+    push @_, $ENV{CATALYST_DEBUG} ? "-log=error,debug" : "-log=error";
     $self->SUPER::setup(@_);
 }
 
