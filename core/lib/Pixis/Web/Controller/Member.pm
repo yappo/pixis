@@ -3,7 +3,9 @@
 package Pixis::Web::Controller::Member;
 use strict;
 use warnings;
+use utf8;
 use base qw(Catalyst::Controller::HTML::FormFu);
+use Digest::SHA1 ();
 
 sub auto :Private {
     my ($self, $c) = @_;
@@ -63,6 +65,10 @@ sub settings :Local :Args(0) {
     my $user = $c->registry(api => 'Member')->find($c->user->id);
     $form->model->default_values($user);
     $c->stash->{form} = $form;
+
+    $form = $self->form();
+    $form->load_config_filestem('member/settings_auth');
+    $c->stash->{form_password} = $form;
 }
 
 sub settings_basic :Path('settings/basic') :Args(0) :FormConfig {
@@ -78,6 +84,37 @@ sub settings_basic :Path('settings/basic') :Args(0) :FormConfig {
             $c->session->{__user} = { $user->get_columns };
         }
         $c->res->redirect($c->uri_for('home'));
+    }
+}
+
+sub settings_auth :Path('settings/auth') :Args(0) :FormConfig {
+    my ($self, $c) = @_;
+
+    my $form = $c->stash->{form};
+    if ($form->submitted_and_valid) {
+        my ($auth) = $c->registry(api => 'MemberAuth')->load_auth(
+            {
+                email => $c->user->email,
+                auth_type => 'password'
+            }
+        );
+
+        my $password = $form->param('password');
+        my $hashed = unpack('H*', Digest::SHA1->new()->add($password)->digest);
+        if ($auth->auth_data ne $hashed ) {
+            $form->form_error_message("現行パスワードが正しくありません");
+            $form->force_error_message(1);
+            return;
+        }
+
+        $c->registry(api => 'MemberAuth')->update_auth(
+            {
+                member_id => $c->user->id,
+                auth_type => 'password',
+                password  => $form->param('password_new')
+            },
+        );
+        $c->res->redirect($c->uri_for('/member/settings'));
     }
 }
 

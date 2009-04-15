@@ -48,7 +48,7 @@ sub login :Local :FormConfig {
     if ($form->submitted_and_valid) {
         my $auth_ok = $c->forward('/auth/authenticate', [ 
             $form->param('email'), $form->param('password')
-        ] );
+        ] ) && !@{$c->error};
         if ($auth_ok) {
             $c->res->redirect(
                 $c->session->{next_uri} ||

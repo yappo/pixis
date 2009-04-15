@@ -1,0 +1,26 @@
+---
+auto_fieldset: 1
+action: /member/settings/auth
+elements:
+    - type: Password
+      name: password
+      label_loc: Password
+    - type: Password
+      name: password_new
+      label_loc: Password (new)
+      constraints:
+        - Required
+        - ASCII
+        - type: Length
+          min: 6
+          max: 24
+    - type: Password
+      name: password_check
+      label_loc: Password (re-type)
+      constraints:
+        - Required
+        - type: Equal
+          others: password_new
+    - type: Submit
+      value: submit
+      value_loc: Submit

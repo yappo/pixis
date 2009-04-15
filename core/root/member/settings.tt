@@ -7,4 +7,9 @@
 [% form %]
 </div>
 
+<h2>パスワード</h2>
+<div class="formbox">
+[% form_password %]
+</div>
+
 [% END %]

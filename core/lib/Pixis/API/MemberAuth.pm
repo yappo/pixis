@@ -2,6 +2,7 @@ package Pixis::API::MemberAuth;
 use Moose;
 use Pixis::Registry;
 use namespace::clean -except => qw(meta);
+use Digest::SHA1 ();
 
 with 'Pixis::API::Base::DBIC';
 
@@ -32,6 +33,26 @@ sub load_auth {
         }
     }
     return defined $auth ? (wantarray ? @$auth : $auth) : ();
+}
+
+sub update_auth {
+    my ($self, $args) = @_;
+
+    $self->resultset->search(
+        {
+            member_id => $args->{member_id},
+            auth_type => $args->{auth_type},
+        }
+    )->update(
+        {
+            auth_data => Digest::SHA1::sha1_hex($args->{password}),
+        }
+    );
+
+    my $member = Pixis::Registry->get(api => 'member')->find($args->{member_id});
+    my $cache_key = [ 'pixis', 'member_auth', $member->email, $args->{auth_type}];
+
+    $self->cache_del($cache_key);
 }
 
 1;

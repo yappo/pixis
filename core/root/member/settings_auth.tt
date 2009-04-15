@@ -1,0 +1,6 @@
+[% WRAPPER wrapper.tt %]
+<h1>パスワードの設定</h1>
+<div class="formbox">
+[% form %]
+</div>
+[% END %]
