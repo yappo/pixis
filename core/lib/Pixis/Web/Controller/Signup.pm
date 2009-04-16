@@ -20,10 +20,14 @@ sub start :Index :Path :Args(0) :FormConfig {
     my $form = $c->stash->{form};
     if ($form->submitted_and_valid) {
         # check if this email has already been taken
-        if ( $c->registry(api => 'Member')->load_from_email($form->param('email')) ) {
-            $form->form_error_message("使用されたメールアドレスはすでに登録されています");
-            $form->force_error_message(1);
-            return;
+        my $member_api = $c->registry(api => 'Member');
+        {
+            local $member_api->{resultset_constraints} = {};
+            if ( $member_api->load_from_email($form->param('email')) ) {
+                $form->form_error_message("使用されたメールアドレスはすでに登録されています");
+                $form->force_error_message(1);
+                return;
+            }
         }
 
         my $params = $form->params;
