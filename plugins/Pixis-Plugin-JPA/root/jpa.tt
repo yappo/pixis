@@ -11,6 +11,7 @@ CALL site_config.navigation.push(
     {
         text => "JPA",
         url  => "/jpa"
+        id   => "jpa"
     }
 );
 
@@ -18,12 +19,14 @@ CALL site_config.navigation.push(
     {
         text => "JPA Wiki",
         url  => "http://wiki.perlassociation.org"
+        id   => "wiki"
     }
 );
 CALL site_config.navigation.push(
     {
         text => "JPA Services",
-        url => "/jpa/service"
+        url  => "/jpa/service"
+        id   => "services"
     }
 );
 

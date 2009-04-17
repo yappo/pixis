@@ -1,7 +1,11 @@
 [% WRAPPER wrapper.tt %]
+<div id="title">
 <h1>JPA 登録情報の確認</h1>
+</div><!-- title -->
 
-<p>以下であっている場合は「上記で登録する」リンクをクリックしてください</p>
+<div id="content">
+<div class="section">
+<p class="pt10">以下であっている場合は「上記で登録する」リンクをクリックしてください。</p>
 
 [% SET fields = [
     { field => "lastname", label => "Last Name" },
@@ -14,7 +18,7 @@
     { field => "address3", label => "Address3" },
 ] %]
 
-<div id="confirm">
+<div class="table_container">
 <table>
 [% IF (confirm.membership == 'JPA-0002') %]
 <tr>
@@ -43,9 +47,9 @@
 </tr>
 [% END # FOREACH %]
 </table>
-</div><!-- confirm -->
-<div>
-<a href="[% c.uri_for("commit_basic", subsession) %]">上記で登録する</a>
-</div>
+</div><!-- table_container -->
+<p class="clear"><a href="[% c.uri_for("commit_basic", subsession) %]">上記で登録する</a></p>
 
+</div><!-- section -->
+</div><!-- content -->
 [% END # WRAPPER%]
