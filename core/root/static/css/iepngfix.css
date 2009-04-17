@@ -1,0 +1,4 @@
+@charset "utf-8";
+/* CSS Document */
+/* 注意： iepngfix.htcへのパスは、iepngfixが適用されるHTMLファイルからの相対パスになる */
+img, div, input { behavior: url(iepngfix.htc) }

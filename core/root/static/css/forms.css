@@ -1,0 +1,92 @@
+/* form関連css */
+
+input {
+    line-height: 1.2 !important;
+}
+
+div.text input,
+div.password input {
+    width: 200px;
+}
+div.submit input {
+    padding: 0 6px;
+    line-height: 1.2;
+}
+div.section p.error_message {
+    margin-top: 0;
+    margin-left: 0;
+    font-size: 10px;
+    color: #f00;
+}
+
+/* form_full */
+
+div.form_full {
+    margin: 30px 0;
+}
+div.form_full th,
+div#sessionbox th {
+    padding: 5px 15px 5px 0;
+    width: 100px;
+    text-align: right;
+    white-space: nowrap;
+    vertical-align: top;
+}
+div.form_full td,
+div#sessionbox td {
+    padding: 5px 0;
+    border: none;
+    vertical-align: top;
+}
+div.form_full div.text input,
+div.form_full div.password input,
+div.form_full div.textarea textarea {
+    width: 300px;
+}
+div.form_full tr.message th,
+div#sessionbox tr.message th,
+div.form_full tr.message td,
+div#sessionbox tr.message td {
+    padding: 0;
+    font-size: 10px;
+    color: #f00;
+}
+
+/* login */
+
+div.submit {
+    margin-top: 10px;
+}
+div.text,
+div.password,
+div.checkbox,
+div.select,
+div.textarea {
+    margin-top: 0;
+}
+div#login p {
+    margin: 10px 0;
+}
+
+/* signup_basic */
+
+div#signup_basic {
+    margin-top: 10px;
+}
+
+/* commit_basic */
+
+div#commit {
+    padding-top: 30px;
+}
+div#commit p {
+    padding: 10px 0;
+    border: 3px solid #00A7D4;
+    font-size: 16px;
+    text-align: center;
+}
+div#commit p strong {
+    font-weight: bold;
+    font-size: 16px;
+    color: #00A7D4;
+}
