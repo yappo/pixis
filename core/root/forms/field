@@ -1,19 +1,22 @@
-[% IF self.label.defined && self.label_tag == 'legend' %]
+<tr>
+<th>
+[% IF self.label.defined && self.label_tag == 'legend' -%]
 [% INCLUDE $self.label_filename %]
-[% END %]
-[% IF self.label.defined && self.label_tag != 'legend' %]
+[%- END %]
+[% IF self.label.defined && self.label_tag != 'legend' -%]
 [% INCLUDE $self.label_filename %]
-[% END %]
+[%- END %]
+</th>
+<td>
 [% IF self.container_tag.defined %]
-<[% self.container_tag %]
-[% process_attrs(self.container_attributes) %]>
-[% END %]
-[% IF self.container_tag.defined %][% END %]
+<[% self.container_tag %] [% process_attrs(self.container_attributes) %]>
+[%- END %]
 [% content %]
 [% IF self.comment.defined %]
 <span[% process_attrs(self.comment_attributes) %]>
 [% self.comment %]
-</span>[% END %]
+</span>
+[% END %]
 [% IF self.errors %]
 [%   FOREACH error = self.errors %]
 <p class="error_message [% error.class %]">[% error.message %]</p>
@@ -27,3 +30,5 @@
 [% self.javascript %]
 </script>
 [% END %]
+</td>
+</tr>

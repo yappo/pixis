@@ -1,8 +1,9 @@
 [% WRAPPER wrapper.tt %]
 [% SET owner = (c.user.id == member.id) %]
-
+<div id="member_title" class="clearfix">
+<p id="gravatar"><img src="[% member.gravatar_url %]" width="80" /></p>
+<div id="info">
 <p>[% loc('Welcome x', member.nickname) %]</p> 
-
 [% # ナビバーみたいなのがここに来る感じかなぁ %]
 <!-- navbar? -->
 <ul id="member_menu" class="clearfix">
@@ -20,25 +21,36 @@
 [% END %]
     <li><a href="/member/search">[% loc("Member Search") %]</a></li>
 </ul>
-
-<div class="clearfix">
-<p id="gravatar"><img src="[% member.gravatar_url %]" width="80" /></p>
-<div id="info">
-<dl id="following">
-<dt>[% loc("Following") %]</dt>
-[% FOREACH m IN following %]
-<dd><a href="[% c.uri_for(m.id) %]"><img src="[% m.gravatar_url(size => 20) %]"></a></dd>
-[% END %]
-</dl>
-
-<dl id="followers">
-<dt>[% loc("Followers") %]</dt>
-[% FOREACH m IN followers %]
-<dd><a href="[% c.uri_for(m.id) %]"><img src="[% m.gravatar_url(size => 20) %]"></a></dd>
-[% END %]
-</dl>
 </div><!-- info -->
-</div><!-- clearfix -->
+
+</div><!-- title -->
+<div id="content">
+
+<div id="following" class="section">
+<h2>[% loc("Following") %]</h2>
+<ul>
+[% IF (following.size > 0) %]
+[%   FOREACH m IN following %]
+<li><a href="[% c.uri_for(m.id) %]"><img src="[% m.gravatar_url(size => 20) %]"></a></li>
+[%   END %]
+[% ELSE %]
+<li class="no_follow">なし</li>
+[% END %]
+</ul>
+</div><!-- following -->
+
+<div id="followers" class="section">
+<h2>[% loc("Followers") %]</h2>
+<ul>
+[% IF (followers.size > 0) %]
+[%   FOREACH m IN followers %]
+<li><a href="[% c.uri_for(m.id) %]"><img src="[% m.gravatar_url(size => 20) %]"></a></li>
+[%   END %]
+[% ELSE %]
+<li class="no_follow">なし</li>
+[% END %]
+</ul>
+</div><!-- followers -->
 
 <!--
 <h2>[% loc("Recent Activity") %]
@@ -50,4 +62,5 @@
 </ul>
 [% END %]
 -->
+</div><!-- content -->
 [% END # WRAPPER %]

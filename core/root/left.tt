@@ -1,14 +1,16 @@
 [% DEFAULT submenu = site_config.submenu %]
 <!-- START left -->
-<div id="left">
-  [% IF (site_config.logo) %]<img src="[% site_config.logo %]" border="0" alt="JPAlogo" />[% END %]
-  <div id="menu">
+<div id="side">
+<div id="logo"><a href="/jpa"><img src="[% static_uri %]/logo.jpg" alt="Japan Perl Association" /></a></div>
+<div id="lnav_container">
 [% PROCESS navigation.tt %]
-    <div class="leftnews"> 
-      [% FOREACH smenu IN submenu -%]
-       <div><img src="/static/img/Bullet_green.gif" alt="right blue" width="19" height="16" /> <a href="[% smenu.link %]">[% smenu.text %]</a></div>
-      [%- END %]
-      </div>
-  </div>
-</div>
+[% IF (site_config.submenu) -%]
+<ul id="subnav"> 
+  [% FOREACH smenu IN submenu -%]
+<li><a href="[% smenu.link %]">[% smenu.text %]</a></li>
+  [%- END %]
+</ul>
+[%- END %]
+</div><!-- lnav_container -->
+</div><!-- side -->
 <!-- END left -->

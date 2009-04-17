@@ -1,9 +1,11 @@
-<!-- START header -->
 <div id="header">
+<ul class="clearfix">
 [% IF c.user_exists %]
-<a href="/member/home">ホーム</a> | <a href="/member/settings">[% loc("Member Settings") %]</a> | <a href="/auth/logout">[% loc("Logout") %]</a>
+<li id="hnav_logout"><a href="/auth/logout">[% loc("Logout") %]</a></li>
+<li id="hnav_settings"><a href="/member/settings">[% loc("Member Settings") %]</a></li>
+<li id="hnav_home"><a href="/member/home">ホーム</a></li>
 [% ELSE %]
-<a href="/auth/login">[% loc("Login") %]</a>
+<li id="hnav_login"><a href="/auth/login">[% loc("Login") %]</a></li>
 [% END %]
-</div>
-<!-- END header -->
+</ul>
+</div><!-- header -->
