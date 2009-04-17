@@ -1,13 +1,21 @@
 [% WRAPPER wrapper.tt %]
+<div id="title">
+<h1>[% loc("Add new session") %]</h1>
+</div><!-- title -->
 
-<h2>[% loc("Add new session") %]</h2>
-<div>[% event.title %] - [% loc("Track [_1]", track.title) %]</div>
+<div id="content">
+<div class="section clearfix">
+<h2>[% event.title %] - [% loc("Track [_1]", track.title) %]</h2>
 
+<div id="session_timeline">
 [% PROCESS event/track_timeline.tt, editable => 1 %]
+</div><!-- session_timeline -->
 
 <div id="sessionbox">
 <div>[% loc("Click on the timeline to select the time/date") %]</div>
 [% form %]
 </div><!-- sessionbox -->
 
+</div><!-- section -->
+</div><!-- content -->
 [% END # WRAPPER %]

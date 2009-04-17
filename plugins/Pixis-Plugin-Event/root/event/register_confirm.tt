@@ -1,14 +1,17 @@
 [% WRAPPER wrapper.tt %]
+<div id="title">
+<p>イベント参加確認</p>
+</div>
 
-<h1>[% event.title %] - 参加確認</h1>
-
+<div id="content">
+<div class="section">
+<h1 id="h1_event">[% event.title %]</h1>
 [% IF (ticket.price == 0) %]
-<p>参加費は無料ですので、下記ボタンをクリックするとイベントに参加確定となります</p>
+<p>参加費は無料ですので、下記ボタンをクリックするとイベントに参加確定となります。</p>
 [% ELSE %]
-<p>参加費用[% ticket.price %]円が必要となります。下記ボタンをクリックした後
-、Paypalか銀行振り込みでの入金が確認された後参加確定となります。</p>
+<p>参加費用[% ticket.price %]円が必要となります。下記ボタンをクリックした後、Paypalか銀行振り込みでの入金が確認された後参加確定となります。</p>
 [% END %]
-
 [% form %]
-
+</div><!-- section -->
+</div><!-- content -->
 [% END %]

@@ -1,7 +1,13 @@
 [% WRAPPER wrapper.tt %]
-<h1>[% event.title %]</h1>
-<h2>[% session.title %]</h2>
+<div id="title">
+<h1>セッション情報</h1>
+</div><!-- title -->
 
+<div id="content">
+<div class="section">
+<h1 id="h1_event">[% event.title %]</h1>
+<h2>[% session.title %]</h2>
+<div class="table_container">
 <table>
 <tr>
 <th>時間</th><td>[% session.start_on.strftime('%H:%M') %] - [% session.end_on.strftime('%H:%M') %]</th> 
@@ -9,7 +15,12 @@
 <tr>
 <th>講師</th><td>[% session.presenter %] 氏</td>
 </tr>
+<tr>
+<th>内容</th><td>[% session.description.replace("\n", "<br />") %]</td>
+</tr>
 </table>
-<p>[% session.description.replace("\n", "<br />") %]</p>
-<p><a href="[% c.uri_for( "/event", event.id ) %]">&lt;&lt;&nbsp;イベントに戻る</a></p>
+</div><!-- table_container -->
+<p class="clear"><a href="[% c.uri_for( "/event", event.id ) %]">&lt;&lt;&nbsp;イベントに戻る</a></p>
+</div><!-- section -->
+</div><!-- content -->
 [% END %]
