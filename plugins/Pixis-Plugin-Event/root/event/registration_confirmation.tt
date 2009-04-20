@@ -2,6 +2,9 @@
 [% event.title %]にお申し込みいただきありがとうございました。
 
 登録が完了いたしました。
-[% event.start_on.strftime('%Y-%m-%d') %]にお越しください。
+会場に[% event.start_on.strftime('%Y-%m-%d') %]にお越しください。
 
 [% event.address %]
+
+ご来場を心よりお待ちしております
+
