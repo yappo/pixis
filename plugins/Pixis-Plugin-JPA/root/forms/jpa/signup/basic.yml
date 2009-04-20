@@ -21,9 +21,6 @@ elements:
       label_loc: First Name
       constraints:
         - Required
-    - type: Checkbox
-      name: is_anonymous
-      label_loc: Make Me Anonymous
     - type: Text
       name: email
       label_loc: Email
