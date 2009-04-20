@@ -1,13 +1,21 @@
 [% WRAPPER wrapper.tt %]
-
+<div id="title">
 <h1>Japan Perl Association 新規会員登録</h1>
+</div><!-- title -->
 
-<p> 本サイトからの登録は個人の会員様に限らせていただきます。法人の方でJapan Perl Associationに興味のある方は info perlassociation.org 宛に連絡いただければ折り返し返信いたします。</p>
+<div id="content">
 
+<div class="section">
+<p class="pt10"> 本サイトからの登録は個人の会員様に限らせていただきます。<br />
+法人の方でJapan Perl Associationに興味のある方は<br />
+info perlassociation.org 宛に連絡いただければ折り返し返信いたします。</p>
+</div><!-- section -->
+
+<div class="section">
 <h2> 年会費について </h2> 
-
 <p> 個人会員は登録時に以下の年会費をお支払いいただきます：</p>
-<table border="1">
+<div class="table_container">
+<table>
 <tr>
     <th> 一般個人会員 </th>
     <td> 5,000 円 </td>
@@ -17,19 +25,23 @@
     <td> 無料 </td>
 </tr>
 </table>
+</div><!-- table_container -->
 
-<p> 学生会員の方は別途学生証のコピーを送付していただく必要がございます。</p>
+<p class="clear"> 学生会員の方は別途学生証のコピーを送付していただく必要がございます。</p>
+</div><!-- section -->
 
+<div class="section">
 <h2> 登録の流れ </h2>
 
 <ol>
     <li> 本サイトの"Pixis" エンジンにユーザー登録をしていただく必要があります。 </li>
     <li> ログイン後、JPA会員登録用の情報を入力していただきます。</li>
-    <li> 情報入力後、年会費支払いのための指示が出されます。 </li>
+    <li> 情報入力後、年会費支払いのための指示が出されます。
     <ul>
-        <li> 銀行振り込みかPaypalでのお支払いを選択していただきます。 </li>
+        <li>銀行振り込みかPaypalでのお支払いを選択していただきます。 </li>
         <li> Paypalでのお支払いの場合はそのままオンラインでお支払いを受け付けられます </li>
     </ul>
+    </li>
     <li> 入金確認後、確認のメールをお送りいたします。確認には通常2〜5営業日かかります。 </li>
 </ol>
 
@@ -38,5 +50,7 @@
     <li>すでにPixisエンジンにユーザー登録をしている場合： <a href="/jpa/signup/basic">登録はこちらから</a></li>
     <li>Pixisエンジンにユーザー登録されていない場合：<a href="/signup">登録はこちらから</a></li>
 </ul>
+</div><!-- section -->
 
+</div><!-- content -->
 [% END # WRAPPER %]

@@ -4,6 +4,7 @@ CALL site_config.navigation.push(
     {
         text => loc("Event"),
         url  => '/event'
+        id   => "events"
     }
 );
 

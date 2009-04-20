@@ -1,7 +1,11 @@
 [% WRAPPER wrapper.tt %]
+<div id="title">
 <h1>JPA 会員登録</h1>
+</div><!-- title -->
 
-<div class="formbox">
+<div id="content">
+<div id="signup_basic" class="form_full section">
 [% form %]
-</div>
+</div><!-- section -->
+</div><!-- content -->
 [% END # WRAPPER %]

@@ -1,8 +1,5 @@
-<!-- START navigation -->
-    <h2 class="hide">Menu:</h2>
-    <ul>
+<ul id="lnav">
 [% FOREACH nav IN site_config.navigation %]
-      <li><a href="[% nav.url %]">[% loc(nav.text || 'Link') %]</a></li>
+<li id="lnav_[% nav.id %]"><a href="[% nav.url %]">[% loc(nav.text || 'Link') %]</a></li>
 [% END %]
-    </ul>
-<!-- END navigation -->
+</ul>

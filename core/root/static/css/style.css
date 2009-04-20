@@ -1,0 +1,436 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* clearfix */
+
+.clearfix:after {
+  height: 0;
+  visibility: hidden;
+  content: ".";
+  display: block;
+  clear: both;
+}
+.clearfix {
+  _height: 1px;
+  min-height: 1px;
+  /*\*//*/
+  height: auto;
+  overflow: hidden;
+  /**/
+}
+
+
+
+/* generic styles */
+
+* {
+	font-size: 12px;
+	line-height: 1.6;
+}
+
+
+/* generic classes */
+
+.mt0 { margin-top: 0 !important; }
+.mt10 { margin-top: 10px !important; }
+.mb0 { margin-bottom: 0 !important; }
+.pt10 { padding-top: 10px !important; }
+.pb0 { padding-bottom: 0 !important; }
+.center { text-align: center !important; }
+.clear { clear: both !important; }
+.no_bb { border-bottom: none !important; }
+.no_listmark {
+    background: none !important;
+    list-style-type: none !important; }
+.link {
+    padding-left: 22px;
+    background: url(../img/listmark_link.gif) no-repeat;
+    line-height: 16px;
+}
+
+
+/* layout */
+
+* {
+    font-family: "ＭＳ Ｐゴシック", "ヒラギノ角ゴ Pro W3", Osaka;
+}
+
+body {
+	text-align: center;
+}
+
+h2 {
+	margin-top: 30px;
+    margin-bottom: 10px;
+	padding-left: 25px;
+	background: url(../img/h2_bg.gif) no-repeat 0px 6px;
+	font-weight: bold;
+	font-size: 16px;
+	height: 31px;
+}
+
+div.table_container {
+    padding: 15px;
+    border: 1px solid #eee;
+    background: #fff;
+    float: left;
+    width: auto;
+}
+html>body div.table_container {
+    margin-bottom: 10px;
+}
+div.table_container table {
+    border-top: 1px dashed #eee;
+    background: #fff;
+}
+div.table_container th,
+div.table_container td {
+    padding: 5px 10px;
+    border-bottom: 1px dashed #eee;
+    vertical-align: top;
+}
+div.table_container th {
+    font-weight: bold;
+}
+
+a {
+	color: #00a7d4;
+}
+
+img {
+    display: block;
+}
+
+div#header {
+    background: url(../img/header_bg.jpg) repeat-x;
+    margin: 0 auto;
+	height: 34px;
+	text-align: center;
+}
+div#header ul {
+	margin: 0 auto;
+	padding-right: 20px;
+	background: url(../img/hnav_bg.jpg) no-repeat;
+	width: 920px;
+}
+div#header li {
+    float: right;
+	width: auto;
+    text-align: center;
+}
+div#header li a {
+    padding: 0 20px;
+    background: url(../img/hnav_btn_bg.jpg) no-repeat 0px 0px;
+    display: block;
+    height: 34px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    line-height: 30px;
+}
+div#header li a:hover { background-position: 0px -34px; }
+div#header li#hnav_login    a { width: 4em; }
+div#header li#hnav_home     a { width: 3em; }
+div#header li#hnav_settings a { width: 2em; }
+div#header li#hnav_logout   a { width: 5em; }
+
+div#container {
+    background: url(../img/body_bg.jpg) repeat-y center top;
+	margin: 0 auto;
+	width: 940px;
+}
+div#main {
+	padding-right: 20px;
+	float: right;
+    width: 670px;
+	text-align: left;
+}
+div#title {
+	padding-left: 20px;
+	background: url(../img/title_bg.jpg) no-repeat;
+	height: 127px;
+}
+div#title h1,
+div#title p {
+    margin: 0;
+    padding-top: 40px;
+    font-weight: bold;
+    font-size: 22px;
+}
+div#content {
+	padding: 10px 25px 60px 25px;
+	background: url(../img/main_bg.jpg) repeat-x;
+	height: 250px;
+}
+html>body div#content {
+	min-height: 250px;
+	height: auto;
+}
+div.section h3 {
+    margin: 10px 5px 0 5px;
+    font-weight: bold;
+}
+div.section p,
+div.section ul {
+	margin: 10px 5px;
+}
+div.section ol {
+    margin: 10px 5px 10px 13px;
+}
+html>body div.section ol {
+    margin: 10px 5px;
+}
+div.section ul li {
+	margin-bottom: 8px;
+	padding-left: 22px;
+	background: url(../img/listmark_link.gif) no-repeat;
+	line-height: 16px;
+}
+div.section ul li a {
+	line-height: 16px;
+}
+div.section ol li {
+    margin-bottom: 8px;
+    margin-left: 15px;
+    list-style-type: decimal;
+}
+div.section ol li ul li {
+    list-style-type: none;
+}
+
+div#lnav_container {
+	background: url(../img/side_bg.jpg) no-repeat right bottom;
+}
+div#side {
+	margin-bottom: 50px;
+	float: right;
+	width: 250px;
+	text-align: left;
+}
+div#side ul { margin-left: 20px; }
+div#logo {
+	margin-left: 4px;
+	background: url(../img/side_line.jpg) no-repeat right bottom;
+	height: 137px;
+}
+ul#lnav li a {
+	display: block;
+	padding-top: 9px;
+	padding-left: 20px;
+	background: url(../img/lnav_bg.jpg) no-repeat;
+	width: 210px;
+	height: 27px;
+	color: #fff;
+	text-decoration: none;
+	line-height: 1.4;
+}
+ul#lnav li#lnav_jpa      a { background-position: 0px 0px; height: 25px; }
+ul#lnav li#lnav_wiki     a { background-position: 0px -34px; }
+ul#lnav li#lnav_services a { background-position: 0px -70px; }
+ul#lnav li#lnav_events   a { background-position: 0px -106px; }
+ul#lnav li#lnav_jpa      a:hover { background-position: 230px 0px; }
+ul#lnav li#lnav_wiki     a:hover { background-position: 230px -34px; }
+ul#lnav li#lnav_services a:hover { background-position: 230px -70px; }
+ul#lnav li#lnav_events   a:hover { background-position: 230px -106px; }
+
+ul#subnav {
+	padding: 20px;
+	border-top: 1px solid #50c2e1;
+}
+ul#subnav li {
+	margin-bottom: 8px;
+	padding-left: 22px;
+	background: url(../img/listmark_subnav.gif) no-repeat;
+	line-height: 16px;
+}
+ul#subnav li a {
+	font-size: 10px;
+	color: #fff;
+	line-height: 16px;
+}
+div#footer {
+	margin: 0 auto 20px auto;
+	padding-top: 10px;
+	padding-left: 20px;
+	background: url(../img/footer_bg.jpg) no-repeat right top;
+	width: 920px;
+}
+div#footer a {
+    color: #fff;
+	text-decoration: none;
+}
+div#footer a:hover {
+	text-decoration: underline;
+}
+div#footer address {
+	padding-bottom: 10px;
+	background: url(../img/copyright_bg.jpg) no-repeat right bottom;
+    color: #fff;
+    text-align: center;
+}
+
+
+
+/* jpa */
+
+h1#h1_jpa {
+    padding-top: 35px;
+}
+h1#h1_jpa span {
+    font-weight: normal;
+}
+div#information li {
+    background: url(../img/listmark_head.gif) no-repeat;
+}
+
+
+
+/* board */
+
+div#board_content {
+	padding: 10px 0 30px 0;
+	background: url(../img/main_bg.jpg) repeat-x;
+}
+
+div#maki { border-top: none; }
+div.board {
+    padding: 20px 25px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #d1d1d1;
+}
+div.board div.image {
+    margin-right: 25px;
+    float: left;
+    width: 90px;
+}
+div.board div.info {
+    float: left;
+    width: 500px;
+}
+div.board div.info p {
+    margin: 0 0 10px 0;
+}
+div.board div.info h2 {
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+div.board div.info p.post {
+    padding-bottom: 5px;
+    background: url(../img/dotline.gif) repeat-x left bottom;
+    font-size: 10px;
+}
+
+
+/* training */
+
+div#course h3 {
+    margin-left: 5px;
+    padding-left: 22px;
+    background: url(../img/listmark_head.gif) no-repeat;
+    font-weight: bold;
+}
+
+div#course div p {
+    margin: 0 5px 10px 27px;
+}
+
+
+
+/* powered-by */
+
+div.section ul li ul {
+    margin: 0 10px;
+}
+
+
+
+/* signup */ 
+div.section ol li ul li {
+    margin-left: 10px;
+    padding-left: 0;
+    list-style-type: disc !important;
+    background: none;
+}
+
+/* event */
+
+h1#h1_event {
+    margin: 30px 0;
+    font-weight: bold;
+    font-size: 16px;
+}
+h1#h1_event span {
+    font-weight: normal;
+}
+
+div#session_timeline {
+    margin-left: 25px;
+    margin-bottom: 60px;
+    padding-right: 10px;
+    float: right;
+    width: 150px;
+}
+
+div#sessionbox {
+    float: right;
+    width: 430px;
+}
+
+div#registered {
+    padding-top: 30px;
+}
+div#registered p {
+    padding: 10px 0;
+    border: 3px solid #00A7D4;
+    font-size: 16px;
+    text-align: center;
+}
+div#registered p strong {
+    font-weight: bold;
+    font-size: 16px;
+    color: #00A7D4;
+}
+
+
+/* member */
+
+div#member_title {
+	padding-left: 20px;
+	background: url(../img/title_bg.jpg) no-repeat;
+	height: 127px;
+}
+div#member_title h1,
+div#member_title p {
+    margin: 0;
+    padding-top: 20px;
+    font-weight: bold;
+    font-size: 12px;
+}
+div#member_title p#gravatar {
+    margin-right: 40px;
+    float: left;
+    width: 80px;
+}
+div#member_title div#info {
+    float: left;
+    width: auto;
+}
+div#member_title ul {
+    margin-top: 10px;
+}
+div#member_title li {
+    margin-bottom: 3px;
+    padding-left: 22px;
+    background: url(../img/listmark_link.gif) no-repeat;
+    line-height: 16px;
+}
+div#member_title li a {
+    line-height: 16px;
+}
+
+div#following li.no_follow,
+div#followers li.no_follow {
+    padding-left: 22px;
+    background: none;
+}

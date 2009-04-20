@@ -1,3 +1,5 @@
 <!-- START footer -->
-<div id="footer">Pixis by <a href="http://www.endeworks.jp">Endeworks Inc.</a></div>
+<div id="footer">
+<address>Pixis by <a href="http://www.endeworks.jp">Endeworks Inc.</a></address>
+</div>
 <!-- END footer -->

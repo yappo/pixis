@@ -1,9 +1,12 @@
 [% WRAPPER wrapper.tt %]
-
+<div id="title">
 <h1>[% loc("Login") %]</h1>
+</div><!-- title -->
 
-    <div class="greenbox loginbox">
+<div id="content">
+<div id="login" class="form_full section">
 [% form %]
-    </div>
-<a href="[% c.uri_for('/signup') %]">[% loc("No Account? Sign up now!") %]</a>
+<p class="link"><a href="[% c.uri_for('/signup') %]">[% loc("No Account? Sign up now!") %]</a> </p>
+</div><!-- login -->
+</div><!-- content -->
 [% END # WRAPPER %]

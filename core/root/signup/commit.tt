@@ -1,6 +1,7 @@
 [% WRAPPER wrapper.tt %]
-
-<h2>登録情報確認</h2>
+<div id="title">
+<h1>登録情報確認</h1>
+</div><!-- title -->
 
 [% SET fields = [
     { field => "lastname", label => "Last Name" },
@@ -9,7 +10,9 @@
     { field => "nickname", label => "Nickname" },
 ] %]
 
-<div id="confirm">
+<div id="content">
+<div class="section pt10">
+<div class="table_container">
 <table>
 [% FOREACH field IN fields %]
 <tr>
@@ -18,10 +21,11 @@
 </tr>
 [% END # FOREACH %]
 </table>
-</div><!-- confirm -->
+</div><!-- table_container -->
+</div><!-- section -->
 
-<p>以上でよろしければ、「送信」を押してください</p>
+<p class="clear">以上でよろしければ、「送信」を押してください。</p>
 [% form %]
 
-
+</div><!-- content -->
 [% END %]

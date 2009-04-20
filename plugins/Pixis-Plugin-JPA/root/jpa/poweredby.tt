@@ -1,33 +1,42 @@
 [% WRAPPER wrapper.tt %]
-
+<div id="title">
 <h1>Powered By</h1>
+</div><!-- title -->
 
+<div id="content">
+<div class="section">
 <h2>Technology</h2>
 <ul>
     <li><a href="http://wiki.perlassociation.org/Perl"">Perl</a></li>
-    <ul>
+    <li class="no_listmark"><ul>
         <li><a href="http://moose.perl.org">Moose</a> - Perl5 で強力なオブジェクト指向プログラミングを具現化するツール</li>
         <li><a href="http://search.cpan.org/dist/DBIx-Class">DBIx::Class</a> - 強力なオブジェクト・リレーショナル・マッパー</li>
         <li><a href="http://github.com/lestrrat/pixis/tree/master">Pixis</a> - プラグイン対応したCatalystアプリケーション</li>
-        <ul>
+        <li class="no_listmark"><ul>
             <li><a href="http://catalyst.perl.org">Catalyst</a> - 強力なMVC Webアプリケーションフレームワーク</li>
             <li><a href="http://code.google.com/p/html-formfu">HTML::FormFu</a> - フォーム作成、バリデーション</li>
             <li><a href="http://search.cpan.org/dist/Data-Localize">Data::Localize</a> - 国際化ツール</li>
-        </ul>
-    </ul>
+        </ul></li>
+    </ul></li>
     <li><a href="http://dev.mysql.com">MySQL</a></li>
     <li><a href="http://www.danga.com/memcached/">Memcached</a></li>
 </ul>
+</div><!-- section -->
 
+<div class="section">
 <h2>ホスティング</h2>
 <ul>
     <li> <a href="http://www.datahotel.ne.jp/">データホテル</a> </li>
     <li> <a href="http://www.kddi-webcommunications.co.jp/">KDDI ウェブコミュニケーションズ</a>
 </ul>
+</div><!-- section -->
 
+<div class="section">
 <h2>Various Tools</h2>
 <ul>
     <li><a href="http://www.paypal.com/j1">PayPal</a> - 少額決済ゲートウェイ</li>
 </ul>
+</div><!-- section -->
 
+</div><!-- content -->
 [% END # WRAPPER %]

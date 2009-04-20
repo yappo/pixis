@@ -1,17 +1,24 @@
 [% WRAPPER wrapper.tt %]
+<div id="title">
+<p>イベント参加申し込み</p>
+</div>
 
-<h1>[% event.title %] - 参加申し込み</h1>
+<div id="content">
+<div class="section">
+<h1 id="h1_event">[% event.title %]</h1>
+</div><!-- section -->
 
+<div class="section">
 [% IF (! c.registry('api', 'Event').is_registration_open({ event_id => event.id })) %]
-<div>このイベントへの参加は締め切られました。また次回のお越しをお待ちしております</div>
+<p>このイベントへの参加は締め切られました。また次回のお越しをお待ちしております。</p>
 [% ELSE %]
 
 <h2> 参加 </h2>
 
 [% IF (c.registry('api', 'event').is_registered({ event_id => event.id, member_id => c.user.id })) %]
-すでに登録されています
+<p>すでに登録されています。</p>
 [% ELSE %]
-
+<div class="table_container">
 <table>
 <tr>
     <th>イベント名</th>
@@ -26,7 +33,10 @@
 </tr>
 [% END # FOREACH %]
 </table>
+</div><!-- table_container -->
 [% END %]
 
 [% END # IF open %]
+</div><!-- section -->
+</div><!-- content -->
 [% END # WRAPPER %]

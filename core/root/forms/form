@@ -1,5 +1,5 @@
 [% INCLUDE start_form %]
-[% SET elements = [ self.elements.0 ] %]
+    [% SET elements = [ self.elements.0 ] %]
 [% FOREACH element IN elements %]
 [% INCLUDE $element.filename self=element %]
 [% END %]

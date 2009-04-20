@@ -1,46 +1,60 @@
 [% WRAPPER wrapper.tt %]
 
-<h1>(社) Japan Perl Association</h1>
+<div id="title">
+<h1 id="h1_jpa"><span>一般社団法人</span><br />Japan Perl Association</h1>
+</div><!-- title -->
 
+<div id="content">
 
-<h2> Japan Perl Associationについて </h2>
+<div class="section">
+<p><span style="color:red"><small>4/8 18:00から21:00ごろまで会員登録に問題がございましたが、暫定処置を行いました。<br />大変ご迷惑をおかけいたしました。</small></span></p>
+</div>
+
+<div class="section">
+<h2>Japan Perl Associationについて</h2>
 <p> 一般社団法人Japan Perl Association (JPA) は Perl技術及び文化の啓蒙・促進のた
 めの組織です。Perl技術を利用するプロジェクト、コミュニティ、ビジネスのサポートに
 取り組む事を目的とします。</p>
-
 <ul>
-    <li> <a href="/jpa/board">理事会</a></li>
+    <li><a href="/jpa/board">理事会</a></li>
 </ul>
+</div><!-- section -->
 
-<p><span style="color:red"><small>4/8 18:00から21:00ごろまで会員登録に問題がございましたが、暫定処置を行いました。大変ご迷惑をおかけいたしました</small></span></p>
-
-<h2> お知らせ </h2>
+<div id="information" class="section">
+<h2>お知らせ</h2>
 <ul>
     <li>2009/4/13 - <a href="/event/jpa-seminar-01">第一回セミナーの参加登録受け付けを開始しました</a></li>
     <li>2009/4/8 - 本格活動開始に関する記者発表を行いました
 </ul>
+</div><!-- section -->
 
+<div class="section">
 <h2>Perlについて</h2>
-
 <p> Perlは1987年に初めて発表され、以来20年以上の長きに渡って進化し続けている言語です。インターネットの創世記にはCGIスクリプトを作成するのに多用されさらに有名になりました。しかしPerl自体はCGIのための言語ではありません：世界中の開発者達が自作のライブラリを登録するCPANという巨大なライブラリネットワークを持ち、豊富なテスト・自動化ツールを駆使して堅牢なシステム開発を可能にする、「難しい事を可能に、簡単な事をさらに簡単に」してくれる最高のツールと言えるでしょう。</p>
-
 <p> PerlはWeb、バイオインフォマティクス、システム管理ツールやテストフレームワークなど、すでに様々な分野で幅広く使用されており、今後も活躍が期待されています。</p>
-
 <p> JPAは モダンかつ実践的なPerlの使用方法やノウハウを研修やセミナーなどで提供することにより、企業の皆様が安心してPerlを使用していただけるよう全力でサポートいたします。</p>
+</div><!-- section -->
 
-<h2> 参加 </h2>
-<p> JPAは随時 <a href="[% c.uri_for('/jpa/signup') %]">新規会員を募集しております</a>。 JPAの会員になるとYAPC::Asia Tokyoを含むJPAイベントの参加費の割引等、特典が受けられるようになります。Perlの今後、Perlの文化、雇用を一緒に考えませんか？</p>
+<div class="section">
+<h2>参加</h2>
+<p>JPAは随時 <a href="[% c.uri_for('/jpa/signup') %]">新規会員を募集しております</a>。 JPAの会員になるとYAPC::Asia Tokyoを含むJPAイベントの参加費の割引等、特典が受けられるようになります。Perlの今後、Perlの文化、雇用を一緒に考えませんか？</p>
 <ul>
     <li><a href="[% c.uri_for('/jpa/signup') %]">新規会員登録</a></li>
 </ul>
+</div><!-- section -->
+
+<div class="section">
 <h2>本サイトについて</h2>
-
 <p>本サイトは<a href="http://catalyst.perl.org">Catalyst MVCフレームワーク</a>、<a href="http://www.perlfoundation.org/perl5/index.cgi?dbix_class">DBIx::Class オブジェクトマッパー</a>、<a href="http://code.google.com/p/html-formfu/">HTML::FormFu フォーム作成・バリデーションツール</a>、<a href="http://search.cpan.org/dist/Data-Localize">Data::Localize 国際化用ツール</a>等を用いて、プラッガブルなWebアプリケーションシステムを可能にする<a href="http://github.com/lestrrat/pixis/tree/master">Pixis エンジン</a>上で動作しています。</p>
+</div><!-- section -->
 
+<div class="section">
 <h2>お問い合わせ</h2>
 <p>株式会社endeworks内　一般社団法人 Japan Perl Association<br />
 TEL: 03-6416-1160<br />
 FAX: 03-6416-1161<br />
 MAIL: pr@perlassociation.org</p>
+</div><!-- section -->
 
+</div><!-- content -->
 [% END # WRAPPER %]

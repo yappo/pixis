@@ -1,7 +1,10 @@
 [% WRAPPER wrapper.tt %]
-
+<div id="title">
 <h1>[% loc("Event") %]</h1>
+</div><!-- title -->
 
+<div id="content">
+<div class="section">
 [% IF (c.check_user_roles('admin')) %]
 <ul>
     <li><a href="/event/create">[% loc('Organize an event') %]</a></li>
@@ -15,6 +18,9 @@
     <li><a href="[% c.uri_for("/event", event.id) %]">[% event.title | html %]</a></li>
 [% END %]
 </ul>
+[% ELSE %]
+<p>まだイベントが登録されていません。</p>
 [% END %]
-
+</div><!-- section -->
+</div><!-- content -->
 [% END # WRAPPER %]

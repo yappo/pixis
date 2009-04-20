@@ -1,3 +1,7 @@
+[% IF (!(self.label_tag == 'legend')) %]
 <div class="label">
 <[% self.label_tag %][% process_attrs(self.label_attributes) %]>[% self.label %]</[% self.label_tag %]>
 </div>
+[% ELSE %]
+<[% self.label_tag %][% process_attrs(self.label_attributes) %]>[% self.label %]</[% self.label_tag %]>
+[% END %]

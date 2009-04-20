@@ -5,20 +5,18 @@
     DEFAULT left_tt = 'left.tt';
     DEFAULT base_scripts = [ '/static/js/jquery-1.3.1.js', '/static/js/jquery-ui-1.6rc6.min.js', '/static/js/jquery.dump.js' ];
     DEFAULT scripts      = [];
-    DEFAULT base_styles = [ '/static/css/base.css', '/static/js/theme/ui.all.css' ];
+    DEFAULT base_styles = [ '/static/css/import.css', '/static/js/theme/ui.all.css' ];
     DEFAULT styles = [];
     DEFAULT metas = [];
+    DEFAULT static_uri = '/static/img';
 -%]
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
 <head>
-    <title>[% IF title %][% title %] - [% site_config.title || 'Pixis' %][% ELSE %][% site_config.title || 'Pixis' %][% END %]</title>
-
-[% FOREACH meta IN metas %]
-    <meta[% FOREACH pair IN meta.pairs %] [% pair.key | html %]="[% pair.value | html %]"[% END %]>
-[% END %]
-
-
+<title>[% IF title %][% title %] - [% site_config.title || 'Pixis' %][% ELSE %][% site_config.title || 'Pixis' %][% END %]</title>
+[% FOREACH meta IN metas -%]
+<meta[% FOREACH pair IN meta.pairs %] [% pair.key | html %]="[% pair.value | html %]"[% END %] />
+[%- END %]
 [% FOREACH script IN base_scripts %]
     <script src="[% script %]" type="text/javascript"></script>
 [% END %] 
@@ -33,14 +31,14 @@
 [% END %]
 </head>
 <body>
-<div id="container">
 [% PROCESS $header_tt %]
-[% PROCESS $left_tt %]
-  <div id="content">
+<div id="container" class="clearfix">
+<div id="main">
 [% content %]
-  </div>
-[% PROCESS $right_tt %]
+</div><!-- main -->
+[% PROCESS $left_tt %]
+</div><!--  container -->
+[%# PROCESS $right_tt %]
 [% PROCESS $footer_tt %]
-</div>
 </body>
 </html>

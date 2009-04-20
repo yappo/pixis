@@ -1,12 +1,22 @@
 [% WRAPPER wrapper.tt %]
-[% form %]
-
-[% IF (members) %]
-<div>[% loc("Found [_1] hits", members.size) %]</div>
-[% FOREACH m IN members %]
-<div>
-    <div><a href="[% c.uri_for(m.id) %]">[% m.nickname %]</a></div>
+<div id="title">
+<h1>メンバー検索</h1>
 </div>
+
+<div id="content">
+<div class="form_full section">
+[% form %]
+</div><!-- section -->
+
+<div id="results" class="section">
+[% IF (members) %]
+<h2>[% loc("Found [_1] hits", members.size) %]</h2>
+<ul>
+[% FOREACH m IN members %]
+    <li><a href="[% c.uri_for(m.id) %]">[% m.nickname %]</a></li>
 [% END %]
+</ul>
 [% END # if members %]
+</div><!-- section -->
+</div><!-- content -->
 [% END # wrapper %]
